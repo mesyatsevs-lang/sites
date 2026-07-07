@@ -9,6 +9,17 @@
       name="description"
       content="Управляющий партнер по развитию строительных, девелоперских, территориальных и digital-направлений: контракты, земля, стройконтроль, SPEC, AI и BIM/ТИМ."
     >
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Сергей Месяцев — развитие строительных и digital-направлений">
+    <meta
+      property="og:description"
+      content="Контракты, земля и КРТ, «Элемент Контроль», AI-автоматизация, техзаказчик и BIM/ТИМ для строительного бизнеса."
+    >
+    <meta property="og:url" content="https://sergey-mesyatsev.tech/">
+    <meta property="og:image" content="https://sergey-mesyatsev.tech/og-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
     <style>
       :root {
         --color-sovereign-ink: #0a0f1f;
@@ -240,6 +251,30 @@
         font-weight: var(--font-weight-medium);
         line-height: 1;
         padding: 10px 16px;
+      }
+
+      .sticky-contact {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 30;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        border-radius: var(--radius-buttons);
+        background: var(--color-sovereign-ink);
+        color: var(--color-signal-white);
+        box-shadow: var(--shadow-xl);
+        font-size: 15px;
+        font-weight: var(--font-weight-medium);
+        line-height: 1;
+        padding: 12px 22px;
+        transition: transform 180ms ease, box-shadow 180ms ease;
+      }
+
+      .sticky-contact:hover {
+        transform: translateY(-1px);
       }
 
       .section {
@@ -511,6 +546,11 @@
         padding: 18px 26px;
       }
 
+      .results {
+        background: var(--color-signal-white);
+        border-bottom: 1px solid var(--color-cool-hairline);
+      }
+
       .section-head {
         display: grid;
         grid-template-columns: minmax(0, 0.78fr) minmax(280px, 0.44fr);
@@ -530,6 +570,56 @@
         color: var(--color-carbon-gray);
         font-size: var(--text-body);
         line-height: var(--leading-body);
+      }
+
+      .proof-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--spacing-16);
+      }
+
+      .proof-card {
+        min-height: 316px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid var(--color-cool-hairline);
+        border-radius: 14px;
+        background: var(--color-signal-white);
+        box-shadow: var(--shadow-md);
+        padding: var(--spacing-28);
+      }
+
+      .proof-stat {
+        color: var(--color-sovereign-ink);
+        font-size: clamp(32px, 4vw, var(--text-heading-lg));
+        font-weight: var(--font-weight-regular);
+        letter-spacing: var(--tracking-heading-lg);
+        line-height: 1.02;
+      }
+
+      .proof-label {
+        margin-top: var(--spacing-16);
+        color: var(--color-sovereign-violet);
+        font-size: 12px;
+        font-weight: var(--font-weight-medium);
+        letter-spacing: 0.96px;
+        line-height: var(--leading-caption);
+        text-transform: uppercase;
+      }
+
+      .proof-card p {
+        margin-top: var(--spacing-20);
+        color: var(--color-carbon-gray);
+        font-size: 15px;
+        line-height: 1.58;
+      }
+
+      .proof-note {
+        margin-top: var(--spacing-24);
+        color: var(--color-ash-gray);
+        font-size: 12px;
+        line-height: 1.45;
       }
 
       .services {
@@ -672,13 +762,88 @@
         line-height: var(--leading-body);
       }
 
-      .profile {
+      .formats {
         background: var(--color-mist-surface);
+      }
+
+      .formats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--spacing-16);
+      }
+
+      .format-card {
+        min-height: 360px;
+        border: 1px solid var(--color-cool-hairline);
+        border-radius: 14px;
+        background: var(--color-signal-white);
+        box-shadow: var(--shadow-md);
+        padding: var(--spacing-32);
+      }
+
+      .format-kicker {
+        display: inline-flex;
+        align-items: center;
+        border-radius: var(--radius-md);
+        background: var(--color-mist-surface);
+        color: var(--color-carbon-gray);
+        font-size: 11px;
+        font-weight: var(--font-weight-medium);
+        letter-spacing: 0.88px;
+        line-height: 1;
+        padding: 10px 12px;
+        text-transform: uppercase;
+      }
+
+      .format-card h3 {
+        margin-top: var(--spacing-24);
+        font-size: var(--text-heading-sm);
+        font-weight: var(--font-weight-medium);
+        letter-spacing: var(--tracking-heading-sm);
+        line-height: var(--leading-heading-sm);
+      }
+
+      .format-card p {
+        margin-top: var(--spacing-16);
+        color: var(--color-carbon-gray);
+        font-size: 15px;
+        line-height: 1.58;
+      }
+
+      .format-list {
+        display: grid;
+        gap: var(--spacing-10, 10px);
+        margin: var(--spacing-24) 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .format-list li {
+        position: relative;
+        color: var(--color-sovereign-ink);
+        font-size: 14px;
+        line-height: 1.45;
+        padding-left: var(--spacing-20);
+      }
+
+      .format-list li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.68em;
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: var(--color-sovereign-violet);
+      }
+
+      .profile {
+        background: var(--color-signal-white);
       }
 
       .profile-card {
         display: grid;
-        grid-template-columns: minmax(0, 0.8fr) minmax(320px, 0.48fr);
+        grid-template-columns: minmax(0, 0.78fr) minmax(320px, 0.46fr);
         gap: var(--spacing-48);
         align-items: stretch;
         border: 1px solid var(--color-cool-hairline);
@@ -704,14 +869,84 @@
         line-height: var(--leading-body-lg);
       }
 
-      .profile-panel {
+      .about-facts {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--spacing-12);
+        margin-top: var(--spacing-32);
+      }
+
+      .about-fact {
         border-radius: 14px;
         background: var(--color-mist-surface);
+        border: 1px solid var(--color-cool-hairline);
+        padding: var(--spacing-20);
+      }
+
+      .about-fact span {
+        display: block;
+      }
+
+      .about-fact span:first-child {
+        color: var(--color-sovereign-violet);
+        font-size: 11px;
+        font-weight: var(--font-weight-medium);
+        letter-spacing: 0.88px;
+        line-height: var(--leading-caption);
+        text-transform: uppercase;
+      }
+
+      .about-fact span:last-child {
+        margin-top: var(--spacing-8);
+        color: var(--color-sovereign-ink);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .portrait-card {
+        min-height: 100%;
+        border-radius: 14px;
+        background:
+          linear-gradient(135deg, rgba(107, 43, 234, 0.08), rgba(246, 247, 252, 0.88)),
+          var(--color-mist-surface);
         border: 1px solid var(--color-cool-hairline);
         padding: var(--spacing-24);
       }
 
-      .profile-panel__title {
+      .portrait-frame {
+        min-height: 390px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        border: 1px dashed rgba(10, 15, 31, 0.22);
+        background:
+          repeating-linear-gradient(90deg, rgba(10, 15, 31, 0.035) 0 1px, transparent 1px 18px),
+          repeating-linear-gradient(0deg, rgba(10, 15, 31, 0.035) 0 1px, transparent 1px 18px),
+          rgba(255, 255, 255, 0.66);
+      }
+
+      .portrait-placeholder {
+        display: grid;
+        gap: var(--spacing-10, 10px);
+        justify-items: center;
+        text-align: center;
+      }
+
+      .portrait-initials {
+        width: 82px;
+        height: 82px;
+        border-radius: 22px;
+        display: grid;
+        place-items: center;
+        background: var(--color-sovereign-ink);
+        color: var(--color-signal-white);
+        box-shadow: var(--shadow-subtle);
+        font-size: 28px;
+        font-weight: var(--font-weight-medium);
+        letter-spacing: -0.6px;
+      }
+
+      .portrait-placeholder span:last-child {
         color: var(--color-carbon-gray);
         font-size: 12px;
         font-weight: var(--font-weight-medium);
@@ -719,37 +954,11 @@
         text-transform: uppercase;
       }
 
-      .scope-list {
-        display: grid;
-        gap: var(--spacing-12);
+      .portrait-caption {
         margin-top: var(--spacing-24);
-      }
-
-      .scope-item {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: var(--spacing-16);
-        border-bottom: 1px solid var(--color-cool-hairline);
-        padding-bottom: var(--spacing-12);
-      }
-
-      .scope-item:last-child {
-        border-bottom: 0;
-        padding-bottom: 0;
-      }
-
-      .scope-item span:first-child {
-        font-size: 15px;
-        font-weight: var(--font-weight-medium);
-        line-height: 1.35;
-      }
-
-      .scope-item span:last-child {
         color: var(--color-carbon-gray);
-        font-size: 13px;
-        line-height: 1.35;
-        text-align: right;
+        font-size: 14px;
+        line-height: 1.55;
       }
 
       .contact {
@@ -856,6 +1065,11 @@
           gap: var(--spacing-20);
         }
 
+        .proof-grid,
+        .formats-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
         .services-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
@@ -957,7 +1171,10 @@
         }
 
         .services-grid,
-        .method-grid {
+        .proof-grid,
+        .formats-grid,
+        .method-grid,
+        .about-facts {
           grid-template-columns: 1fr;
         }
 
@@ -966,13 +1183,21 @@
           padding: var(--spacing-24);
         }
 
-        .scope-item {
-          display: grid;
-          gap: var(--spacing-8);
+        .proof-card,
+        .format-card {
+          min-height: auto;
+          padding: var(--spacing-24);
         }
 
-        .scope-item span:last-child {
-          text-align: left;
+        .portrait-frame {
+          min-height: 310px;
+        }
+
+        .sticky-contact {
+          right: 14px;
+          bottom: 14px;
+          left: 14px;
+          min-height: 50px;
         }
       }
     </style>
@@ -996,7 +1221,9 @@
             </span>
           </a>
           <div class="nav-links" aria-label="Разделы страницы">
+            <a class="nav-link" href="#results">Кейсы</a>
             <a class="nav-link" href="#services">Услуги</a>
+            <a class="nav-link" href="#formats">Форматы</a>
             <a class="nav-link" href="#method">Подход</a>
             <a class="nav-link" href="#profile">Профиль</a>
           </div>
@@ -1006,6 +1233,10 @@
           </div>
         </nav>
       </header>
+
+      <a class="sticky-contact" href="https://t.me/sergeymesyatsev" aria-label="Связаться в Telegram">
+        Связаться
+      </a>
 
       <main id="top">
         <section class="hero" aria-labelledby="hero-title">
@@ -1085,6 +1316,71 @@
             <span>СОД</span>
           </div>
         </div>
+
+        <section class="section results" id="results" aria-labelledby="results-title">
+          <div class="container">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Результаты / кейсы</p>
+                <h2 class="section-title" id="results-title">Доказательства, которые можно показывать публично</h2>
+              </div>
+              <p class="section-copy">
+                Здесь только подтверждённая фактура из рабочих материалов. Суммы контрактов, названия под NDA
+                и детали закрытых договорённостей не раскрываются на сайте.
+              </p>
+            </div>
+
+            <div class="proof-grid">
+              <article class="proof-card">
+                <div>
+                  <div class="proof-stat">20 + 21</div>
+                  <div class="proof-label">портфель группы</div>
+                  <p>
+                    20 контрактов на проектирование и 21 контракт на техзаказчика, аудит,
+                    DD и стройконтроль в развитии направлений ZAK / ButikPro / BIM Capital.
+                  </p>
+                </div>
+                <div class="proof-note">Публичная формулировка из банка кейсов v0.8</div>
+              </article>
+
+              <article class="proof-card">
+                <div>
+                  <div class="proof-stat">до 1 200 га</div>
+                  <div class="proof-label">земельный актив</div>
+                  <p>
+                    Рязанский агропромышленный / аграрно-туристический проект: роль инициатора,
+                    управляющего партнёра и организатора команды.
+                  </p>
+                </div>
+                <div class="proof-note">Детали проекта — только в безопасной публичной рамке</div>
+              </article>
+
+              <article class="proof-card">
+                <div>
+                  <div class="proof-stat">пилоты</div>
+                  <div class="proof-label">«Элемент Контроль»</div>
+                  <p>
+                    Участие в создании, апробации, коммерческой упаковке и выводе на рынок
+                    платформы мониторинга качества монолитных работ.
+                  </p>
+                </div>
+                <div class="proof-note">В пилотах выявлялись риски перегрева и перепадов температур</div>
+              </article>
+
+              <article class="proof-card">
+                <div>
+                  <div class="proof-stat">регламенты</div>
+                  <div class="proof-label">NF PM</div>
+                  <p>
+                    Разработан комплект регламентов для функции технического заказчика:
+                    документооборот, совещания, поручения, приёмка, отчётность и контроль.
+                  </p>
+                </div>
+                <div class="proof-note">Финансовые условия и внутренние решения не публикуются</div>
+              </article>
+            </div>
+          </div>
+        </section>
 
         <section class="section services" id="services" aria-labelledby="services-title">
           <div class="container">
@@ -1208,6 +1504,65 @@
           </div>
         </section>
 
+        <section class="section formats" id="formats" aria-labelledby="formats-title">
+          <div class="container">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Форматы работы</p>
+                <h2 class="section-title" id="formats-title">Три способа подключиться к задаче</h2>
+              </div>
+              <p class="section-copy">
+                Формат выбирается после короткой диагностики: иногда достаточно разового разбора,
+                иногда нужна упаковка и сопровождение, а иногда — роль управляющего партнёра.
+              </p>
+            </div>
+
+            <div class="formats-grid">
+              <article class="format-card">
+                <span class="format-kicker">Диагностика</span>
+                <h3>Разовый разбор задачи</h3>
+                <p>
+                  Подходит собственнику или руководителю, когда нужно быстро понять потенциал,
+                  риски и ближайший маршрут действий.
+                </p>
+                <ul class="format-list">
+                  <li>анализ компании, актива или процесса;</li>
+                  <li>поиск слабых мест в упаковке и переговорах;</li>
+                  <li>карта следующих шагов без лишней бюрократии.</li>
+                </ul>
+              </article>
+
+              <article class="format-card">
+                <span class="format-kicker">Проект</span>
+                <h3>Упаковка и сопровождение</h3>
+                <p>
+                  Для компании или проекта, где уже есть задача, команда и ЛПР, но нужна
+                  коммерческая, проектная или digital-рамка.
+                </p>
+                <ul class="format-list">
+                  <li>формулировка предложения и доказательной базы;</li>
+                  <li>карта заказчиков, партнёров или инвесторов;</li>
+                  <li>подготовка встреч, КП, follow-up и переговорной логики.</li>
+                </ul>
+              </article>
+
+              <article class="format-card">
+                <span class="format-kicker">Партнёрство</span>
+                <h3>Управляющий партнёр</h3>
+                <p>
+                  Для задач, где развитие нужно вести в течение времени: с командой,
+                  полномочиями, отчётностью и заранее зафиксированной зоной ответственности.
+                </p>
+                <ul class="format-list">
+                  <li>дорожная карта, роли, ресурсы и управленческий ритм;</li>
+                  <li>участие во встречах и фиксация решений;</li>
+                  <li>результативная часть — только в договорной рамке.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
         <section class="section method" id="method" aria-labelledby="method-title">
           <div class="container">
             <div class="section-head">
@@ -1254,32 +1609,37 @@
                 <p class="eyebrow">Профиль</p>
                 <h2 id="profile-title">Опыт на стыке стройки, девелопмента, digital-продуктов и развития бизнеса</h2>
                 <p>
-                  Сергей Месяцев работает как управляющий партнер по развитию: помогает владельцам и
-                  командам превращать опыт, связи и продукты в понятную коммерческую систему. Не вместо
-                  команды и не вместо отраслевой экспертизы, а как усиление там, где нужна связка рынка,
-                  управления и технологической повестки.
+                  Сергей Месяцев — управляющий партнёр по развитию строительных, девелоперских,
+                  территориальных и digital-направлений. Прошёл путь от стройплощадки и управления СМР
+                  до руководства строительством в крупной девелоперской группе, развития группы компаний,
+                  запуска digital-продуктов, территориальных проектов и прикладной AI-автоматизации.
                 </p>
-              </div>
-              <aside class="profile-panel" aria-label="Сферы применения">
-                <div class="profile-panel__title">Где это полезно</div>
-                <div class="scope-list">
-                  <div class="scope-item">
-                    <span>Строительные компании</span>
-                    <span>рост, контракты, упаковка</span>
+                <div class="about-facts" aria-label="Ключевой опыт">
+                  <div class="about-fact">
+                    <span>Стройка</span>
+                    <span>СМР, генподряд, техзаказчик, стройконтроль и управление проектами.</span>
                   </div>
-                  <div class="scope-item">
-                    <span>Девелоперы и землевладельцы</span>
-                    <span>земля, КРТ, партнерства</span>
+                  <div class="about-fact">
+                    <span>Развитие</span>
+                    <span>Контракты, переговоры, упаковка услуг, партнёрства и территории.</span>
                   </div>
-                  <div class="scope-item">
-                    <span>Проектные и инжиниринговые команды</span>
-                    <span>техзаказчик, СОД, BIM/ТИМ</span>
-                  </div>
-                  <div class="scope-item">
-                    <span>Digital и AI-направления</span>
-                    <span>агенты, процессы, контроль</span>
+                  <div class="about-fact">
+                    <span>Digital</span>
+                    <span>«Элемент Контроль», BIM/ТИМ, СОД и AI-агенты для строительных процессов.</span>
                   </div>
                 </div>
+              </div>
+              <aside class="portrait-card" aria-label="Место под фото">
+                <div class="portrait-frame">
+                  <div class="portrait-placeholder">
+                    <span class="portrait-initials">SM</span>
+                    <span>место под фото</span>
+                  </div>
+                </div>
+                <p class="portrait-caption">
+                  Портрет лучше поставить деловой, без тяжёлой постановки: лицо, нейтральный фон,
+                  спокойный свет. Пока фото нет, оставлен плейсхолдер.
+                </p>
               </aside>
             </div>
           </div>
