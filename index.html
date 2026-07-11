@@ -857,43 +857,20 @@
       }
 
       .portrait-frame {
-        min-height: 390px;
-        display: grid;
-        place-items: center;
+        height: 430px;
+        overflow: hidden;
         border-radius: 12px;
-        border: 1px dashed rgba(10, 15, 31, 0.22);
-        background:
-          repeating-linear-gradient(90deg, rgba(10, 15, 31, 0.035) 0 1px, transparent 1px 18px),
-          repeating-linear-gradient(0deg, rgba(10, 15, 31, 0.035) 0 1px, transparent 1px 18px),
-          rgba(255, 255, 255, 0.66);
+        border: 1px solid rgba(10, 15, 31, 0.12);
+        background: var(--color-signal-white);
+        box-shadow: var(--shadow-md);
       }
 
-      .portrait-placeholder {
-        display: grid;
-        gap: 10px;
-        justify-items: center;
-        text-align: center;
-      }
-
-      .portrait-initials {
-        width: 82px;
-        height: 82px;
-        border-radius: 22px;
-        display: grid;
-        place-items: center;
-        background: var(--color-sovereign-ink);
-        color: var(--color-signal-white);
-        box-shadow: var(--shadow-subtle);
-        font-size: 28px;
-        font-weight: var(--font-weight-medium);
-      }
-
-      .portrait-placeholder span:last-child {
-        color: var(--color-carbon-gray);
-        font-size: 12px;
-        font-weight: var(--font-weight-medium);
-        letter-spacing: 1.08px;
-        text-transform: uppercase;
+      .portrait-photo {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 38%;
       }
 
       .portrait-caption {
@@ -991,6 +968,10 @@
 
         .profile h2 {
           font-size: 44px;
+        }
+
+        .portrait-card {
+          max-width: 460px;
         }
 
         .hero-grid,
@@ -1175,7 +1156,7 @@
         }
 
         .portrait-frame {
-          min-height: 310px;
+          height: clamp(310px, calc((100vw - 68px) * 1.18), 430px);
         }
 
         .sticky-contact {
@@ -1594,16 +1575,20 @@
                 </div>
               </div>
             </div>
-            <aside class="portrait-card" aria-label="Место под фото Сергея Месяцева">
+            <aside class="portrait-card" aria-label="Деловой портрет Сергея Месяцева">
               <div class="portrait-frame">
-                <div class="portrait-placeholder">
-                  <span class="portrait-initials">SM</span>
-                  <span>место под фото</span>
-                </div>
+                <img
+                  class="portrait-photo"
+                  src="assets/sergey-mesyatsev-profile.webp"
+                  width="900"
+                  height="1350"
+                  alt="Сергей Месяцев"
+                  loading="lazy"
+                  decoding="async"
+                >
               </div>
               <p class="portrait-caption">
-                Здесь нужен деловой портрет: лицо, спокойный фон, естественный свет. Пока фото не передано,
-                оставлен аккуратный плейсхолдер.
+                Сергей Месяцев, управляющий партнер по развитию строительных, девелоперских и digital-направлений.
               </p>
             </aside>
           </div>
