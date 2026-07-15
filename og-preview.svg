@@ -1,58 +1,45 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="page" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="0.52" stop-color="#f6f7fc"/>
-      <stop offset="1" stop-color="#efeafe"/>
-    </linearGradient>
-    <linearGradient id="chip" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#6b2bea" stop-opacity="0.18"/>
-      <stop offset="1" stop-color="#28d3fe" stop-opacity="0.14"/>
-    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#d9d5c8" stroke-width="1" opacity="0.7"/>
+    </pattern>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="0" dy="26" stdDeviation="28" flood-color="#281e5d" flood-opacity="0.18"/>
-      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#0a0f1f" flood-opacity="0.08"/>
+      <feDropShadow dx="0" dy="28" stdDeviation="30" flood-color="#141922" flood-opacity="0.14"/>
+      <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#141922" flood-opacity="0.08"/>
     </filter>
   </defs>
-  <rect width="1200" height="630" fill="url(#page)"/>
-  <rect x="64" y="54" width="1072" height="522" rx="28" fill="#ffffff" stroke="#e5e7eb" filter="url(#shadow)"/>
-  <circle cx="96" cy="88" r="7" fill="#6b2bea"/>
-  <text x="118" y="94" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#4e4e4e" letter-spacing="2">AI-АУДИТ · ПИЛОТ · АГЕНТЫ</text>
-  <text x="92" y="196" font-family="Arial, sans-serif" font-size="72" font-weight="400" fill="#0a0f1f">
-    <tspan x="92" dy="0">AI-агенты</tspan>
-    <tspan x="92" dy="82">для строительного</tspan>
-    <tspan x="92" dy="82">бизнеса</tspan>
+  <rect width="1200" height="630" fill="#f7f5ef"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect x="64" y="54" width="1072" height="522" rx="10" fill="#ffffff" stroke="#d9d5c8" filter="url(#shadow)"/>
+  <rect x="64" y="558" width="268" height="18" fill="#2e5e75"/>
+  <rect x="332" y="558" width="268" height="18" fill="#b25f2a"/>
+  <rect x="600" y="558" width="268" height="18" fill="#596b3f"/>
+  <rect x="868" y="558" width="268" height="18" fill="#d9a23a"/>
+  <text x="92" y="110" font-family="Arial, sans-serif" font-size="19" font-weight="800" fill="#b25f2a">СТРОИТЕЛЬСТВО · ДЕВЕЛОПМЕНТ · ТЕРРИТОРИИ · DIGITAL</text>
+  <text x="92" y="235" font-family="Georgia, 'Times New Roman', serif" font-size="84" font-weight="500" fill="#141922">
+    <tspan x="92" dy="0">Сергей</tspan>
+    <tspan x="92" dy="92">Месяцев</tspan>
   </text>
-  <text x="92" y="470" font-family="Arial, sans-serif" font-size="28" font-weight="400" fill="#4e4e4e">
-    <tspan x="92" dy="0">КП, CRM, техзаказчик, ИД, стройконтроль</tspan>
-    <tspan x="92" dy="42">и digital-контур без тяжелой IT-разработки</tspan>
+  <text x="92" y="410" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#141922">
+    <tspan x="92" dy="0">Партнёр по стратегическому</tspan>
+    <tspan x="92" dy="42">развитию девелоперских</tspan>
+    <tspan x="92" dy="42">и строительных компаний</tspan>
   </text>
-  <g transform="translate(760 104)">
-    <rect x="0" y="0" width="316" height="390" rx="22" fill="#ffffff" stroke="#e5e7eb"/>
-    <rect x="24" y="24" width="268" height="74" rx="18" fill="url(#chip)" stroke="#ddd7fb"/>
-    <text x="46" y="56" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#6b2bea" letter-spacing="1.2">COMMAND SURFACE</text>
-    <text x="46" y="81" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#0a0f1f">Пилот 2-4 недели</text>
-    <g transform="translate(24 128)">
-      <rect width="268" height="62" rx="18" fill="#f6f7fc" stroke="#e5e7eb"/>
-      <circle cx="32" cy="31" r="17" fill="#ffffff"/>
-      <text x="32" y="37" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#6b2bea" text-anchor="middle">01</text>
-      <text x="62" y="28" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#0a0f1f">КП и follow-up</text>
-      <text x="62" y="47" font-family="Arial, sans-serif" font-size="13" fill="#4e4e4e">письма, CRM, лиды</text>
+  <g transform="translate(782 112)">
+    <rect width="274" height="330" rx="10" fill="#19354c"/>
+    <text x="28" y="58" font-family="Arial, sans-serif" font-size="15" font-weight="800" fill="#d9a23a">4 ВХОДА НА САЙТ</text>
+    <g font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#f7f5ef">
+      <text x="28" y="112">Контракты</text>
+      <text x="28" y="166">Земля и КРТ</text>
+      <text x="28" y="220">Элемент Контроль</text>
+      <text x="28" y="274">AI-автоматизация</text>
     </g>
-    <g transform="translate(24 204)">
-      <rect width="268" height="62" rx="18" fill="#f6f7fc" stroke="#e5e7eb"/>
-      <circle cx="32" cy="31" r="17" fill="#ffffff"/>
-      <text x="32" y="37" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#6b2bea" text-anchor="middle">02</text>
-      <text x="62" y="28" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#0a0f1f">Техзаказчик</text>
-      <text x="62" y="47" font-family="Arial, sans-serif" font-size="13" fill="#4e4e4e">протоколы, поручения</text>
-    </g>
-    <g transform="translate(24 280)">
-      <rect width="268" height="62" rx="18" fill="#f6f7fc" stroke="#e5e7eb"/>
-      <circle cx="32" cy="31" r="17" fill="#ffffff"/>
-      <text x="32" y="37" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#6b2bea" text-anchor="middle">03</text>
-      <text x="62" y="28" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#0a0f1f">ИД и стройконтроль</text>
-      <text x="62" y="47" font-family="Arial, sans-serif" font-size="13" fill="#4e4e4e">реестры, акты, отчеты</text>
+    <g stroke="#d9a23a" stroke-width="3">
+      <line x1="28" y1="128" x2="246" y2="128"/>
+      <line x1="28" y1="182" x2="246" y2="182"/>
+      <line x1="28" y1="236" x2="246" y2="236"/>
+      <line x1="28" y1="290" x2="246" y2="290"/>
     </g>
   </g>
-  <text x="92" y="552" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#6b2bea">Сергей Месяцев · @sergeymesyatsev</text>
+  <text x="92" y="530" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#2e5e75">sergey-mesyatsev.tech · @sergeymesyatsev</text>
 </svg>
