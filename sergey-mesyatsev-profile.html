@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PDF-профиль — Сергей Месяцев</title>
+    <style>
+      :root {
+        --paper: #f4f1ea;
+        --paper-deep: #e7e0d4;
+        --white: #fffdfa;
+        --ink: #151a23;
+        --ink-soft: #4d5663;
+        --muted: #7d8692;
+        --line: #d8d0c2;
+        --blueprint: #17384d;
+        --rust: #bc5f2c;
+        --olive: #607744;
+        --signal: #e7ae36;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        background: #ded8ce;
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .document {
+        display: grid;
+        gap: 18px;
+        padding: 18px;
+      }
+
+      .page {
+        position: relative;
+        width: 210mm;
+        height: 297mm;
+        margin: 0 auto;
+        overflow: hidden;
+        background:
+          linear-gradient(rgba(21, 26, 35, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(21, 26, 35, 0.035) 1px, transparent 1px),
+          var(--paper);
+        background-size: 12mm 12mm;
+        box-shadow: 0 16px 40px rgba(21, 26, 35, 0.18);
+      }
+
+      .page::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 5mm;
+        background: linear-gradient(90deg, var(--blueprint) 0 25%, var(--rust) 25% 50%, var(--olive) 50% 75%, var(--signal) 75% 100%);
+      }
+
+      .content {
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        padding: 18mm;
+      }
+
+      .topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12mm;
+        color: var(--ink-soft);
+        font-size: 8.5pt;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 11mm;
+        height: 11mm;
+        border-radius: 2mm;
+        background: var(--ink);
+        color: var(--paper);
+        font-size: 8pt;
+        font-weight: 900;
+      }
+
+      .topline-left,
+      .topline-right {
+        display: flex;
+        align-items: center;
+        gap: 4mm;
+      }
+
+      .topline-rule {
+        width: 14mm;
+        height: 0.6mm;
+        background: var(--rust);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1,
+      h2 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 500;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        margin-top: 31mm;
+        max-width: 114mm;
+        font-size: 42pt;
+        line-height: 0.95;
+      }
+
+      h2 {
+        font-size: 28pt;
+        line-height: 1.04;
+      }
+
+      h3 {
+        font-size: 13pt;
+        line-height: 1.2;
+      }
+
+      .lead {
+        margin-top: 8mm;
+        max-width: 112mm;
+        color: var(--ink);
+        font-size: 17pt;
+        font-weight: 800;
+        line-height: 1.22;
+      }
+
+      .copy {
+        color: var(--ink-soft);
+        font-size: 10pt;
+        line-height: 1.55;
+      }
+
+      .cover-copy {
+        margin-top: 7mm;
+        max-width: 108mm;
+        font-size: 11pt;
+        line-height: 1.55;
+      }
+
+      .portrait-card {
+        position: absolute;
+        top: 34mm;
+        right: 18mm;
+        width: 56mm;
+        border: 0.35mm solid rgba(21, 26, 35, 0.16);
+        border-radius: 2mm;
+        overflow: hidden;
+        background: var(--white);
+        box-shadow: 0 8mm 18mm rgba(21, 26, 35, 0.16);
+      }
+
+      .portrait-card img {
+        display: block;
+        width: 100%;
+        height: 82mm;
+        object-fit: cover;
+        object-position: 50% 16%;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4mm;
+        margin-top: 20mm;
+        width: 112mm;
+      }
+
+      .metric {
+        min-height: 28mm;
+        border: 0.3mm solid var(--line);
+        border-radius: 2mm;
+        background: rgba(255, 253, 250, 0.72);
+        padding: 5mm;
+      }
+
+      .metric strong {
+        display: block;
+        color: var(--ink);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 22pt;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      .metric span {
+        display: block;
+        margin-top: 3mm;
+        color: var(--ink-soft);
+        font-size: 8pt;
+        line-height: 1.35;
+      }
+
+      .footer-note {
+        position: absolute;
+        left: 18mm;
+        right: 18mm;
+        bottom: 15mm;
+        display: flex;
+        justify-content: space-between;
+        gap: 8mm;
+        color: var(--muted);
+        font-size: 8pt;
+        line-height: 1.35;
+      }
+
+      .page-title {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 54mm;
+        gap: 12mm;
+        align-items: end;
+        margin-top: 22mm;
+      }
+
+      .page-title .copy {
+        padding-bottom: 1mm;
+      }
+
+      .directions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5mm;
+        margin-top: 12mm;
+      }
+
+      .direction-card,
+      .case-card,
+      .filter-card,
+      .step-card {
+        border: 0.3mm solid var(--line);
+        border-radius: 2mm;
+        background: rgba(255, 253, 250, 0.82);
+      }
+
+      .direction-card {
+        min-height: 59mm;
+        padding: 6mm;
+      }
+
+      .label {
+        display: inline-flex;
+        align-items: center;
+        gap: 3mm;
+        color: var(--rust);
+        font-size: 7.5pt;
+        font-weight: 900;
+        line-height: 1.2;
+        text-transform: uppercase;
+      }
+
+      .label::before {
+        content: "";
+        width: 9mm;
+        height: 0.6mm;
+        background: currentColor;
+      }
+
+      .direction-card h3,
+      .case-card h3,
+      .filter-card h3,
+      .step-card h3 {
+        margin-top: 4mm;
+      }
+
+      .direction-card p,
+      .case-card p,
+      .filter-card p,
+      .step-card p {
+        margin-top: 3mm;
+      }
+
+      .result {
+        margin-top: 5mm;
+        color: var(--ink);
+        font-size: 8.5pt;
+        font-weight: 800;
+        line-height: 1.32;
+      }
+
+      .support {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4mm;
+        margin-top: 7mm;
+      }
+
+      .support-item {
+        border-left: 0.8mm solid var(--blueprint);
+        background: rgba(23, 56, 77, 0.06);
+        padding: 4mm;
+      }
+
+      .support-item b {
+        display: block;
+        font-size: 8.8pt;
+        line-height: 1.2;
+      }
+
+      .support-item span {
+        display: block;
+        margin-top: 2mm;
+        color: var(--ink-soft);
+        font-size: 7.5pt;
+        line-height: 1.35;
+      }
+
+      .cases {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4mm;
+        margin-top: 10mm;
+      }
+
+      .case-card {
+        min-height: 41mm;
+        padding: 4mm;
+      }
+
+      .case-line {
+        display: grid;
+        grid-template-columns: 14mm minmax(0, 1fr);
+        gap: 2.5mm;
+        margin-top: 2.4mm;
+        color: var(--ink-soft);
+        font-size: 7.2pt;
+        line-height: 1.32;
+      }
+
+      .case-line b {
+        color: var(--rust);
+        font-size: 7pt;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .note-box {
+        margin-top: 5mm;
+        border-radius: 2mm;
+        background: var(--blueprint);
+        color: var(--paper);
+        padding: 4.5mm 5mm;
+      }
+
+      .note-box h3 {
+        color: var(--signal);
+      }
+
+      .note-box p {
+        margin-top: 3mm;
+        color: rgba(247, 245, 239, 0.82);
+        font-size: 8pt;
+        line-height: 1.38;
+      }
+
+      .start-grid {
+        display: grid;
+        grid-template-columns: 60mm minmax(0, 1fr);
+        gap: 8mm;
+        margin-top: 13mm;
+      }
+
+      .steps {
+        display: grid;
+        gap: 3mm;
+      }
+
+      .step-card {
+        display: grid;
+        grid-template-columns: 12mm minmax(0, 1fr);
+        gap: 4mm;
+        padding: 4.5mm;
+      }
+
+      .step-number {
+        color: var(--rust);
+        font-size: 8pt;
+        font-weight: 900;
+      }
+
+      .filters {
+        display: grid;
+        gap: 4mm;
+      }
+
+      .filter-card {
+        padding: 5mm;
+      }
+
+      .filter-card ul {
+        margin: 4mm 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .filter-card li {
+        position: relative;
+        margin-top: 2.5mm;
+        padding-left: 4mm;
+        color: var(--ink-soft);
+        font-size: 8pt;
+        line-height: 1.35;
+      }
+
+      .filter-card li::before {
+        content: "";
+        position: absolute;
+        top: 1.7mm;
+        left: 0;
+        width: 1.6mm;
+        height: 1.6mm;
+        border-radius: 50%;
+        background: var(--rust);
+      }
+
+      .contact-panel {
+        position: absolute;
+        left: 18mm;
+        right: 18mm;
+        bottom: 28mm;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 76mm;
+        gap: 10mm;
+        align-items: end;
+        border-radius: 2mm;
+        background: var(--ink);
+        color: var(--paper);
+        padding: 8mm;
+      }
+
+      .contact-panel h2 {
+        font-size: 24pt;
+        line-height: 1.02;
+      }
+
+      .contact-list {
+        display: grid;
+        gap: 3mm;
+      }
+
+      .contact-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 6mm;
+        border: 0.25mm solid rgba(247, 245, 239, 0.18);
+        border-radius: 999px;
+        padding: 3mm 4mm;
+        color: var(--paper);
+        font-size: 8pt;
+        text-decoration: none;
+      }
+
+      .contact-row span:last-child {
+        color: var(--signal);
+        font-weight: 800;
+      }
+
+      .page-start .page-title {
+        margin-top: 18mm;
+      }
+
+      .page-start .start-grid {
+        grid-template-columns: 1fr;
+        gap: 5mm;
+        margin-top: 9mm;
+      }
+
+      .page-start .steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 3mm;
+      }
+
+      .page-start .step-card {
+        grid-template-columns: 8mm minmax(0, 1fr);
+        gap: 3mm;
+        min-height: 31mm;
+        padding: 3.5mm;
+      }
+
+      .page-start .step-card h3 {
+        margin-top: 0;
+        font-size: 10.5pt;
+      }
+
+      .page-start .step-card p {
+        margin-top: 2mm;
+        font-size: 7.5pt;
+        line-height: 1.3;
+      }
+
+      .page-start .filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4mm;
+      }
+
+      .page-start .filter-card {
+        padding: 4mm;
+      }
+
+      .page-start .filter-card li {
+        margin-top: 2mm;
+        font-size: 7.3pt;
+        line-height: 1.28;
+      }
+
+      .page-start .contact-panel {
+        bottom: 15mm;
+        grid-template-columns: minmax(0, 1fr) 72mm;
+        padding: 6mm;
+      }
+
+      .page-start .contact-panel h2 {
+        font-size: 22pt;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      @media print {
+        html,
+        body {
+          width: 210mm;
+          background: white;
+        }
+
+        .document {
+          display: block;
+          padding: 0;
+        }
+
+        .page {
+          margin: 0;
+          box-shadow: none;
+          page-break-after: always;
+          break-after: page;
+        }
+
+        .page:last-child {
+          page-break-after: auto;
+          break-after: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="document">
+      <section class="page" aria-label="Обложка">
+        <div class="content">
+          <div class="topline">
+            <div class="topline-left">
+              <span class="mark">SM</span>
+              <span>Профиль партнёра</span>
+            </div>
+            <div class="topline-right">
+              <span class="topline-rule"></span>
+              <span>Июль 2026</span>
+            </div>
+          </div>
+
+          <div class="portrait-card">
+            <img src="assets/sergey-mesyatsev-profile.webp" alt="Сергей Месяцев" width="900" height="1350" />
+          </div>
+
+          <h1>Сергей Месяцев</h1>
+          <p class="lead">Партнёр по стратегическому развитию девелоперских и строительных компаний.</p>
+          <p class="copy cover-copy">
+            Помогаю девелоперским, строительным, проектным и инжиниринговым компаниям привлекать контракты,
+            упаковывать услуги, запускать территориальные проекты, развивать продукты и внедрять AI / BIM /
+            digital-инструменты в строительный бизнес.
+          </p>
+
+          <div class="metrics" aria-label="Ключевые акценты">
+            <div class="metric">
+              <strong>7</strong>
+              <span>направлений в общей коммерческой системе</span>
+            </div>
+            <div class="metric">
+              <strong>4</strong>
+              <span>главных входа для первого разговора</span>
+            </div>
+            <div class="metric">
+              <strong>1</strong>
+              <span>роль: стратегическое развитие, а не разовая консультация</span>
+            </div>
+          </div>
+
+          <div class="footer-note">
+            <span>Строительство · девелопмент · территории · digital</span>
+            <span>sergey-mesyatsev.tech</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" aria-label="Направления">
+        <div class="content">
+          <div class="topline">
+            <div class="topline-left">
+              <span class="mark">SM</span>
+              <span>Направления</span>
+            </div>
+            <span>02 / 04</span>
+          </div>
+
+          <div class="page-title">
+            <h2>Четыре входа, через которые клиент быстрее понимает ценность</h2>
+            <p class="copy">
+              Остальные компетенции усиливают доверие и подключаются по ситуации: управляющее партнёрство,
+              техзаказчик, стройконтроль, BIM / ТИМ, СОД и digital.
+            </p>
+          </div>
+
+          <div class="directions">
+            <article class="direction-card">
+              <span class="label">Услуга 01</span>
+              <h3>Стратегическое развитие девелоперских и строительных компаний</h3>
+              <p class="copy">Диагностика, упаковка предложения, карта заказчиков, встречи, КП, follow-up и сопровождение сделки.</p>
+              <p class="result">Результат: коммерческая система, а не разовая передача контактов.</p>
+            </article>
+            <article class="direction-card">
+              <span class="label">Услуга 03</span>
+              <h3>Земельные активы, КРТ и территории</h3>
+              <p class="copy">Аудит актива, проектная гипотеза, сценарии монетизации, дорожная карта и упаковка для инвестора, региона или партнёра.</p>
+              <p class="result">Результат: понятная логика развития актива до переговоров.</p>
+            </article>
+            <article class="direction-card">
+              <span class="label">Услуга 05</span>
+              <h3>«Элемент Контроль»</h3>
+              <p class="copy">Цифровой мониторинг качества монолитных работ: температура бетона, режим прогрева, температурные листы и данные контроля.</p>
+              <p class="result">Результат: платный пилот на объекте с понятной зоной проверки.</p>
+            </article>
+            <article class="direction-card">
+              <span class="label">Услуга 06</span>
+              <h3>AI-автоматизация строительного бизнеса</h3>
+              <p class="copy">AI-аудит, прикладные агенты, база знаний, КП, follow-up, CRM-дисциплина, документы, отчёты и обучение команды.</p>
+              <p class="result">Результат: пилот 2–4 недели на реальном процессе.</p>
+            </article>
+          </div>
+
+          <div class="support">
+            <div class="support-item">
+              <b>Управляющий партнёр по проекту</b>
+              <span>Для проектов, где есть ЛПР, бюджет, полномочия и экономическая фиксация роли.</span>
+            </div>
+            <div class="support-item">
+              <b>Технический заказчик и стройконтроль</b>
+              <span>Регламенты, поручения, отчётность, приёмка работ, риски и управляемость проекта.</span>
+            </div>
+            <div class="support-item">
+              <b>BIM / ТИМ, СОД и digital</b>
+              <span>Методология выбора и внедрения инструментов, а не роль разработчика или BIM-моделлера.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" aria-label="Кейсы">
+        <div class="content">
+          <div class="topline">
+            <div class="topline-left">
+              <span class="mark">SM</span>
+              <span>Доказательная база</span>
+            </div>
+            <span>03 / 04</span>
+          </div>
+
+          <div class="page-title">
+            <h2>Кейсы показывают ширину, но не размывают роль</h2>
+            <p class="copy">
+              Публично используются безопасные формулировки. Чувствительные детали, суммы, NDA и внутренние
+              договорённости остаются для личной встречи и отдельного решения.
+            </p>
+          </div>
+
+          <div class="cases">
+            <article class="case-card">
+              <span class="label">Девелопмент</span>
+              <h3>Capital Group / Миэль / ПИК-Девелопмент</h3>
+              <div class="case-line"><b>Роль</b><span>Стройка, СМР, генподряд, управление строительством и проектными контурами.</span></div>
+              <div class="case-line"><b>Итог</b><span>Практическая база для разговора с ЛПР как с человеком из отрасли.</span></div>
+            </article>
+            <article class="case-card">
+              <span class="label">Группа компаний</span>
+              <h3>ZAK Development / ButikPro / BIM Capital</h3>
+              <div class="case-line"><b>Роль</b><span>Управляющий партнёр: упаковка, команда, переговоры, продуктовая рамка.</span></div>
+              <div class="case-line"><b>Итог</b><span>Портфель направлений: проектирование, техзаказчик, аудит, DD, стройконтроль, BIM / ТИМ.</span></div>
+            </article>
+            <article class="case-card">
+              <span class="label">Продукт</span>
+              <h3>«Элемент Контроль»</h3>
+              <div class="case-line"><b>Роль</b><span>Соинициатор и партнёр по развитию продукта: апробация, пилоты, упаковка, рынок.</span></div>
+              <div class="case-line"><b>Итог</b><span>Пилоты на объектах монолитного строительства и выявление технологических рисков.</span></div>
+            </article>
+            <article class="case-card">
+              <span class="label">Территории</span>
+              <h3>Рязанский агропромышленный / аграрно-туристический проект</h3>
+              <div class="case-line"><b>Роль</b><span>Инициатор и управляющий партнёр: команда, гипотеза, переговорный и региональный контур.</span></div>
+              <div class="case-line"><b>Итог</b><span>Рамка территориального проекта для разговора с собственниками, регионом и инвесторами.</span></div>
+            </article>
+            <article class="case-card">
+              <span class="label">Контракты</span>
+              <h3>Привлечение крупных контрактов</h3>
+              <div class="case-line"><b>Роль</b><span>Упаковка предложения, выход на заказчиков, переговоры, сопровождение до подписания и оплаты.</span></div>
+              <div class="case-line"><b>Итог</b><span>Подписанные и оплаченные договоры; детали раскрываются только в личном контексте.</span></div>
+            </article>
+            <article class="case-card">
+              <span class="label">Методология</span>
+              <h3>NF PM (NF Group)</h3>
+              <div class="case-line"><b>Роль</b><span>Руководитель направления капитального строительства: техзаказчик, ИРД, сроки, качество, ввод.</span></div>
+              <div class="case-line"><b>Итог</b><span>Регламенты и экспертное заключение по выбору ПО / СОД / ТИМ.</span></div>
+            </article>
+          </div>
+
+          <div class="note-box">
+            <h3>Главный принцип публичности</h3>
+            <p>
+              Кейсы используются как доказательство управленческой и коммерческой компетенции, а не как публичное
+              раскрытие закрытых договорённостей, сумм, условий или материалов клиентов.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="page page-start" aria-label="Начало работы">
+        <div class="content">
+          <div class="topline">
+            <div class="topline-left">
+              <span class="mark">SM</span>
+              <span>Следующий шаг</span>
+            </div>
+            <span>04 / 04</span>
+          </div>
+
+          <div class="page-title">
+            <h2>Начать лучше с короткой диагностики задачи</h2>
+            <p class="copy">
+              Цель первого разговора — понять, есть ли рабочая рамка: ЛПР, задача, материалы, бюджет, полномочия
+              и следующий деловой шаг.
+            </p>
+          </div>
+
+          <div class="start-grid">
+            <div class="steps">
+              <article class="step-card">
+                <div class="step-number">01</div>
+                <div>
+                  <h3>Короткая диагностика</h3>
+                  <p class="copy">Фиксируем, кто ЛПР, какая бизнес-цель и где уже есть результат первого разговора.</p>
+                </div>
+              </article>
+              <article class="step-card">
+                <div class="step-number">02</div>
+                <div>
+                  <h3>Разбор компании, актива или продукта</h3>
+                  <p class="copy">Смотрим материалы, портфель, исходные данные, коммерческое предложение и ограничения.</p>
+                </div>
+              </article>
+              <article class="step-card">
+                <div class="step-number">03</div>
+                <div>
+                  <h3>Выбор формата</h3>
+                  <p class="copy">Подбираем аудит, упаковку, дорожную карту, пилот или сопровождение сделки.</p>
+                </div>
+              </article>
+              <article class="step-card">
+                <div class="step-number">04</div>
+                <div>
+                  <h3>Договорённость о следующем шаге</h3>
+                  <p class="copy">Определяем рамку работ, ответственных, материалы, срок и экономическую логику.</p>
+                </div>
+              </article>
+            </div>
+
+            <div class="filters">
+              <article class="filter-card">
+                <h3>Подходит, если</h3>
+                <ul>
+                  <li>Есть собственник, ЛПР или руководитель направления.</li>
+                  <li>Есть задача развития: контракт, актив, продукт, digital-контур или управляемость проекта.</li>
+                  <li>Есть готовность работать по договору, с рамкой ответственности и экономикой.</li>
+                  <li>Есть материалы, команда или проектная ситуация, которую можно разбирать предметно.</li>
+                </ul>
+              </article>
+              <article class="filter-card">
+                <h3>Не подходит, если</h3>
+                <ul>
+                  <li>Нужен просто контакт, интро или бесплатное советничество.</li>
+                  <li>Ожидается гарантированный контракт, инвестор или решение органов власти.</li>
+                  <li>Нет бюджета, владельца задачи или доступа к исходным данным.</li>
+                  <li>Нужно обещание AI, BIM или digital-эффекта без процесса, команды и дисциплины.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+
+          <div class="contact-panel">
+            <div>
+              <h2>Обсудить задачу</h2>
+              <p class="copy" style="margin-top: 4mm; color: rgba(247, 245, 239, 0.78);">
+                Опишите, что сейчас важнее: контракты, земля, продукт, AI-пилот или управленческая сборка проекта.
+              </p>
+            </div>
+            <div class="contact-list">
+              <a class="contact-row" href="https://t.me/sergeymesyatsev"><span>Telegram</span><span>@sergeymesyatsev</span></a>
+              <a class="contact-row" href="mailto:mesyatsev.s@gmail.com"><span>Email</span><span>mesyatsev.s@gmail.com</span></a>
+              <a class="contact-row" href="https://sergey-mesyatsev.tech/"><span>Сайт</span><span>sergey-mesyatsev.tech</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
