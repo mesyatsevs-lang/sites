@@ -403,6 +403,7 @@
       }
 
       .route-card {
+        color: inherit;
         min-height: 362px;
         display: flex;
         flex-direction: column;
@@ -468,6 +469,17 @@
         font-size: 14px;
         font-weight: 800;
         line-height: 1.35;
+      }
+
+      .route-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 18px;
+        color: var(--copper);
+        font-size: 13px;
+        font-weight: 850;
+        line-height: 1;
       }
 
       .support-strip {
@@ -626,6 +638,46 @@
         line-height: 1.2;
       }
 
+      .start-list {
+        display: grid;
+        border: 1px solid var(--line);
+        background: var(--white);
+        box-shadow: var(--shadow-tight);
+      }
+
+      .start-row {
+        display: grid;
+        grid-template-columns: 86px minmax(0, 1fr);
+        gap: 24px;
+        border-bottom: 1px solid var(--line);
+        padding: 24px;
+      }
+
+      .start-row:last-child {
+        border-bottom: 0;
+      }
+
+      .start-index {
+        color: var(--copper);
+        font-size: 12px;
+        font-weight: 850;
+        line-height: 1;
+      }
+
+      .start-row h3 {
+        font-size: 21px;
+        font-weight: 760;
+        line-height: 1.22;
+      }
+
+      .start-row p {
+        max-width: 760px;
+        margin-top: 8px;
+        color: var(--ink-soft);
+        font-size: 15px;
+        line-height: 1.62;
+      }
+
       .list {
         display: grid;
         gap: 12px;
@@ -777,6 +829,10 @@
           grid-column: 2;
           justify-self: start;
         }
+
+        .start-row {
+          grid-template-columns: 56px minmax(0, 1fr);
+        }
       }
 
       @media (max-width: 680px) {
@@ -902,6 +958,12 @@
           padding: 20px;
         }
 
+        .start-row {
+          grid-template-columns: 1fr;
+          gap: 10px;
+          padding: 20px;
+        }
+
         .case-tag {
           grid-column: auto;
         }
@@ -996,7 +1058,7 @@
             </div>
 
             <div class="routes">
-              <article class="route-card">
+              <a class="route-card" href="strategic-development.html">
                 <div>
                   <div class="route-top">
                     <span class="route-code">УСЛУГА 01</span>
@@ -1007,11 +1069,12 @@
                     Диагностика, упаковка предложения, карта заказчиков, встречи, КП, follow-up
                     и сопровождение сделки для строительных, проектных и инжиниринговых компаний.
                   </p>
+                  <span class="route-link">Открыть направление →</span>
                 </div>
                 <div class="route-result">Результат: коммерческая система, а не разовая передача контактов.</div>
-              </article>
+              </a>
 
-              <article class="route-card">
+              <a class="route-card" href="land-krt.html">
                 <div>
                   <div class="route-top">
                     <span class="route-code">УСЛУГА 03</span>
@@ -1022,11 +1085,12 @@
                     Аудит актива, проектная гипотеза, сценарии монетизации, дорожная карта,
                     команда и упаковка для инвестора, региона или партнера.
                   </p>
+                  <span class="route-link">Открыть направление →</span>
                 </div>
                 <div class="route-result">Результат: понятная логика развития актива до переговоров.</div>
-              </article>
+              </a>
 
-              <article class="route-card">
+              <a class="route-card" href="element-control.html">
                 <div>
                   <div class="route-top">
                     <span class="route-code">УСЛУГА 05</span>
@@ -1037,11 +1101,12 @@
                     Цифровой мониторинг качества монолитных работ: температура бетона,
                     режим прогрева, температурные листы и данные для контроля качества.
                   </p>
+                  <span class="route-link">Открыть направление →</span>
                 </div>
                 <div class="route-result">Результат: платный пилот на объекте с понятной зоной проверки.</div>
-              </article>
+              </a>
 
-              <article class="route-card">
+              <a class="route-card" href="ai-automation.html">
                 <div>
                   <div class="route-top">
                     <span class="route-code">УСЛУГА 06</span>
@@ -1052,9 +1117,10 @@
                     AI-аудит, прикладные агенты, база знаний, КП, follow-up, CRM-дисциплина,
                     документы, отчеты и обучение команды без тяжелой IT-разработки.
                   </p>
+                  <span class="route-link">Открыть направление →</span>
                 </div>
                 <div class="route-result">Результат: пилот 2-4 недели на реальном процессе.</div>
-              </article>
+              </a>
             </div>
 
             <div class="support-strip" aria-label="Поддерживающие компетенции">
@@ -1099,6 +1165,52 @@
                 контракт, земля, продукт, AI-пилот или управленческое участие.
               </p>
             </aside>
+          </div>
+        </section>
+
+        <section class="section section-bordered" id="start" aria-labelledby="start-title">
+          <div class="container">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">С чего начать</p>
+                <h2 class="section-title" id="start-title">Первый шаг должен прояснить задачу, а не сразу продавать проект</h2>
+              </div>
+              <p class="section-copy">
+                Удобный вход — короткая диагностика. Она помогает понять, что сейчас важнее:
+                контракт, актив, продукт, AI-пилот или управленческая сборка проекта.
+              </p>
+            </div>
+
+            <div class="start-list">
+              <article class="start-row">
+                <div class="start-index">01</div>
+                <div>
+                  <h3>Короткая диагностика задачи</h3>
+                  <p>Фиксируем, кто ЛПР, какая бизнес-цель, где узкое место и какой результат нужен после первого разговора.</p>
+                </div>
+              </article>
+              <article class="start-row">
+                <div class="start-index">02</div>
+                <div>
+                  <h3>Разбор компании, актива или продукта</h3>
+                  <p>Смотрим материалы, портфель, исходные данные, коммерческое предложение, переговорный контур и ограничения.</p>
+                </div>
+              </article>
+              <article class="start-row">
+                <div class="start-index">03</div>
+                <div>
+                  <h3>Выбор формата</h3>
+                  <p>Подбираем формат: аудит, упаковка, дорожная карта, пилот, сопровождение сделки или управленческое участие.</p>
+                </div>
+              </article>
+              <article class="start-row">
+                <div class="start-index">04</div>
+                <div>
+                  <h3>Договорённость о следующем шаге</h3>
+                  <p>Определяем рамку работ, ответственных, материалы, срок и экономическую логику до начала содержательной работы.</p>
+                </div>
+              </article>
+            </div>
           </div>
         </section>
 
@@ -1177,8 +1289,8 @@
           <div class="container">
             <div class="section-head">
               <div>
-                <p class="eyebrow">Коммерческая гигиена</p>
-                <h2 class="section-title" id="principles-title">Четкая рамка важнее громких обещаний</h2>
+                <p class="eyebrow">Фильтр клиента</p>
+                <h2 class="section-title" id="principles-title">Лучше сразу понять, есть ли рабочая рамка</h2>
               </div>
               <p class="section-copy">
                 Сайт должен создавать доверие и приводить к разговору с правильным клиентом,
@@ -1188,22 +1300,22 @@
 
             <div class="principles">
               <article class="principle-card">
-                <h3>Что можно обещать</h3>
+                <h3>Подходит, если</h3>
                 <ul class="list">
-                  <li>Диагностику задачи, продукта, актива или процесса.</li>
-                  <li>Упаковку предложения и подготовку к переговорам.</li>
-                  <li>Дорожную карту, сценарии и структуру следующего шага.</li>
-                  <li>Пилот или проект при понятном ЛПР, бюджете и зоне ответственности.</li>
+                  <li>Есть собственник, ЛПР или руководитель направления, который может принимать решения.</li>
+                  <li>Есть задача развития: контракт, актив, продукт, digital-контур или управляемость проекта.</li>
+                  <li>Есть готовность работать по договору, с рамкой ответственности и экономикой.</li>
+                  <li>Есть материалы, команда или проектная ситуация, которую можно разбирать предметно.</li>
                 </ul>
               </article>
 
               <article class="principle-card">
-                <h3>Что не обещать</h3>
+                <h3>Не подходит, если</h3>
                 <ul class="list">
-                  <li>Гарантированный контракт, инвестора или решение органов власти.</li>
-                  <li>Бесплатную передачу контактов без договора и экономической рамки.</li>
-                  <li>Замену лаборатории или стройконтроля цифровым продуктом.</li>
-                  <li>AI, BIM или digital-эффект без данных, команды и дисциплины.</li>
+                  <li>Нужен просто контакт, интро или “посоветуйте бесплатно”.</li>
+                  <li>Ожидается гарантированный контракт, инвестор или решение органов власти.</li>
+                  <li>Нет бюджета, ответственного владельца задачи или доступа к исходным данным.</li>
+                  <li>Нужно обещание AI, BIM или digital-эффекта без процесса, команды и дисциплины.</li>
                 </ul>
               </article>
             </div>
