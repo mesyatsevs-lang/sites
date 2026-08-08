@@ -62,6 +62,19 @@
   .step .stop::before{content:"!";position:absolute;left:6px;color:var(--accent);
                       font-family:var(--disp);font-weight:700}
 
+
+  /* выбор роли */
+  .pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+        gap:10px;margin-top:22px}
+  .pick a{display:flex;gap:14px;align-items:baseline;text-decoration:none;
+          border:1px solid var(--line);background:var(--surface);
+          padding:14px 16px;color:var(--ink);transition:border-color .15s,transform .15s}
+  .pick a:hover,.pick a:focus-visible{border-color:var(--accent);transform:translateY(-2px)}
+  .pick a b{font-family:var(--disp);font-weight:700;color:var(--accent);min-width:1.2em}
+  .pick a span{font-family:var(--disp);font-weight:700;font-size:1.02rem;line-height:1.2}
+  .pick a small{display:block;font-family:var(--body);font-weight:400;
+                font-size:.83rem;color:var(--muted);margin-top:3px}
+
   .cta{margin-top:clamp(40px,6vw,72px);border:2px solid var(--accent);
        padding:clamp(22px,4vw,36px)}
   .cta h2{font-size:clamp(1.3rem,3vw,1.9rem);text-transform:none}
@@ -87,6 +100,26 @@
       каждую ступень. Отметьте галочками то, что уже есть, — незакрытое
       и будет вашим ближайшим кварталом.</p>
   </header>
+
+  <section id="rol">
+    <div class="shead"><span class="n">Шаг 1</span>
+      <h2>Выберите свою роль</h2></div>
+    <p class="note" style="margin-top:0">Десять вопросов, около трёх минут,
+      балл сразу после отправки. Версии разные: у генподряда спрашивают
+      про исполнительную и КС, у застройщика — про дольщиков и эскроу.
+      Берите ту, в которой узнаёте свой день.</p>
+    <div class="pick">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLXCZlfjLuf6V5j0y9OP1e9P6D00acTdUro2BFB9PGcy_CEA/viewform"><b>1</b><span>Девелопер<small>модель и факт в разных файлах</small></span></a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSccogflVBpLP_0KBuEbaS5Ck8LLCSG6HeTpFpYYUpRtuRNPJg/viewform"><b>2</b><span>Застройщик<small>надзор, эскроу, дольщики — в разных руках</small></span></a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeFvMWGUPSmoraXhoqxbkWCLlVFxJxJEhGQGb4VvxXp24Ttxw/viewform"><b>3</b><span>Технический заказчик<small>подпись за объём, который считали не вы</small></span></a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZsAkfCLbwcx_W331qjNzkbNcPwVbJecnTQpPunOvRcIHQcA/viewform"><b>4</b><span>Генпроектный институт<small>исходные данные с опозданием</small></span></a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfHjqfRO6yH1aFH-A8LwA07UT1tx-7wVLFyqaOLLm3sRFPATA/viewform"><b>5</b><span>Проектный институт<small>задание смежников поздно</small></span></a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc2TIH3hAjey7WJHXKpAT-tyCcvAR0mtEk9CWATtf0bQFzm0A/viewform"><b>6</b><span>Генподряд<small>пакет вернули, оплата встала</small></span></a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIKI9H9oNsYjwjChykdNI2-HdpEyqZ-s1sj50Hb9hPc0XhdQ/viewform"><b>7</b><span>Подрядная структура<small>фронт не готов, бригада стоит</small></span></a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSchfWhxYLL7tj1kOFhCqMbHkHhGtzyVhgq2MLDnPJVLeaKSyA/viewform"><b>8</b><span>Управляющая компания<small>документация от застройщика неполна</small></span></a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeN_8bqx4nwGWzJeYQgSVRMr1glzBXW294loJai5Y7auOK77g/viewform"><b>9</b><span>Эксплуатирующая компания<small>дом сдали и забыли, кто его строил</small></span></a>
+    </div>
+  </section>
 
   <section>
     <div class="shead"><span class="n">Перед лестницей</span>
