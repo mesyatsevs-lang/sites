@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8 ступеней ИИ-зрелости строительной компании — что делать на каждой</title>
+<meta name="description" content="Лестница из восьми ступеней: где ваша компания и какой один шаг делать следующим. Без «внедрим ИИ под ключ».">
+<style>
+  :root{
+    --bg:#0E1013; --surface:#171A1E; --ink:#ECEFF2; --muted:#7C848E;
+    --accent:#FF6A13; --line:rgba(255,255,255,.14);
+    --disp:'Bahnschrift SemiCondensed','Bahnschrift','DIN Next','Oswald','Arial Narrow',system-ui,sans-serif;
+    --body:'Bahnschrift','Segoe UI',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+       font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:clamp(16px,4vw,40px)}
+  .inner{border:1px solid var(--line);padding:clamp(20px,5vw,56px)}
+  h1,h2,h3{font-family:var(--disp);font-weight:700;margin:0;text-wrap:balance}
+  p{margin:0}
+  a{color:var(--accent)}
+
+  .eyebrow{font-family:var(--disp);font-size:.8rem;letter-spacing:.2em;
+           text-transform:uppercase;color:var(--muted)}
+  h1{font-size:clamp(2rem,6vw,3.6rem);line-height:1.02;text-transform:uppercase;
+     margin-top:22px;letter-spacing:-.01em}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lead{margin-top:24px;font-family:var(--disp);font-weight:700;
+        font-size:clamp(1.1rem,2.4vw,1.5rem);line-height:1.32;max-width:34ch}
+  .note{margin-top:18px;color:var(--muted);max-width:64ch}
+
+  section{margin-top:clamp(40px,6vw,72px)}
+  .shead{display:flex;align-items:baseline;gap:14px;padding-bottom:10px;
+         border-bottom:1px solid var(--line);margin-bottom:24px}
+  .shead h2{font-size:clamp(1.05rem,2.2vw,1.35rem);text-transform:uppercase}
+  .shead .n{font-family:var(--disp);color:var(--accent);font-size:.78rem;
+            letter-spacing:.16em;font-weight:700}
+
+  figure{margin:0}
+  figure img{width:100%;height:auto;display:block;border:1px solid var(--line)}
+  figcaption{margin-top:12px;font-size:.9rem;color:var(--muted)}
+
+  .rule{margin-top:26px;padding:20px 22px;border-left:5px solid var(--accent);
+        background:var(--surface);font-family:var(--disp);font-weight:700;
+        font-size:clamp(1rem,2vw,1.2rem);line-height:1.35}
+
+  .steps{display:flex;flex-direction:column;gap:14px;counter-reset:s}
+  .step{border:1px solid var(--line);background:var(--surface);padding:20px 22px 22px}
+  .step .top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .step .num{font-family:var(--disp);font-weight:700;font-size:2.1rem;line-height:1;
+             color:var(--accent);min-width:1.6em;font-variant-numeric:tabular-nums}
+  .step h3{font-size:1.15rem}
+  .step .sub{color:var(--muted);font-size:.92rem;margin-top:6px}
+  .step ul{margin:16px 0 0;padding:0;list-style:none;display:flex;
+           flex-direction:column;gap:9px}
+  .step li{padding-left:26px;position:relative;font-size:.97rem}
+  .step li::before{content:"□";position:absolute;left:0;color:var(--accent);
+                   font-family:var(--disp);font-weight:700}
+  .step .stop{margin-top:14px;font-size:.9rem;color:var(--muted);
+              padding-left:26px;position:relative}
+  .step .stop::before{content:"!";position:absolute;left:6px;color:var(--accent);
+                      font-family:var(--disp);font-weight:700}
+
+  .cta{margin-top:clamp(40px,6vw,72px);border:2px solid var(--accent);
+       padding:clamp(22px,4vw,36px)}
+  .cta h2{font-size:clamp(1.3rem,3vw,1.9rem);text-transform:none}
+  .cta p{margin-top:14px;max-width:60ch}
+  .cta .who{margin-top:22px;font-family:var(--disp);font-weight:700;font-size:1.05rem}
+  .cta .who span{display:block;font-family:var(--body);font-weight:400;
+                 color:var(--muted);font-size:.92rem;margin-top:4px}
+
+  footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+         color:var(--muted);font-size:.88rem}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="inner">
+
+  <header>
+    <p class="eyebrow">Диагностика ИИ-зрелости · строительная отрасль</p>
+    <h1>Восемь ступеней.<br><em>Перепрыгнуть нельзя</em></h1>
+    <p class="lead">Ваш балл говорит, где вы стоите. Эта страница говорит,
+      какой один шаг делать следующим.</p>
+    <p class="note">Здесь нет «внедрим ИИ под ключ». Есть лестница, по которой
+      компании проходят в одном и том же порядке, и список того, что закрывает
+      каждую ступень. Отметьте галочками то, что уже есть, — незакрытое
+      и будет вашим ближайшим кварталом.</p>
+  </header>
+
+  <section>
+    <div class="shead"><span class="n">Перед лестницей</span>
+      <h2>Куда вообще стоит внедрять</h2></div>
+    <figure>
+      <img src="kuda-vnedryat-ai.jpg"
+           alt="Куда действительно стоит внедрять AI: повторяющиеся действия, потеря времени, ручная рутина, ошибки из-за человеческого фактора, задержки в коммуникации, много текста и данных">
+      <figcaption>Шесть признаков процесса, который окупит автоматизацию.
+        Если ни одного нет — не трогайте этот процесс, начните с другого.</figcaption>
+    </figure>
+    <div class="rule">Автоматизировать надо не то, что модно,
+      а то, что повторяется и стоит денег.</div>
+  </section>
+
+  <section>
+    <div class="shead"><span class="n">Лестница</span>
+      <h2>Что закрывает каждую ступень</h2></div>
+    <div class="steps">
+
+      <div class="step">
+        <div class="top"><span class="num">0–1</span>
+          <div><h3>Индивидуальный хаос</h3>
+            <p class="sub">Кто-то пользуется, кто-то боится, компания не знает кто.</p></div></div>
+        <ul>
+          <li>Один абзац от первого лица компании: ИИ — рабочий инструмент, вот что можно и что нельзя</li>
+          <li>Список: кто уже пользуется и для каких задач. Поимённо, не «примерно»</li>
+          <li>Инструменты оплачивает компания, а не сотрудник из своего кармана</li>
+        </ul>
+        <p class="stop">Пока платит сотрудник, вы не управляете ни доступом, ни данными,
+          ни отключением при увольнении.</p>
+      </div>
+
+      <div class="step">
+        <div class="top"><span class="num">2</span>
+          <div><h3>Точечные инструменты</h3>
+            <p class="sub">Работает у отдельных людей и на отдельных объектах.</p></div></div>
+        <ul>
+          <li>Три-пять человек, которые применяют ИИ в реальных задачах каждую неделю</li>
+          <li>Понятно, на чём именно экономится время: письма, разбор документов, сравнение КП</li>
+          <li>Никто не отправляет чужие данные в публичные сервисы «на всякий случай»</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <div class="top"><span class="num">3</span>
+          <div><h3>Порядок и обучение</h3>
+            <p class="sub">Личные находки превращаются в инструмент компании.</p></div></div>
+        <ul>
+          <li>Общая библиотека промптов под ваши типовые документы — один файл, доступный всем</li>
+          <li>Письменный регламент на страницу А4: что нельзя загружать в публичные сервисы</li>
+          <li>Обучение прошли руководители, а не только «продвинутая молодёжь»</li>
+          <li>Единые шаблоны рабочих документов, собираемые с ИИ</li>
+        </ul>
+        <p class="stop">Регламент, которого нет на бумаге, существует только
+          в голове у осторожных. Рискуют при этом все.</p>
+      </div>
+
+      <div class="step">
+        <div class="top"><span class="num">4</span>
+          <div><h3>Процессные автоматизации</h3>
+            <p class="sub">ИИ работает без человека — по расписанию или по событию.</p></div></div>
+        <ul>
+          <li>Один процесс, который повторяется каждую неделю, идёт сам. Один, не десять</li>
+          <li>Саммари планёрок: протокол и задачи с ответственными — автоматически</li>
+          <li>Напоминания и сводки по срокам уходят по событию, а не когда кто-то вспомнил</li>
+          <li>Отчётность собирается из данных, а не пишется с нуля каждый раз</li>
+        </ul>
+        <p class="stop">Начинайте с процесса, где ошибка стоит денег
+          и её сегодня ловят вручную.</p>
+      </div>
+
+      <div class="step">
+        <div class="top"><span class="num">5–6</span>
+          <div><h3>Память и агенты</h3>
+            <p class="sub">Сначала база, потом «цифровые сотрудники». Не наоборот.</p></div></div>
+        <ul>
+          <li>Единая база того, что ИИ должен знать: история, документы, решения по объектам</li>
+          <li>Переписка и исполнительная не в личных чатах и не в Excel на ноутбуке у РП</li>
+          <li>Первый агент закрывает одну понятную обязанность целиком</li>
+          <li>У агента есть задача, расписание и право действовать — это сотрудник, а не чат</li>
+        </ul>
+        <p class="stop">Агент, купленный на хаосе данных, работает вхолостую
+          и выдаёт правдоподобную чушь. Память раньше агентов.</p>
+      </div>
+
+      <div class="step">
+        <div class="top"><span class="num">7–8</span>
+          <div><h3>AI-First и самообучение</h3>
+            <p class="sub">Норма для единиц. Здесь «нет» — это нормальный ответ.</p></div></div>
+        <ul>
+          <li>Новый объект заводится в ИИ-контур с первого дня, а не «когда будет время»</li>
+          <li>Типовые операционные решения система принимает сама, люди работают на исключениях</li>
+          <li>Система предупреждает о срыве раньше, чем это заметил человек</li>
+        </ul>
+        <p class="stop">Сюда не прыгают. Это следствие того, что данные накоплены,
+          а процессы уже идут без ручного запуска.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="shead"><span class="n">Правило</span>
+      <h2>Почему нельзя перепрыгнуть</h2></div>
+    <div class="rule">Ваш реальный уровень — последняя ступень, где закрыто ВСЁ.
+      Если ниже есть пробел, а выше галочка — верхнее не считается.<br>
+      Система равна высоте самого слабого звена.</div>
+    <p class="note">Отсюда и главная ошибка: купить инструмент со ступени +3
+      и удивиться, что он не поехал. Следующий шаг всегда один — закрыть
+      текущую ступень.</p>
+  </section>
+
+  <div class="cta">
+    <h2>Если хотите разобрать свой результат</h2>
+    <p>Посмотрю ваши ответы и назову один первый шаг под ваши процессы:
+      что автоматизировать, с чего начать и чего не делать. Без презентаций
+      и без «внедрим ИИ под ключ».</p>
+    <p class="who">Сергей Месяцев
+      <span>Строитель и AI-Developer · <a href="https://sergey-mesyatsev.tech/">sergey-mesyatsev.tech</a></span></p>
+  </div>
+
+  <footer>
+    Методика «8 уровней зрелости ИИ в компании». Диагностика — девять отраслевых
+    вариантов: девелопер, застройщик, технический заказчик, генпроектный
+    и проектный институт, генподряд, подрядная структура, управляющая
+    и эксплуатирующая компания.
+  </footer>
+
+</div></div>
+</body>
+</html>
