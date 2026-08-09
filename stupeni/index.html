@@ -75,6 +75,35 @@
   .pick a small{display:block;font-family:var(--body);font-weight:400;
                 font-size:.83rem;color:var(--muted);margin-top:3px}
 
+  /* оффер */
+  .offer{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+  .orow{border:1px solid var(--line);background:var(--surface);padding:16px 18px;
+        display:grid;grid-template-columns:1fr auto;gap:6px 18px;align-items:baseline}
+  .orow.pay{border-color:var(--accent)}
+  .orow b{font-family:var(--disp);font-weight:700;font-size:1.15rem}
+  .orow .price{font-family:var(--disp);font-weight:700;font-size:1.1rem;
+               color:var(--accent);text-align:right}
+  .orow.free .price{color:var(--muted);font-weight:400;letter-spacing:.06em;
+                    text-transform:uppercase;font-size:.9rem}
+  .orow .what{grid-column:1/-1;color:#C9CED4;font-size:.95rem}
+  .orow .term{grid-column:1/-1;color:var(--muted);font-size:.86rem}
+
+  /* комплект — не ступень линии, а коробка сбоку */
+  .aside{margin-top:16px;border:1px dashed var(--accent);background:var(--surface);
+         padding:16px 18px;display:grid;grid-template-columns:1fr auto;
+         gap:6px 18px;align-items:baseline}
+  .aside .side{grid-column:1/-1;font-family:var(--disp);font-weight:700;
+               font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;
+               color:var(--accent);margin-bottom:2px}
+  .aside b{font-family:var(--disp);font-weight:700;font-size:1.15rem}
+  .aside .price{font-family:var(--disp);font-weight:700;font-size:1.1rem;
+                color:var(--accent);text-align:right}
+  .aside .what{grid-column:1/-1;color:#C9CED4;font-size:.95rem}
+  .aside .term{grid-column:1/-1;color:var(--muted);font-size:.86rem}
+  .bridge{margin-top:18px;font-family:var(--disp);font-weight:700;
+          font-size:1.02rem;line-height:1.35;border-left:3px solid var(--accent);
+          padding-left:14px}
+
   .cta{margin-top:clamp(40px,6vw,72px);border:2px solid var(--accent);
        padding:clamp(22px,4vw,36px)}
   .cta h2{font-size:clamp(1.3rem,3vw,1.9rem);text-transform:none}
@@ -230,6 +259,50 @@
     <p class="note">Отсюда и главная ошибка: купить инструмент со ступени +3
       и удивиться, что он не поехал. Следующий шаг всегда один — закрыть
       текущую ступень.</p>
+  </section>
+
+  <section>
+    <div class="shead"><span class="n">Что дальше</span>
+      <h2>Что бесплатно, что за деньги</h2></div>
+    <div class="rule">Граница простая: бесплатно — пока я не открываю ваши файлы.<br>
+      Разбор по баллу анкеты — разговор. Работа с вашими документами — уже замер.</div>
+    <div class="offer">
+      <div class="orow free"><b>Анкета</b><span class="price">бесплатно</span>
+        <span class="what">Балл и чек-лист по вашей ступени.</span>
+        <span class="term">Три минуты, здесь же</span></div>
+      <div class="orow free"><b>Разбор</b><span class="price">бесплатно</span>
+        <span class="what">Сорок минут по вашему баллу: один первый шаг под ваши
+          процессы. Без документов и без презентаций.</span>
+        <span class="term">Первым десяти компаниям</span></div>
+      <div class="orow pay"><b>Замер</b><span class="price">150 / 250 / 450 тыс.</span>
+        <span class="what">Один процесс на ваших документах. Интервью, разбор
+          реального пакета, отчёт с цифрой «как есть» — той, от которой потом
+          считается «стало».</span>
+        <span class="term">1–4 недели · цена по объёму процесса, а не по размеру
+          компании: считается по шести вопросам за пять минут</span></div>
+      <div class="orow pay"><b>Пилот</b><span class="price">считается после замера</span>
+        <span class="what">Агент закрытия на одном объекте, на ваших данных.
+          Фикс плюс бонус за метрику: цена привязана к цифре, которую замер
+          показал, и к тому, насколько её нужно сдвинуть.</span>
+        <span class="term">Отчётный период · не продаётся без замера</span></div>
+    </div>
+
+    <div class="aside">
+      <span class="side">Отдельно от линии</span>
+      <b>Комплект внедрения</b><span class="price">300 тыс.</span>
+      <span class="what">Методика по восьми ступеням, библиотека промптов
+        по отделам, регламент безопасности. Всё, что нужно, чтобы двигаться
+        своими силами.</span>
+      <span class="term">Берётся на любом шаге, в том числе вместо всего
+        остального · изготовление две недели</span>
+    </div>
+
+    <p class="bridge">Начать можно с любого шага — в том числе с нулевого,
+      он бесплатный и занимает три минуты.</p>
+
+    <p class="note">Почему замер платный: без цифры «как есть» нечем показать
+      «стало» и нечем обосновать цену следующего шага. Бесплатный аудит
+      обесценивает работу и притягивает тех, кто ничего не собирается менять.</p>
   </section>
 
   <div class="cta">
