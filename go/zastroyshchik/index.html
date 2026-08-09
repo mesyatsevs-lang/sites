@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<title>Открываю анкету…</title>
+<style>body{background:#0E1013;color:#ECEFF2;font-family:system-ui,-apple-system,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0}p{opacity:.65;font-size:15px}a{color:#FF6A13}</style>
+</head><body><p>Открываю анкету…</p>
+<script>
+(function(){var T="https://docs.google.com/forms/d/e/1FAIpQLSccogflVBpLP_0KBuEbaS5Ck8LLCSG6HeTpFpYYUpRtuRNPJg/viewform",R="zastroyshchik";
+var s=(new URLSearchParams(location.search)).get("s")||"direct";
+try{var f=new FormData();f.append("entry.1422663473",R);f.append("entry.976537240",s);
+var u="https://docs.google.com/forms/d/e/1FAIpQLSee1qe1l31JAKttTV1wsqtC-uvaTD8416jJGlswD570DlVq1w/formResponse";
+if(navigator.sendBeacon){navigator.sendBeacon(u,f);}else{fetch(u,{method:"POST",mode:"no-cors",body:f});}}catch(e){}
+setTimeout(function(){location.replace(T);},150);})();
+</script>
+<noscript><a href="https://docs.google.com/forms/d/e/1FAIpQLSccogflVBpLP_0KBuEbaS5Ck8LLCSG6HeTpFpYYUpRtuRNPJg/viewform">Открыть анкету</a></noscript>
+</body></html>
