@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Девять ролей стройки</title>
+<meta name="description" content="25 процессов, которые уже автоматизируются: что ломается и что делает агент.">
+<meta property="og:title" content="Девять ролей стройки">
+<meta property="og:description" content="25 процессов, которые уже автоматизируются: что ломается и что делает агент.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🗺️%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    --ground: #ECEEF2;
+    --surface: #F8F9FB;
+    --sunken: #E2E5EC;
+    --ink: #141821;
+    --muted: #565E70;
+    --faint: #868EA0;
+    --rule: #C6CBD8;
+    --accent: #8A5A0B;
+    --accent-soft: #F0E3CA;
+    --signal: #9C2B3C;
+    --shadow: rgba(20, 24, 33, .1);
+
+    --f-display: "Unbounded", "Trebuchet MS", sans-serif;
+    --f-body: "Onest", "Segoe UI", system-ui, sans-serif;
+    --f-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0F1218;
+      --surface: #181C25;
+      --sunken: #212632;
+      --ink: #E9ECF2;
+      --muted: #A2AAB9;
+      --faint: #737C8C;
+      --rule: #2F3644;
+      --accent: #E0A94A;
+      --accent-soft: #33260F;
+      --signal: #E0788A;
+      --shadow: rgba(0, 0, 0, .45);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #0F1218;
+    --surface: #181C25;
+    --sunken: #212632;
+    --ink: #E9ECF2;
+    --muted: #A2AAB9;
+    --faint: #737C8C;
+    --rule: #2F3644;
+    --accent: #E0A94A;
+    --accent-soft: #33260F;
+    --signal: #E0788A;
+    --shadow: rgba(0, 0, 0, .45);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 54rem; margin: 0 auto; padding: 0 1.25rem 5rem; }
+
+  .kicker {
+    font-family: var(--f-mono);
+    font-size: .72rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    line-height: 1.04;
+    letter-spacing: -.02em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .cover { padding: 3.5rem 0 2rem; display: flex; flex-direction: column; gap: 1.1rem; border-bottom: 2px solid var(--ink); }
+  .cover .sub { color: var(--muted); font-size: 1.1rem; max-width: 36rem; margin: 0; }
+
+  .facts { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; }
+  @media (min-width: 38rem) { .facts { grid-template-columns: repeat(3, 1fr); } }
+  .fact { background: var(--surface); padding: .9rem 1rem; }
+  .fact b { display: block; font-family: var(--f-display); font-size: 1.4rem; font-weight: 700; color: var(--accent); line-height: 1.1; }
+  .fact span { font-size: .84rem; color: var(--muted); }
+
+  section { padding-top: 2.6rem; }
+
+  h2 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin: 0 0 .2rem;
+    letter-spacing: -.01em;
+  }
+  h2 .rn {
+    font-family: var(--f-mono);
+    font-size: .72rem;
+    letter-spacing: .12em;
+    color: var(--faint);
+    display: block;
+    margin-bottom: .45rem;
+    font-weight: 500;
+  }
+
+  .who { color: var(--muted); font-size: .93rem; margin: 0 0 .9rem; max-width: 40rem; }
+
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: .93rem; }
+  th, td { text-align: left; padding: .65rem .9rem .65rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th {
+    font-family: var(--f-mono);
+    font-size: .68rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 500;
+    border-bottom-color: var(--ink);
+  }
+  td.p { font-weight: 600; width: 22%; }
+  td.b { color: var(--muted); width: 44%; }
+  td.a { width: 34%; }
+
+  .note {
+    border-left: 3px solid var(--accent);
+    background: var(--surface);
+    border-radius: 0 3px 3px 0;
+    padding: 1.1rem 1.25rem;
+    margin-top: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    max-width: 44rem;
+  }
+  .note .head { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+  .note p { margin: 0; }
+  .note.edge { border-left-color: var(--signal); }
+  .note.edge .head { color: var(--signal); }
+
+  .cta {
+    margin-top: 3rem;
+    border: 2px solid var(--ink);
+    border-radius: 3px;
+    background: var(--surface);
+    padding: 1.5rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+  }
+  .cta h2 { font-size: 1.4rem; }
+  .cta a { color: var(--accent); }
+  .cta p { margin: 0; }
+
+  footer {
+    margin-top: 2.5rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--f-mono);
+    font-size: .72rem;
+    color: var(--faint);
+    line-height: 1.7;
+  }
+
+  @media print {
+    body { background: #fff; color: #000; font-size: 11pt; }
+    .page { max-width: none; padding: 0; }
+    section { page-break-inside: avoid; padding-top: 1.4rem; }
+    .cta, .note { border-color: #888; }
+    table { min-width: 0; }
+    a { color: #000; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="cover">
+    <span class="kicker">карта отрасли · для собственников и топ-менеджеров</span>
+    <h1>Девять ролей стройки: 25 процессов, которые уже автоматизируются</h1>
+    <p class="sub">Не список возможностей ИИ, а разбор конкретных мест, где в
+      строительной компании уходят деньги и время. По каждой роли — что ломается,
+      во что это обходится и что здесь делает алгоритм.</p>
+    <div class="facts">
+      <div class="fact"><b>0,9 трлн ₽</b><span>годовой эффект ИИ для отрасли</span></div>
+      <div class="fact"><b>65 %</b><span>девелоперов уже пробуют</span></div>
+      <div class="fact"><b>&lt;10 %</b><span>довели до масштаба</span></div>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="rn">как читать</span>Три колонки вместо обещаний</h2>
+    <p class="who">В каждой роли одно и то же: процесс, что в нём ломается сегодня и что
+      делает агент. Никаких «повышения эффективности» — только операция, которую можно
+      проверить. Если в вашей компании процесс устроен иначе, значит эта строка не про вас,
+      и это тоже полезно знать.</p>
+  </section>
+
+  <section>
+    <h2><span class="rn">роль 1</span>Генеральный подрядчик</h2>
+    <p class="who">Деньги приходят через закрытие, а закрытие упирается в документы.
+      Три процесса, где ГП теряет больше всего.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Процесс</th><th>Что ломается</th><th>Что делает агент</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="p">Исполнительная документация</td>
+            <td class="b">Пакет возвращают на доработку по формальным замечаниям, оплата зависает на недели</td>
+            <td class="a">Проверяет комплектность до отправки: чего нет, что не сходится, что вернут</td>
+          </tr>
+          <tr>
+            <td class="p">Приёмка и закрытие</td>
+            <td class="b">Объёмы у прораба, ПТО и заказчика расходятся — закрытие идёт три-пять кругов</td>
+            <td class="a">Сводит три версии объёмов и показывает построчно, где именно расхождение</td>
+          </tr>
+          <tr>
+            <td class="p">Тендер</td>
+            <td class="b">Комплект неполон и противоречив, цена собирается на допущениях</td>
+            <td class="a">Разбирает текстовую часть комплекта: что не задано, что противоречит, где риск</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="rn">роль 2</span>Подрядчик по направлению</h2>
+    <p class="who">Самый короткий цикл в отрасли и самая тонкая маржа: здесь ошибка
+      в документах видна не через год, а через месяц.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Процесс</th><th>Что ломается</th><th>Что делает агент</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="p">Исполнительная документация</td>
+            <td class="b">Требования генподрядчика жёстче нормативных, а очередь на проверку — последняя</td>
+            <td class="a">Проверяет пакет под требования конкретного ГП, а не под норматив вообще</td>
+          </tr>
+          <tr>
+            <td class="p">Закрытие</td>
+            <td class="b">Объёмы срезают дважды, удержания складываются — на руки приходит заметно меньше договорного</td>
+            <td class="a">Разбирает, из чего сложилась разница между договором и полученным</td>
+          </tr>
+          <tr>
+            <td class="p">Фронт работ</td>
+            <td class="b">Простой по чужой вине не оформлен — значит его не было, и штраф остаётся на подрядчике</td>
+            <td class="a">Ведёт журнал простоев и неготовности фронта как доказательную базу</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="rn">роль 3</span>Технический заказчик</h2>
+    <p class="who">Роль, где сходятся все документы стройки. Проверить всё вручную
+      физически нельзя — и это признают обе стороны.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Процесс</th><th>Что ломается</th><th>Что делает агент</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="p">Проверка ИД</td>
+            <td class="b">Объём пакетов непроверяем вручную, проблема вскрывается на вводе объекта</td>
+            <td class="a">Сплошная проверка комплектности вместо выборочной</td>
+          </tr>
+          <tr>
+            <td class="p">Приёмка объёмов</td>
+            <td class="b">Проверить построчно дороже, чем принять на веру; завышения ловятся не всегда</td>
+            <td class="a">Сверяет заявленное с исполнительной документацией и подсвечивает расхождения</td>
+          </tr>
+          <tr>
+            <td class="p">Исходно-разрешительная документация</td>
+            <td class="b">Сроки техусловий внешние и неуправляемые, исходные данные приходят порциями</td>
+            <td class="a">Держит реестр сроков и предупреждает до того, как срок стал просрочкой</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="rn">роль 4</span>Девелопер</h2>
+    <p class="who">Здесь считают деньги проекта. Проблема не в отсутствии данных,
+      а в том, что они сводятся вручную и с опозданием на квартал.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Процесс</th><th>Что ломается</th><th>Что делает агент</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="p">Модель и стройка</td>
+            <td class="b">Финансовая модель делается один раз и стареет; факт сводится с ней вручную раз в квартал</td>
+            <td class="a">Подтягивает факт в модель и показывает отклонение, пока оно ещё управляемо</td>
+          </tr>
+          <tr>
+            <td class="p">Изменения</td>
+            <td class="b">Изменение проекта влияет на бюджет, но денежное последствие считают не сразу</td>
+            <td class="a">Переводит каждое изменение в сумму и срок в момент его появления</td>
+          </tr>
+          <tr>
+            <td class="p">Оценка площадки</td>
+            <td class="b">Ограничения вскрываются после сделки; проверка занимает недели, а решение нужно за дни</td>
+            <td class="a">Собирает ограничения и риски площадки в один отчёт до принятия решения</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="rn">роль 5</span>Генеральный проектировщик</h2>
+    <p class="who">Ошибка стоит дешевле всего именно здесь — и дороже всего у того,
+      кто по ней строит.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Процесс</th><th>Что ломается</th><th>Что делает агент</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="p">Выпуск РД</td>
+            <td class="b">Спецификации, ведомости и текст расходятся между разделами; платит за это подрядчик</td>
+            <td class="a">Сверяет табличные части разделов между собой и находит расхождения до выпуска</td>
+          </tr>
+          <tr>
+            <td class="p">Экспертиза</td>
+            <td class="b">Повторный круг съедает маржу договора; замечания распределяются вручную</td>
+            <td class="a">Разбирает замечания, адресует их разделам и ведёт статус ответов</td>
+          </tr>
+          <tr>
+            <td class="p">Изменения</td>
+            <td class="b">У подрядчика одна редакция, у техзаказчика другая — строят по устаревшей</td>
+            <td class="a">Следит за актуальностью редакции у всех получателей</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="rn">роль 6</span>Государственный заказчик</h2>
+    <p class="who">Покупает редко напрямую, но задаёт требования, по которым живут все
+      остальные. Здесь цена ошибки не в деньгах, а в персональной ответственности.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Процесс</th><th>Что ломается</th><th>Что делает агент</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="p">Приёмка</td>
+            <td class="b">Давление конца года: принять, чтобы оплатить, пока лимиты не сгорели — здесь и принимают невыполненное</td>
+            <td class="a">Даёт основание для отказа: что именно не подтверждено документами</td>
+          </tr>
+          <tr>
+            <td class="p">Проверки</td>
+            <td class="b">Проверка приходит через годы, материалы разбросаны, отвечает лично подписавший</td>
+            <td class="a">Собирает досье контракта так, чтобы его можно было предъявить целиком</td>
+          </tr>
+          <tr>
+            <td class="p">Закупочная документация</td>
+            <td class="b">Ошибка в техническом задании порождает жалобу, жалоба — сдвиг сроков бюджетного года</td>
+            <td class="a">Проверяет документацию на противоречия и типовые основания для жалоб</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="rn">роль 7</span>Проектные компании по направлениям</h2>
+    <p class="who">Больше половины переделок здесь вызвано не своей ошибкой, а изменением
+      в смежном разделе. Доказать это сегодня нечем.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Процесс</th><th>Что ломается</th><th>Что делает агент</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="p">Задание от смежников</td>
+            <td class="b">Задание приходит поздно или меняется после разработки; каскадную переделку никто не считает</td>
+            <td class="a">Фиксирует, когда пришло задание и что поменялось после — доказательная база</td>
+          </tr>
+          <tr>
+            <td class="p">Стыки разделов</td>
+            <td class="b">Задания смежникам идут россыпью, без реестра и сроков</td>
+            <td class="a">Ведёт реестр выданных заданий со сроками и статусом</td>
+          </tr>
+          <tr>
+            <td class="p">Экспертиза</td>
+            <td class="b">Замечание адресовано вашему разделу, а причина в смежном</td>
+            <td class="a">Разбирает замечания по разделам и находит источник, а не адресата</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="rn">роль 8</span>Эксплуатирующая компания</h2>
+    <p class="who">Единственная роль, которая видит результат стройки в работе — годами.
+      Не покупатель, а датчик: её данные показывают, кто и где строил плохо.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Процесс</th><th>Что ломается</th><th>Что делает агент</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="p">Приём документации</td>
+            <td class="b">Комплект собран под ввод объекта, а не под эксплуатацию; добрать уже не у кого</td>
+            <td class="a">Проверяет комплект под эксплуатационные требования до подписания передачи</td>
+          </tr>
+          <tr>
+            <td class="p">Паспортизация</td>
+            <td class="b">Через год никто не знает, что установлено и какие нужны запчасти</td>
+            <td class="a">Собирает паспорт объекта из исполнительной документации</td>
+          </tr>
+          <tr>
+            <td class="p">Гарантия</td>
+            <td class="b">Гарантийные сроки не отслеживаются, об истечении узнают постфактум</td>
+            <td class="a">Ведёт сроки по элементам и предупреждает заранее</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="rn">роль 9</span>Управляющая компания</h2>
+    <p class="who">Отдельный рынок со своей регуляторикой и своей экономикой. Общий
+      со стройкой процесс здесь один — и покупает его не УК.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Процесс</th><th>Что ломается</th><th>Что делает агент</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="p">Передача квартир</td>
+            <td class="b">Сотни актов приёмки за короткий срок, повторяемость дефектов не видна, жалобы уходят в публичное поле и бьют по продажам следующих очередей</td>
+            <td class="a">Разбирает замечания приёмки и показывает, какие дефекты повторяются и у какого подрядчика</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note edge">
+      <span class="head">граница рынка</span>
+      <p>Управляющая компания живёт по жилищному законодательству, зарабатывает
+        на тарифе, а не на проекте, и её рынок уже занят профильными системами.
+        Продукт, который «умеет и стройку, и ЖКХ», не убеждает ни одного покупателя
+        ни в одном из двух сегментов. Поэтому здесь — одна строка, а не три.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="rn">итог</span>Девять ролей — но не девять продуктов</h2>
+    <p class="who">Если разложить все двадцать пять процессов, окажется, что за ними
+      стоит одна и та же операция: <strong>сверка документов между собой и с фактом</strong>.
+      Меняются документы, требования и адресат, но не суть.</p>
+    <div class="note">
+      <span class="head">что это значит для вас</span>
+      <p><strong>Не нужно покупать девять решений.</strong> Нужно выбрать один процесс,
+        где расхождение обходится дороже всего, и закрыть его до конца — со владельцем
+        процесса, регламентом и замером «было — стало».</p>
+      <p>Компании, которые начинают сразу с нескольких направлений, попадают в те же
+        девяносто процентов, что не доходят до масштаба: пилотов много, ни один не вшит
+        в работу.</p>
+    </div>
+  </section>
+
+  <div class="cta">
+    <span class="kicker">с чего начать</span>
+    <h2>Узнать, на каком вы этапе, — 10 минут</h2>
+    <p>Обследование операционного контура: 20 вопросов, версии под роль. На выходе акт —
+      процент цифровой готовности, этап и замечания к устранению. Без регистрации,
+      результат остаётся у вас:
+      <a href="https://sergey-mesyatsev.tech/akt">пройти обследование</a>.</p>
+    <p>Пришлёте результат — разберём его за 40 минут, бесплатно: где именно теряются
+      деньги и что из этого закрывается в ближайший месяц.</p>
+    <p><strong>Сергей Месяцев</strong> · 25 лет в управлении строительством ·
+      Telegram <a href="https://t.me/sergeymesyatsev">@sergeymesyatsev</a> ·
+      <a href="mailto:mesyatsev.s@gmail.com">mesyatsev.s@gmail.com</a> ·
+      <a href="https://sergey-mesyatsev.tech/">sergey-mesyatsev.tech</a></p>
+  </div>
+
+  <footer>
+    Карта ролей составлена по собственной практике управления строительством и разбору
+    процессов девяти ролей отрасли. Отраслевые ориентиры: исследование «Яков и Партнёры»
+    по ИИ в строительстве, июнь 2026; исследования применения ИИ девелоперами 2025–2026.<br>
+    Процессы описаны как операции, а не как обещания результата: эффект в каждой компании
+    зависит от того, есть ли данные, владелец процесса и готовность вшить решение в регламент.
+  </footer>
+
+</div>
+</body>
+</html>

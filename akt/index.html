@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Акт цифровой готовности</title>
+<meta name="description" content="Обследование операционного контура строительной компании: 20 вопросов, 10 минут, результат остаётся у вас.">
+<meta property="og:title" content="Акт цифровой готовности">
+<meta property="og:description" content="Обследование операционного контура строительной компании: 20 вопросов, 10 минут, результат остаётся у вас.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📋%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    --ground: #ECEEF2; --surface: #F8F9FB; --sunken: #E2E5EC; --ink: #141821;
+    --muted: #565E70; --faint: #868EA0; --rule: #C6CBD8; --accent: #8A5A0B;
+    --accent-soft: #F0E3CA; --signal: #9C2B3C; --signal-soft: #F2D9DE;
+    --good: #2C6B4F; --good-soft: #D6E7DE; --shadow: rgba(20,24,33,.1);
+    --f-display: "Unbounded", "Trebuchet MS", sans-serif;
+    --f-body: "Onest", "Segoe UI", system-ui, sans-serif;
+    --f-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0F1218; --surface: #181C25; --sunken: #212632; --ink: #E9ECF2;
+      --muted: #A2AAB9; --faint: #737C8C; --rule: #2F3644; --accent: #E0A94A;
+      --accent-soft: #33260F; --signal: #E0788A; --signal-soft: #381C22;
+      --good: #77C79E; --good-soft: #16321F; --shadow: rgba(0,0,0,.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0F1218; --surface: #181C25; --sunken: #212632; --ink: #E9ECF2;
+    --muted: #A2AAB9; --faint: #737C8C; --rule: #2F3644; --accent: #E0A94A;
+    --accent-soft: #33260F; --signal: #E0788A; --signal-soft: #381C22;
+    --good: #77C79E; --good-soft: #16321F; --shadow: rgba(0,0,0,.45);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .page { max-width: 48rem; margin: 0 auto; padding: 0 1.25rem 5rem; }
+
+  .kicker { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.8rem, 5vw, 2.7rem); line-height: 1.04; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+  h2 { font-family: var(--f-display); font-weight: 600; font-size: 1.22rem; margin: 0; letter-spacing: -.01em; }
+  p { margin: 0; }
+
+  .intro { padding: 3.2rem 0 0; display: flex; flex-direction: column; gap: 1.05rem; }
+  .intro .sub { color: var(--muted); font-size: 1.06rem; }
+
+  .roles { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; margin-top: .4rem; }
+  @media (min-width: 40rem) { .roles { grid-template-columns: repeat(3, 1fr); } }
+  .role-btn { background: var(--surface); padding: 1.1rem 1.15rem; text-align: left; border: none; cursor: pointer; font-family: var(--f-body); color: var(--ink); display: flex; flex-direction: column; gap: .3rem; }
+  .role-btn:hover { background: var(--accent-soft); }
+  .role-btn b { font-size: 1.02rem; font-weight: 600; }
+  .role-btn span { font-size: .88rem; color: var(--muted); }
+  .role-btn.sel { background: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent); }
+
+  button.go { font-family: var(--f-body); font-size: 1rem; font-weight: 600; border-radius: 3px; border: 1px solid var(--ink); background: var(--ink); color: var(--ground); padding: .75rem 1.4rem; cursor: pointer; }
+  button.go:hover { opacity: .88; }
+  button.go[disabled] { opacity: .35; cursor: not-allowed; }
+  button.ghost { background: transparent; color: var(--ink); border-color: var(--rule); font-weight: 500; }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .facts { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; }
+  @media (min-width: 38rem) { .facts { grid-template-columns: repeat(3, 1fr); } }
+  .fact { background: var(--surface); padding: .9rem 1rem; }
+  .fact b { display: block; font-family: var(--f-display); font-size: 1.35rem; font-weight: 700; color: var(--accent); line-height: 1.1; }
+  .fact span { font-size: .85rem; color: var(--muted); }
+
+  .bar-wrap { position: sticky; top: 0; background: var(--ground); padding: 1rem 0 .8rem; z-index: 5; }
+  .bar-label { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: .72rem; color: var(--faint); margin-bottom: .45rem; letter-spacing: .06em; }
+  .bar { height: 4px; background: var(--sunken); border-radius: 2px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; background: var(--accent); transition: width .25s ease; }
+
+  .stepname { margin: 1.3rem 0 .2rem; }
+  .stepnote { color: var(--muted); font-size: .93rem; margin-bottom: .3rem; }
+
+  .q { border: 1px solid var(--rule); background: var(--surface); border-radius: 3px; padding: 1rem 1.15rem; margin-top: .85rem; }
+  .q .n { font-family: var(--f-mono); font-size: .71rem; color: var(--faint); display: block; margin-bottom: .3rem; }
+  .q .text { font-weight: 600; margin-bottom: .65rem; }
+  .opt { display: flex; gap: .65rem; align-items: flex-start; padding: .4rem 0; cursor: pointer; }
+  .opt input { margin: .35rem 0 0; accent-color: var(--accent); flex: none; }
+  .opt span { font-size: .95rem; }
+  .opt:hover span { color: var(--accent); }
+
+  .nav { display: flex; gap: .7rem; margin-top: 1.5rem; flex-wrap: wrap; align-items: center; }
+  .hint { font-family: var(--f-mono); font-size: .73rem; color: var(--faint); }
+
+  /* акт */
+  .akt { border: 2px solid var(--ink); border-radius: 3px; background: var(--surface); overflow: hidden; margin-top: 1rem; }
+  .akt-head { padding: 1.1rem 1.3rem; border-bottom: 1px solid var(--rule); display: flex; flex-wrap: wrap; gap: .35rem 1.5rem; align-items: baseline; }
+  .akt-head .ttl { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; letter-spacing: -.01em; }
+  .akt-head .meta { font-family: var(--f-mono); font-size: .72rem; color: var(--faint); }
+  .akt-body { padding: 1.2rem 1.3rem; display: flex; flex-direction: column; gap: 1rem; }
+  .akt-row { display: flex; flex-wrap: wrap; gap: .25rem 2rem; align-items: baseline; }
+  .akt-row .k { font-family: var(--f-mono); font-size: .71rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); min-width: 13rem; }
+  .akt-row .v { font-weight: 600; }
+  .akt-row .v.pct { font-family: var(--f-display); font-size: 2rem; color: var(--accent); line-height: 1; }
+  .akt-row .v.bad { color: var(--signal); }
+  .akt-foot { padding: .9rem 1.3rem; border-top: 1px solid var(--rule); background: var(--sunken); font-family: var(--f-mono); font-size: .71rem; color: var(--muted); }
+  ol.zam { margin: 0; padding-left: 1.2rem; font-size: .95rem; }
+  ol.zam li { margin-bottom: .55rem; }
+  ol.zam li::marker { color: var(--signal); font-family: var(--f-mono); font-size: .85rem; }
+  ol.zam .where { font-family: var(--f-mono); font-size: .72rem; color: var(--faint); display: block; margin-top: .15rem; }
+
+  figure { margin: 1.5rem 0 0; }
+  .plate { background: var(--surface); border: 1px solid var(--rule); border-radius: 3px; padding: 1.15rem; overflow-x: auto; }
+  .plate svg { display: block; width: 100%; min-width: 28rem; height: auto; color: var(--ink); }
+  figcaption { font-size: .86rem; color: var(--muted); margin-top: .6rem; }
+  .svg-t { font-family: var(--f-body); font-size: 13px; fill: currentColor; }
+  .svg-t-b { font-family: var(--f-body); font-size: 13.5px; font-weight: 600; fill: currentColor; }
+  .svg-m { font-family: var(--f-mono); font-size: 11px; fill: currentColor; opacity: .7; }
+  .svg-m-accent { font-family: var(--f-mono); font-size: 11px; fill: var(--accent); }
+  .svg-m-warn { font-family: var(--f-mono); font-size: 11px; fill: var(--signal); }
+  .svg-line { stroke: currentColor; stroke-width: 1.2; fill: none; opacity: .65; }
+
+  .note { border-left: 3px solid var(--accent); background: var(--surface); border-radius: 0 3px 3px 0; padding: 1rem 1.2rem; margin-top: 1.3rem; display: flex; flex-direction: column; gap: .5rem; }
+  .note .head { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+  .note p { font-size: .95rem; }
+  .note a { color: var(--accent); }
+
+  .actions { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1.2rem; }
+  .toast { font-family: var(--f-mono); font-size: .76rem; color: var(--accent); min-height: 1.2rem; margin-top: .5rem; }
+
+  footer { margin-top: 3rem; padding-top: 1.1rem; border-top: 1px solid var(--rule); font-family: var(--f-mono); font-size: .72rem; color: var(--faint); line-height: 1.7; }
+  .hidden { display: none; }
+  @media (prefers-reduced-motion: reduce) { .bar > i { transition: none; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ВВОД -->
+  <div id="s-intro" class="intro">
+    <span class="kicker">обследование операционного контура · 20 вопросов · 10 минут</span>
+    <h1>Акт цифровой готовности</h1>
+    <p class="sub">Цифровой контур строится как объект: снизу вверх, без перепрыгиваний.
+      Обследование показывает, на каком этапе вы стоите, какие скрытые работы не закрыты
+      и какой этап можно начинать, не переделывая потом.</p>
+
+    <div class="facts">
+      <div class="fact"><b>7 этапов</b><span>от изысканий до ввода в эксплуатацию</span></div>
+      <div class="fact"><b>3 скрытые</b><span>работы, которые нельзя закрыть задним числом</span></div>
+      <div class="fact"><b>0 ₽</b><span>без регистрации, результат остаётся у вас</span></div>
+    </div>
+
+    <h2 style="margin-top:1rem">Кто заполняет</h2>
+    <p style="color:var(--muted);font-size:.94rem">Восемь вопросов из двадцати зависят
+      от роли — процессы у всех разные, общими словами стройку не описать.</p>
+
+    <div class="roles">
+      <button class="role-btn" type="button" data-role="gp">
+        <b>Генеральный подрядчик</b>
+        <span>закрытие, ИД, объёмы, отношения с техзаказчиком</span>
+      </button>
+      <button class="role-btn" type="button" data-role="tz">
+        <b>Технический заказчик</b>
+        <span>управление проектом: семь контуров от поручений до архива</span>
+      </button>
+      <button class="role-btn" type="button" data-role="other">
+        <b>Другая роль</b>
+        <span>девелопер, проектировщик, подрядчик, эксплуатация</span>
+      </button>
+    </div>
+
+    <h2 style="margin-top:1rem">Ваша собственная оценка</h2>
+    <p style="color:var(--muted);font-size:.94rem">До вопросов — как вы сами
+      чувствуете уровень своей компании. Это не проверка: расхождение между ощущением
+      и обследованием обычно и есть самое полезное в акте.</p>
+
+    <div class="roles" id="selfbox">
+      <button class="role-btn" type="button" data-self="1"><b>Начальный</b><span>порядка мало, всё держится на людях</span></button>
+      <button class="role-btn" type="button" data-self="3"><b>Средний</b><span>процессы есть, соблюдаются через раз</span></button>
+      <button class="role-btn" type="button" data-self="5"><b>Высокий</b><span>работает системно, есть чем управлять</span></button>
+    </div>
+
+    <p style="font-size:.9rem;color:var(--muted)">Отвечайте про то, как есть сегодня,
+      а не как должно быть по регламенту: обследование имеет смысл только на честных
+      ответах и всё равно останется у вас.</p>
+
+    <div class="nav">
+      <button class="go" id="btn-start" type="button" disabled>Начать обследование</button>
+      <span class="hint" id="resume-hint">выберите роль</span>
+    </div>
+  </div>
+
+  <!-- ВОПРОСЫ -->
+  <div id="s-quiz" class="hidden">
+    <div class="bar-wrap">
+      <div class="bar-label"><span id="bar-step">Блок 1 из 4</span><span id="bar-count">0 из 20</span></div>
+      <div class="bar"><i id="bar-fill" style="width:0%"></i></div>
+    </div>
+    <h2 id="step-name" class="stepname"></h2>
+    <p id="step-note" class="stepnote"></p>
+    <div id="qbox"></div>
+    <div class="nav">
+      <button class="go ghost" id="btn-back" type="button">Назад</button>
+      <button class="go" id="btn-next" type="button" disabled>Далее</button>
+      <span class="hint" id="nav-hint">ответьте на все вопросы блока</span>
+    </div>
+  </div>
+
+  <!-- РЕЗУЛЬТАТ -->
+  <div id="s-result" class="hidden">
+    <span class="kicker">результат обследования</span>
+
+    <div class="akt">
+      <div class="akt-head">
+        <span class="ttl">Акт цифровой готовности</span>
+        <span class="meta" id="a-meta"></span>
+      </div>
+      <div class="akt-body">
+        <div class="akt-row"><span class="k">Роль</span><span class="v" id="a-role"></span></div>
+        <div class="akt-row"><span class="k">Готовность контура</span><span class="v pct" id="a-pct"></span></div>
+        <div class="akt-row"><span class="k">Самооценка и обследование</span><span class="v" id="a-self" style="font-weight:400"></span></div>
+        <div class="akt-row"><span class="k">Этап</span><span class="v" id="a-stage"></span></div>
+        <div class="akt-row"><span class="k">Скрытые работы</span><span class="v" id="a-hidden"></span></div>
+        <div>
+          <div class="akt-row" style="margin-bottom:.5rem"><span class="k">Замечания к устранению</span></div>
+          <ol class="zam" id="a-zam"></ol>
+        </div>
+        <div class="akt-row"><span class="k">Допустимый следующий этап</span><span class="v" id="a-next"></span></div>
+        <div class="akt-row"><span class="k">Если нарушить порядок</span><span class="v" id="a-risk" style="font-weight:400"></span></div>
+      </div>
+      <div class="akt-foot" id="a-foot"></div>
+    </div>
+
+    <figure>
+      <div class="plate" id="a-chart"></div>
+      <figcaption>Разрез контура. Заполненные этажи — то, что фактически построено;
+        штриховка ниже уровня земли — скрытые работы, которые нельзя освидетельствовать
+        задним числом.</figcaption>
+    </figure>
+
+    <div class="note">
+      <span class="head">что с этим делать</span>
+      <p id="a-do"></p>
+      <p style="color:var(--muted)">Пришлите акт — разберём за 40 минут бесплатно:
+        где именно теряется время и деньги и что из этого закрывается в ближайший месяц.</p>
+      <p><strong>Сергей Месяцев</strong> · 25 лет в управлении строительством ·
+        <a href="https://t.me/sergeymesyatsev">@sergeymesyatsev</a> ·
+        <a href="mailto:mesyatsev.s@gmail.com">mesyatsev.s@gmail.com</a> ·
+        <a href="https://sergey-mesyatsev.tech/">sergey-mesyatsev.tech</a></p>
+    </div>
+
+    <div class="actions">
+      <button class="go" id="btn-copy" type="button">Скопировать акт</button>
+      <button class="go ghost hidden" id="btn-save" type="button">Скачать акт</button>
+      <button class="go ghost" id="btn-again" type="button">Пройти заново</button>
+    </div>
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <footer>
+    Модель опирается на состав операций строительного контроля по ПП РФ № 468
+    от 21.06.2010 (ред. от 06.05.2024): входной контроль, последовательность
+    технологических операций, освидетельствование скрытых работ, приёмка этапов,
+    соответствие законченного объекта документации.<br>
+    Формулировки собраны из практики управления строительством. Состав и порядок
+    подготовки исполнительной документации — по пособию Р. Р. Абдрахмановой
+    «Исполнительная документация», выпуск 2, ООО «Дакон», 2026, с учётом
+    ГОСТ Р 70108-2025.<br>
+    Расчёт происходит в вашем браузере, ответы никуда не передаются.
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var ROLES = {
+    gp: "Генеральный подрядчик",
+    tz: "Технический заказчик",
+    other: "Другая роль"
+  };
+
+  // ---------- 12 общих вопросов, 3 блока по 4 ----------
+  var COMMON = [
+    { b: 0, t: "Где лежат закрывающие документы и исполнительная документация?", o: [
+      "У каждого своё: папки на участках, почта, мессенджеры",
+      "Общий диск, но правил именования и версий нет",
+      "Есть система, но параллельно живут локальные копии",
+      "Единое хранилище, версии под контролем" ] },
+    { b: 0, t: "Как идёт обмен документами с контрагентами?", o: [
+      "Бумага и почта",
+      "Сканы по почте, реестр ведётся вручную",
+      "ЭДО с частью контрагентов, остальные по почте",
+      "ЭДО со всеми, статусы видны в системе" ] },
+    { b: 0, t: "Можно ли поднять историю по завершённому объекту: переписку, замечания, решения?", o: [
+      "Практически нет",
+      "Неделя и опрос участников",
+      "День-два, если человек на месте",
+      "Минуты, всё в системе" ] },
+    { b: 0, t: "Операционные документы — журналы, акты, паспорта, сертификаты — заполняются когда?", o: [
+      "Задним числом, перед сдачей или проверкой",
+      "Частично по ходу, остальное восстанавливаем потом",
+      "По ходу работ, но на бумаге и с задержкой",
+      "По ходу и онлайн, задним числом не заполняются" ] },
+
+    { b: 1, t: "Назначены ли приказом ответственные за производство работ и за приёмку выполненных работ?", o: [
+      "Формально нет, работает как сложилось",
+      "Приказ есть, но фактически отвечает руководитель за всех",
+      "Назначены, но без полномочий останавливать процесс",
+      "Назначены, полномочия есть, все знают кто" ] },
+    { b: 1, t: "Что происходит после совещания или переговоров?", o: [
+      "Договорились устно, протокола нет",
+      "Протокол пишется, но задачи из него не расписываются",
+      "Протокол и задачи есть, исполнение контролируется не всегда",
+      "Протокол → задачи → исполнение, и это проверяется" ] },
+    { b: 1, t: "Как ведётся реестр замечаний и предписаний?", o: [
+      "По памяти и в переписке",
+      "Таблицей вручную, без сроков",
+      "Таблицей с ответственными и сроками",
+      "В системе, со статусом устранения и эскалацией" ] },
+    { b: 1, t: "Отставание от графика — когда становится видно?", o: [
+      "Когда уже сорвали срок",
+      "На совещании раз в месяц",
+      "Еженедельно, по отчётам участков",
+      "Практически сразу, отклонение подсвечивается" ] },
+
+    { b: 2, t: "Переводится ли отставание от графика в деньги — санкции, издержки, упущенное?", o: [
+      "Нет",
+      "Оцениваем на глаз, когда прижмёт",
+      "Считаем по конкретным случаям",
+      "Есть методика, считается регулярно" ] },
+    { b: 2, t: "Кто в компании пользуется ИИ-инструментами в работе?", o: [
+      "Никто",
+      "Один-два энтузиаста",
+      "Отдельные подразделения",
+      "Большинство подразделений регулярно" ] },
+    { b: 2, t: "Есть ли внутри человек, способный поддержать цифровое решение после запуска?", o: [
+      "Нет",
+      "Есть интерес, но нет времени",
+      "Есть ИТ-специалист общего профиля",
+      "Есть выделенный человек или команда" ] },
+    { b: 2, t: "Бюджет на автоматизацию и решение по нему?", o: [
+      "Бюджета нет, решение непонятно чьё",
+      "По факту из общего, решают коллегиально и долго",
+      "Небольшой бюджет, решает руководитель направления",
+      "Бюджет утверждён, решает первое лицо" ] }
+  ];
+
+  // ---------- 8 ролевых вопросов ----------
+  var ROLEQ = {
+    gp: [
+      { t: "Сколько кругов проходит пакет — ведомость объёмов, КС-2, КС-3, КС-6а и ИД — до подписания?", o: [
+        "Три и больше, каждый раз по-разному",
+        "Два-три, предсказуемо",
+        "Обычно два",
+        "С первого раза, замечания единичные" ] },
+      { t: "Как часто закрытие идёт под гарантийное письмо с незакрытыми замечаниями?", o: [
+        "Почти всегда, это норма работы",
+        "Часто, на большинстве этапов",
+        "Иногда, по отдельным видам работ",
+        "Редко: замечания устраняются до подписания" ] },
+      { t: "Что происходит с хвостом замечаний, принятых под гарантийные письма?", o: [
+        "Всплывает перед ЗОС, разбираем авралом",
+        "Помним, но реестра нет",
+        "Ведём реестр, закрываем по мере сил",
+        "Реестр со сроками, закрывается по графику" ] },
+      { t: "Сходятся ли объёмы у прораба, ПТО и техзаказчика без ручной сверки?", o: [
+        "Никогда, сверяем построчно каждый раз",
+        "Расходятся регулярно, ищем руками",
+        "Расходятся редко и по мелочи",
+        "Считаются из одного источника" ] },
+      { t: "Что чему соответствует: исполнительная делается под факт или факт подгоняется под исполнительную?", o: [
+        "Оформляем как удобно закрыть, факт подтягиваем следом",
+        "Бывает по-разному, зависит от объекта и сроков",
+        "Стараемся по факту, расхождения правим вручную",
+        "Только по факту: ИД отражает выполненное, а не наоборот" ] },
+      { t: "Есть ли у вас собранные требования конкретного заказчика — не норматив, а его правила приёмки?", o: [
+        "Нет, узнаём из замечаний",
+        "В головах у тех, кто с ним работал",
+        "Есть заметки, но не систематизированы",
+        "Есть реестр требований по каждому заказчику" ] },
+      { t: "От подписания до денег — сколько и видно ли, где застряло?", o: [
+        "Два месяца и больше, где стоит — непонятно",
+        "Полтора-два месяца, выясняем звонками",
+        "Около месяца, статус в целом виден",
+        "Месяц и меньше, статус виден в системе" ] },
+      { t: "Дефекты и переделки: считается ли их стоимость и предъявляется ли виновной стороне?", o: [
+        "Нет, списываем в общие потери",
+        "Считаем задним числом, предъявляем редко",
+        "Считаем и предъявляем по крупным случаям",
+        "Есть порядок: оценка, стоимость устранения, предъявление" ] }
+    ],
+    tz: [
+      { t: "Чего от вас ждёт застройщик: выполнения функции по договору или управления проектом?", o: [
+        "Выполняем функцию, решения принимает застройщик сам",
+        "Управляем частично, по отдельным вопросам",
+        "Управляем проектом, но решения по отклонениям идут долго",
+        "Управляем от лица застройщика, решения принимаются в темпе стройки" ] },
+      { t: "Контур поручений: что происходит с протоколом совещания дальше?", o: [
+        "Договорились устно, протокола нет",
+        "Протокол пишется, поручения из него не расписываются",
+        "Поручения с ответственными и сроками есть, просрочки ищем вручную",
+        "Статусы и напоминания в системе, просрочка видна сразу" ] },
+      { t: "Контур строительного контроля: замечания и предписания — с чем они живут?", o: [
+        "В письмах и мессенджерах, фото отдельно",
+        "Реестр есть, фотофиксация к замечанию не привязана",
+        "Замечание с фото и сроком, повторные отслеживаем вручную",
+        "Все атрибуты на месте, повторные и критичность считаются сами" ] },
+      { t: "Контур исполнительной документации: реестр ИД со статусами и ответственными есть?", o: [
+        "Реестра нет, комплектность выясняется при сдаче",
+        "Реестр в таблице, статус уточняется вручную",
+        "Реестр со статусами, ответственными и сроками передачи",
+        "Комплектность видна в любой момент, сроки согласования под контролем" ] },
+      { t: "Контур СОД: проектная и рабочая документация — версии, права, согласования?", o: [
+        "Почта и папки, версия угадывается по имени файла",
+        "Общее хранилище без прав доступа и версионности",
+        "СОД есть, но замечания к документам ведутся отдельно",
+        "Версии, права, согласования и замечания в одном контуре" ] },
+      { t: "Контур графика: календарный график и график ИРД — отклонения видны и связаны с задачами?", o: [
+        "График отдельно, факт отдельно, сверка раз в месяц",
+        "Сверяем еженедельно вручную",
+        "Отклонения видны, но не порождают поручений",
+        "Отклонение автоматически даёт задачу и попадает в отчёт" ] },
+      { t: "Контур отчётности застройщику: как собирается еженедельный отчёт?", o: [
+        "Вручную с нуля, уходит несколько дней",
+        "По шаблону, данные собираем руками",
+        "Большая часть данных подтягивается из системы",
+        "Формируется из системы, руками пишутся только выводы" ] },
+      { t: "Контур архива: что останется после ввода и как собирается пакет для ЗОС?", o: [
+        "Файлы у разных людей, часть теряется, ЗОС собираем авралом",
+        "Архив и пакет ЗОС собираются в конце, по чек-листу",
+        "Архив структурирован по ходу, выгрузка возможна",
+        "Выгрузка документов, реестров, фото и истории статусов в любой момент" ] }
+    ],
+    other: [
+      { t: "Ваш основной документ на выходе — как проверяется перед передачей?", o: [
+        "Никак, узнаём о проблемах от получателя",
+        "Смотрим выборочно",
+        "Проверяем по чек-листу",
+        "Проверяется сплошняком по формализованным требованиям" ] },
+      { t: "Требования получателя вашего результата где хранятся?", o: [
+        "Нигде, узнаём из замечаний",
+        "В головах у людей",
+        "Есть заметки, не систематизированы",
+        "Реестр требований по каждому контрагенту" ] },
+      { t: "Повторяющиеся замечания анализируются?", o: [
+        "Нет",
+        "Замечаем, но не считаем",
+        "Считаем по крупным",
+        "Ведём статистику и меняем процесс" ] },
+      { t: "Переделки по чужой вине — фиксируются документально?", o: [
+        "Нет, спорим на словах",
+        "Фиксируем письмами постфактум",
+        "Фиксируем сразу, но нерегулярно",
+        "Есть порядок фиксации и предъявления" ] },
+      { t: "Сроки, которые зависят от смежников, отслеживаются?", o: [
+        "Узнаём о срыве постфактум",
+        "Спрашиваем вручную",
+        "Есть реестр со сроками",
+        "Отслеживаются с предупреждением заранее" ] },
+      { t: "Изменения, приходящие извне, оцениваются в деньгах и сроках?", o: [
+        "Нет",
+        "Оцениваем на глаз",
+        "Считаем по крупным изменениям",
+        "Каждое изменение переводится в срок и сумму" ] },
+      { t: "Типовые решения и шаблоны у вас есть?", o: [
+        "Нет, каждый раз заново",
+        "У отдельных сотрудников свои",
+        "Есть, но обновляются редко",
+        "Есть, поддерживаются, ими пользуются" ] },
+      { t: "Результат прошлых проектов используется в новых?", o: [
+        "Практически нет",
+        "Если вспомнили и нашли",
+        "Частично, есть архив",
+        "Систематически, архив структурирован" ] }
+    ]
+  };
+
+  var BLOCKS = [
+    { name: "Документы и данные", note: "Из чего агент будет брать ответы. Пустое хранилище — пустой агент." },
+    { name: "Ответственные и порядок", note: "Кто отвечает по приказу и как устроена передача между участком, ПТО и приёмкой." },
+    { name: "Экономика и решения", note: "Переводится ли отставание в деньги и кто принимает решение о внедрении." },
+    { name: "Ваша роль", note: "Восемь вопросов про процессы, которые есть только у вас. У технического заказчика они собраны по семи обязательным контурам управления проектом." }
+  ];
+
+  var STAGES = [
+    { n: 0, name: "Изыскания", from: 0, to: 8,
+      d: "Неизвестно, что под нами: где документы, кто отвечает, что стоит дороже всего. Пока это не выяснено, любое внедрение — стройка без изысканий." },
+    { n: 1, name: "Нулевой цикл", from: 9, to: 24,
+      d: "Идёт расчистка: документы сводятся в одно место, появляются правила хранения. Ещё ничего не работает, но площадка готовится." },
+    { n: 2, name: "Фундамент", from: 25, to: 41,
+      d: "Собираются регламенты и требования — то, на что решение будет опираться. Самый недооценённый этап: его не видно, а держит всё." },
+    { n: 3, name: "Каркас", from: 42, to: 58,
+      d: "Процессы описаны, ответственные назначены приказом, передача между звеньями работает предсказуемо. Есть на чём разводить инженерию." },
+    { n: 4, name: "Инженерные системы", from: 59, to: 74,
+      d: "Можно ставить агентов на конкретные процессы: проверка комплектности, сверка объёмов, реестры и сроки." },
+    { n: 5, name: "Пусконаладка", from: 75, to: 89,
+      d: "Решения работают под присмотром: обкатка на живых пакетах, замер «было — стало», доводка по замечаниям." },
+    { n: 6, name: "Ввод в эксплуатацию", from: 90, to: 100,
+      d: "Работает без внешнего участия: вшито в регламент, есть ответственный, результат измеряется." }
+  ];
+
+  // скрытые работы: индексы вопросов (0-19)
+  var HIDDEN = [
+    { code: "СР-1", name: "Данные собраны", qs: [0, 1, 2],
+      fix: "Единое хранилище и правила версий не зафиксированы. Пока документы разнесены, решению не на чем основывать ответ." },
+    { code: "СР-2", name: "Ответственные назначены", qs: [4, 5, 6],
+      fix: "Ответственные за производство работ и за приёмку приказом не закреплены либо не имеют полномочий. Решение без ответственного не приживается." },
+    { code: "СР-3", name: "Требования и история зафиксированы", qs: [3, 6, 19],
+      fix: "Требования контрагентов, правила комплектности и история замечаний не сведены в реестр. Это то, чего нет в нормативе и что знает только ваша компания." }
+  ];
+
+  var LS = "akt-cifrovoy-gotovnosti-v1";
+  var role = null;
+  var selfLvl = null;
+  var answers = new Array(20).fill(null);
+  var step = 0;
+  var lastText = "";
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function qlist() {
+    var arr = COMMON.slice();
+    var rq = ROLEQ[role] || ROLEQ.other;
+    for (var i = 0; i < rq.length; i++) arr.push({ b: 3, t: rq[i].t, o: rq[i].o });
+    return arr;
+  }
+
+  function stepRange(st) {
+    if (st < 3) return [st * 4, st * 4 + 4];
+    return [12, 20];
+  }
+
+  function load() {
+    try {
+      var raw = window.localStorage.getItem(LS);
+      if (!raw) return false;
+      var d = JSON.parse(raw);
+      if (!d || !d.role || Object.prototype.toString.call(d.a) !== "[object Array]" || d.a.length !== 20) return false;
+      role = d.role; answers = d.a; selfLvl = d.self || null;
+      return answers.some(function (x) { return x !== null; });
+    } catch (e) { return false; }
+  }
+  function save() {
+    try { window.localStorage.setItem(LS, JSON.stringify({ role: role, a: answers, self: selfLvl })); } catch (e) {}
+  }
+  function answered() { return answers.filter(function (x) { return x !== null; }).length; }
+  function total() { var s = 0; for (var i = 0; i < 20; i++) s += answers[i] || 0; return s; }
+  function pct() { return Math.round(total() / 60 * 100); }
+  function stageOf(p) {
+    for (var i = 0; i < STAGES.length; i++) if (p <= STAGES[i].to) return STAGES[i];
+    return STAGES[STAGES.length - 1];
+  }
+  function hiddenState() {
+    return HIDDEN.map(function (h) {
+      var s = 0, n = 0;
+      h.qs.forEach(function (i) { if (answers[i] !== null) { s += answers[i]; n += 1; } });
+      var avg = n ? s / n : 0;
+      return { h: h, avg: avg, closed: avg >= 2 };
+    });
+  }
+
+  function show(w) {
+    $("s-intro").classList.toggle("hidden", w !== "intro");
+    $("s-quiz").classList.toggle("hidden", w !== "quiz");
+    $("s-result").classList.toggle("hidden", w !== "result");
+    window.scrollTo(0, 0);
+  }
+
+  function renderStep() {
+    var qs = qlist();
+    var r = stepRange(step);
+    var b = BLOCKS[step];
+    $("step-name").textContent = (step + 1) + ". " + (step === 3 ? b.name + " · " + ROLES[role] : b.name);
+    $("step-note").textContent = b.note;
+    $("bar-step").textContent = "Блок " + (step + 1) + " из 4";
+    $("btn-back").disabled = step === 0;
+    $("btn-next").textContent = step === 3 ? "Сформировать акт" : "Далее";
+
+    var host = $("qbox");
+    host.textContent = "";
+    for (var idx = r[0]; idx < r[1]; idx++) {
+      (function (i) {
+        var q = qs[i];
+        var box = document.createElement("div");
+        box.className = "q";
+        var n = document.createElement("span");
+        n.className = "n";
+        n.textContent = "Вопрос " + (i + 1);
+        box.appendChild(n);
+        var t = document.createElement("p");
+        t.className = "text";
+        t.textContent = q.t;
+        box.appendChild(t);
+        q.o.forEach(function (opt, oi) {
+          var l = document.createElement("label");
+          l.className = "opt";
+          var inp = document.createElement("input");
+          inp.type = "radio"; inp.name = "q" + i; inp.value = String(oi);
+          if (answers[i] === oi) inp.checked = true;
+          inp.addEventListener("change", function () { answers[i] = oi; save(); refresh(); });
+          var sp = document.createElement("span");
+          sp.textContent = opt;
+          l.appendChild(inp); l.appendChild(sp); box.appendChild(l);
+        });
+        host.appendChild(box);
+      })(idx);
+    }
+    refresh();
+  }
+
+  function refresh() {
+    var r = stepRange(step), ok = true;
+    for (var i = r[0]; i < r[1]; i++) if (answers[i] === null) { ok = false; break; }
+    $("btn-next").disabled = !ok;
+    $("nav-hint").textContent = ok ? "" : "ответьте на все вопросы блока";
+    $("bar-count").textContent = answered() + " из 20";
+    $("bar-fill").style.width = (answered() / 20 * 100) + "%";
+  }
+
+  function svgEl(n, a) {
+    var el = document.createElementNS("http://www.w3.org/2000/svg", n);
+    for (var k in a) if (Object.prototype.hasOwnProperty.call(a, k)) el.setAttribute(k, a[k]);
+    return el;
+  }
+
+  function renderChart(stage) {
+    var host = $("a-chart");
+    host.textContent = "";
+    var W = 620, rowH = 40, H = rowH * 7 + 46;
+    var svg = svgEl("svg", { viewBox: "0 0 " + W + " " + H, role: "img",
+      "aria-label": "Разрез цифрового контура: семь этажей снизу вверх, заполнены те, что пройдены" });
+
+    var defs = svgEl("defs", {});
+    var pat = svgEl("pattern", { id: "hh", width: "7", height: "7", patternTransform: "rotate(45)", patternUnits: "userSpaceOnUse" });
+    var ln = svgEl("line", { x1: "0", y1: "0", x2: "0", y2: "7", stroke: "var(--signal)", "stroke-width": "1.1", opacity: ".4" });
+    pat.appendChild(ln); defs.appendChild(pat); svg.appendChild(defs);
+
+    for (var i = 6; i >= 0; i--) {
+      var st = STAGES[i];
+      var y = 14 + (6 - i) * rowH;
+      var done = st.n <= stage.n;
+      var isHidden = st.n <= 2;
+      var rect = svgEl("rect", { x: 20, y: y, width: 250, height: 30, rx: 2,
+        fill: done ? (isHidden ? "var(--signal-soft)" : "var(--accent-soft)") : "var(--sunken)",
+        stroke: done ? (isHidden ? "var(--signal)" : "var(--accent)") : "var(--rule)" });
+      svg.appendChild(rect);
+      if (isHidden) svg.appendChild(svgEl("rect", { x: 20, y: y, width: 250, height: 30, rx: 2, fill: "url(#hh)", stroke: "none" }));
+
+      var lab = svgEl("text", { x: 286, y: y + 20, class: st.n === stage.n ? "svg-t-b" : "svg-t" });
+      lab.textContent = st.n + " · " + st.name;
+      svg.appendChild(lab);
+
+      if (st.n === stage.n) {
+        var here = svgEl("text", { x: 470, y: y + 20, class: "svg-m-accent" });
+        here.textContent = "← вы здесь";
+        svg.appendChild(here);
+      }
+      if (st.n === 3) {
+        svg.appendChild(svgEl("line", { x1: 20, y1: y + 36, x2: 600, y2: y + 36, class: "svg-line", "stroke-dasharray": "5 4" }));
+      }
+    }
+    var cap = svgEl("text", { x: 20, y: H - 8, class: "svg-m-warn" });
+    cap.textContent = "НИЖЕ ПУНКТИРА — СКРЫТЫЕ РАБОТЫ, ИХ НЕ ОСВИДЕТЕЛЬСТВОВАТЬ ЗАДНИМ ЧИСЛОМ";
+    svg.appendChild(cap);
+    host.appendChild(svg);
+  }
+
+  function buildZam(stage, hs) {
+    var out = [];
+    hs.forEach(function (x) {
+      if (!x.closed) out.push({ t: x.h.fix, w: x.h.code + " · " + x.h.name + " · не закрыта" });
+    });
+    var qs = qlist();
+    var order = [];
+    for (var i = 12; i < 20; i++) if (answers[i] !== null) order.push({ i: i, v: answers[i] });
+    order.sort(function (a, b) { return a.v - b.v || a.i - b.i; });
+    for (var k = 0; k < order.length && out.length < 5; k++) {
+      if (order[k].v <= 1) {
+        out.push({ t: qs[order[k].i].t.replace(/\?$/, "") + " — по этому пункту отставание наибольшее.",
+                   w: "роль · вопрос " + (order[k].i + 1) });
+      }
+    }
+    if (!out.length) out.push({ t: "Критичных замечаний не выявлено. Разумный следующий шаг — замер одного процесса, чтобы получить цифру «как есть» и планировать от неё.", w: "" });
+    return out;
+  }
+
+  function nextAllowed(stage, hs) {
+    var open = hs.filter(function (x) { return !x.closed; });
+    if (open.length) {
+      return "этап " + Math.min(stage.n + 1, 6) + " возможен только после закрытия " +
+        open.map(function (x) { return x.h.code; }).join(" и ");
+    }
+    return "этап " + Math.min(stage.n + 1, 6) + " · " + STAGES[Math.min(stage.n + 1, 6)].name;
+  }
+
+  function riskText(stage, hs) {
+    var open = hs.filter(function (x) { return !x.closed; }).length;
+    if (open === 0) return "порядок работ соблюдён, риск переделки минимальный";
+    if (stage.n <= 2) return "переход к агентам сейчас — стройка без фундамента: результат придётся вскрывать вместе с настройками";
+    return "незакрытые скрытые работы вскроются на пусконаладке, когда решение уже настроено под неполные данные";
+  }
+
+  function doText(stage) {
+    if (stage.n <= 1) return "Начните с наведения порядка в документах: это не про ИИ, но без этого ИИ не на чем работать. Разбор одного процесса покажет, с какого участка начинать.";
+    if (stage.n === 2) return "Фундамент частично есть — самое время замерить один процесс и получить цифру «как есть». Она же станет критерием приёмки для будущего решения.";
+    if (stage.n === 3) return "Каркас готов: можно ставить первый агент на конкретный процесс. Замер до этого обязателен — иначе нечем будет доказать результат.";
+    if (stage.n === 4) return "Инженерия пошла. Дальше — доведение до регламента и замер эффекта, иначе решение останется на энтузиастах.";
+    return "Вы в верхней части шкалы. Задача другая: удерживать качество и расширять контур на смежные процессы и роли.";
+  }
+
+  function actText(stage, p, hs, zam) {
+    var L = [];
+    L.push("АКТ ЦИФРОВОЙ ГОТОВНОСТИ");
+    L.push("");
+    L.push("Роль: " + ROLES[role]);
+    L.push("Готовность контура: " + p + " %");
+    L.push("Этап: " + stage.n + " · " + stage.name);
+    if (selfLvl !== null) L.push("Самооценка до обследования: уровень " + selfLvl);
+    L.push("");
+    L.push(stage.d);
+    L.push("");
+    L.push("СКРЫТЫЕ РАБОТЫ");
+    hs.forEach(function (x) {
+      L.push("- " + x.h.code + " " + x.h.name + ": " + (x.closed ? "закрыта" : "НЕ ЗАКРЫТА"));
+    });
+    L.push("");
+    L.push("ЗАМЕЧАНИЯ К УСТРАНЕНИЮ");
+    zam.forEach(function (z, i) { L.push((i + 1) + ". " + z.t + (z.w ? " [" + z.w + "]" : "")); });
+    L.push("");
+    L.push("Допустимый следующий этап: " + nextAllowed(stage, hs));
+    L.push("Если нарушить порядок: " + riskText(stage, hs));
+    L.push("");
+    L.push("Модель опирается на состав операций строительного контроля по ПП РФ № 468.");
+    L.push("Сергей Месяцев · @sergeymesyatsev · mesyatsev.s@gmail.com · sergey-mesyatsev.tech");
+    return L.join("\n");
+  }
+
+  function renderResult() {
+    var p = pct(), stage = stageOf(p), hs = hiddenState(), zam = buildZam(stage, hs);
+    $("a-meta").textContent = "форма ЦГ-1 · обследование операционного контура";
+    $("a-role").textContent = ROLES[role];
+    $("a-pct").textContent = p + " %";
+    $("a-stage").textContent = stage.n + " · " + stage.name;
+    var selfEl = $("a-self");
+    if (selfLvl === null) {
+      selfEl.textContent = "самооценка не указана";
+    } else {
+      var diff = selfLvl - stage.n;
+      if (diff >= 2) selfEl.textContent = "ощущение выше обследования на " + diff + " этапа — обычно так бывает, когда порядок держится на людях, а не на документах";
+      else if (diff <= -2) selfEl.textContent = "обследование выше самооценки на " + (-diff) + " этапа — у вас построено больше, чем кажется";
+      else selfEl.textContent = "ощущение совпадает с обследованием";
+    }
+    var openN = hs.filter(function (x) { return !x.closed; }).length;
+    var hEl = $("a-hidden");
+    hEl.textContent = openN ? ("не закрыто " + openN + " из 3 · " + hs.filter(function (x) { return !x.closed; }).map(function (x) { return x.h.code; }).join(", ")) : "закрыты все три";
+    hEl.className = openN ? "v bad" : "v";
+
+    var ol = $("a-zam");
+    ol.textContent = "";
+    zam.forEach(function (z) {
+      var li = document.createElement("li");
+      li.appendChild(document.createTextNode(z.t));
+      if (z.w) { var s = document.createElement("span"); s.className = "where"; s.textContent = z.w; li.appendChild(s); }
+      ol.appendChild(li);
+    });
+
+    $("a-next").textContent = nextAllowed(stage, hs);
+    $("a-risk").textContent = riskText(stage, hs);
+    $("a-foot").textContent = "Обследование провёл: Месяцев С. Б. · 25 лет в управлении строительством · самообследование по форме ЦГ-1";
+    $("a-do").textContent = doText(stage);
+
+    renderChart(stage);
+    lastText = actText(stage, p, hs, zam);
+    show("result");
+  }
+
+  function toast(m) {
+    $("toast").textContent = m;
+    window.setTimeout(function () { if ($("toast").textContent === m) $("toast").textContent = ""; }, 4000);
+  }
+
+  // события
+  Array.prototype.slice.call(document.querySelectorAll(".role-btn")).forEach(function (b) {
+    b.addEventListener("click", function () {
+      Array.prototype.slice.call(document.querySelectorAll(".role-btn")).forEach(function (x) { x.classList.remove("sel"); });
+      b.classList.add("sel");
+      role = b.getAttribute("data-role");
+      $("btn-start").disabled = false;
+      $("resume-hint").textContent = "";
+      save();
+    });
+  });
+
+  Array.prototype.slice.call(document.querySelectorAll("[data-self]")).forEach(function (b) {
+    b.addEventListener("click", function () {
+      Array.prototype.slice.call(document.querySelectorAll("[data-self]")).forEach(function (x) { x.classList.remove("sel"); });
+      b.classList.add("sel");
+      selfLvl = parseInt(b.getAttribute("data-self"), 10);
+      save();
+    });
+  });
+
+  $("btn-start").addEventListener("click", function () {
+    if (answered() === 20) { renderResult(); return; }
+    step = 0;
+    for (var s = 0; s < 4; s++) {
+      var r = stepRange(s), full = true;
+      for (var i = r[0]; i < r[1]; i++) if (answers[i] === null) { full = false; break; }
+      if (!full) { step = s; break; }
+    }
+    renderStep(); show("quiz");
+  });
+
+  $("btn-next").addEventListener("click", function () {
+    if (step === 3) { renderResult(); return; }
+    step += 1; renderStep(); show("quiz");
+  });
+  $("btn-back").addEventListener("click", function () {
+    if (step === 0) return;
+    step -= 1; renderStep(); show("quiz");
+  });
+  $("btn-again").addEventListener("click", function () {
+    answers = new Array(20).fill(null); step = 0; save(); show("intro");
+    $("resume-hint").textContent = role ? "" : "выберите роль";
+  });
+  $("btn-copy").addEventListener("click", function () {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(lastText).then(
+        function () { toast("Акт скопирован — можно отправлять"); },
+        function () { toast("Не удалось скопировать, выделите текст вручную"); });
+    } else { toast("Копирование недоступно в этом браузере"); }
+  });
+
+  if (window.claude && typeof window.claude.use === "function") {
+    window.claude.use("downloads").then(function (d) {
+      if (!d) return;
+      var b = $("btn-save");
+      b.classList.remove("hidden");
+      b.addEventListener("click", function () {
+        d.save({ filename: "akt-cifrovoy-gotovnosti.md", data: lastText }).then(
+          function () { toast("Акт сохранён"); },
+          function (e) { if (!e || e.code !== "declined") toast("Сохранить не удалось — воспользуйтесь копированием"); });
+      });
+    }, function () {});
+  }
+
+  if (load()) {
+    var n = answered();
+    Array.prototype.slice.call(document.querySelectorAll(".role-btn")).forEach(function (x) {
+      if (x.getAttribute("data-role") === role) x.classList.add("sel");
+    });
+    $("btn-start").disabled = false;
+    $("btn-start").textContent = n === 20 ? "Показать акт" : "Продолжить";
+    $("resume-hint").textContent = n === 20 ? "ответы сохранены" : "заполнено " + n + " из 20";
+  }
+})();
+</script>
+</body>
+</html>
