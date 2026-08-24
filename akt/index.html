@@ -858,9 +858,12 @@
   }
 
   // события
-  Array.prototype.slice.call(document.querySelectorAll(".role-btn")).forEach(function (b) {
+  // ⚠️ Селектор строго [data-role]: у кнопок самооценки тот же класс role-btn,
+  // и по ".role-btn" клик по самооценке затирал роль в null — человек уходил
+  // на общую версию вопросов, а в акте видел «Роль: undefined». Не расширять.
+  Array.prototype.slice.call(document.querySelectorAll("[data-role]")).forEach(function (b) {
     b.addEventListener("click", function () {
-      Array.prototype.slice.call(document.querySelectorAll(".role-btn")).forEach(function (x) { x.classList.remove("sel"); });
+      Array.prototype.slice.call(document.querySelectorAll("[data-role]")).forEach(function (x) { x.classList.remove("sel"); });
       b.classList.add("sel");
       role = b.getAttribute("data-role");
       $("btn-start").disabled = false;
@@ -967,9 +970,14 @@
 
   if (load()) {
     var n = answered();
-    Array.prototype.slice.call(document.querySelectorAll(".role-btn")).forEach(function (x) {
+    Array.prototype.slice.call(document.querySelectorAll("[data-role]")).forEach(function (x) {
       if (x.getAttribute("data-role") === role) x.classList.add("sel");
     });
+    if (selfLvl !== null) {
+      Array.prototype.slice.call(document.querySelectorAll("[data-self]")).forEach(function (x) {
+        if (parseInt(x.getAttribute("data-self"), 10) === selfLvl) x.classList.add("sel");
+      });
+    }
     $("btn-start").disabled = false;
     $("btn-start").textContent = n === 20 ? "Показать акт" : "Продолжить";
     $("resume-hint").textContent = n === 20 ? "ответы сохранены" : "заполнено " + n + " из 20";
