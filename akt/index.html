@@ -570,11 +570,26 @@
     return (window.matchMedia && window.matchMedia("(max-width: 40rem)").matches) ? "mobile" : "desktop";
   }
 
+  // Метка адресата из ссылки: /akt?k=komarov — чтобы прохождение было подписано,
+  // а не опознавалось по времени и телефону. Метка запоминается: человек может
+  // вернуться на страницу уже без параметра.
+  var MARKLS = "akt-k-v1";
+  function mark() {
+    try {
+      var m = (location.search.match(/[?&]k=([^&]{1,40})/) || [])[1];
+      if (m) {
+        m = decodeURIComponent(m).replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
+        if (m) { window.localStorage.setItem(MARKLS, m); return m; }
+      }
+      return window.localStorage.getItem(MARKLS) || "";
+    } catch (e) { return ""; }
+  }
+
   function ping(payload) {
     if (location.protocol === "file:") return Promise.resolve(false);
     payload.sid = getSid();
     payload.device = device();
-    payload.ref = (document.referrer || "").slice(0, 200);
+    payload.ref = mark() ? ("k:" + mark()) : (document.referrer || "").slice(0, 200);
     var body = JSON.stringify(payload);
     try {
       return window.fetch(HOOK, {
