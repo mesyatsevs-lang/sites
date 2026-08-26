@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Кто прав · пять споров со стройки</title>
+<meta name="description" content="Пять реальных споров со стройки: возврат пакета, переделки, версии рабочки, бумага против цифры, круги закрытия. Выберите сторону — узнайте, что сказал человек напротив.">
+<meta property="og:title" content="Кто прав · пять споров со стройки">
+<meta property="og:description" content="Пять реальных споров со стройки. Выберите сторону — узнайте, что сказал человек напротив.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%E2%9A%96%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    --ground: #ECEEF2; --surface: #F8F9FB; --sunken: #E2E5EC; --ink: #141821;
+    --muted: #565E70; --faint: #868EA0; --rule: #C6CBD8; --accent: #8A5A0B;
+    --accent-soft: #F0E3CA; --signal: #9C2B3C; --signal-soft: #F2D9DE;
+    --good: #2C6B4F; --good-soft: #D6E7DE; --shadow: rgba(20,24,33,.1);
+    --f-display: "Unbounded", "Trebuchet MS", sans-serif;
+    --f-body: "Onest", "Segoe UI", system-ui, sans-serif;
+    --f-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0F1218; --surface: #181C25; --sunken: #212632; --ink: #E9ECF2;
+      --muted: #A2AAB9; --faint: #737C8C; --rule: #2F3644; --accent: #E0A94A;
+      --accent-soft: #33260F; --signal: #E0788A; --signal-soft: #381C22;
+      --good: #77C79E; --good-soft: #16321F; --shadow: rgba(0,0,0,.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0F1218; --surface: #181C25; --sunken: #212632; --ink: #E9ECF2;
+    --muted: #A2AAB9; --faint: #737C8C; --rule: #2F3644; --accent: #E0A94A;
+    --accent-soft: #33260F; --signal: #E0788A; --signal-soft: #381C22;
+    --good: #77C79E; --good-soft: #16321F; --shadow: rgba(0,0,0,.45);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .page { max-width: 44rem; margin: 0 auto; padding: 0 1.25rem 4rem; }
+
+  .kicker { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.7rem, 5vw, 2.5rem); line-height: 1.05; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+
+  .intro { padding: 3rem 0 0; display: flex; flex-direction: column; gap: 1rem; }
+  .intro .sub { color: var(--muted); font-size: 1.05rem; text-wrap: pretty; }
+
+  button.go { font-family: var(--f-body); font-size: 1rem; font-weight: 600; border-radius: 3px; border: 1px solid var(--ink); background: var(--ink); color: var(--ground); padding: .75rem 1.4rem; cursor: pointer; }
+  button.go:hover { opacity: .88; }
+  button.ghost { background: transparent; color: var(--ink); border-color: var(--rule); font-weight: 500; }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .bar-wrap { position: sticky; top: 0; background: var(--ground); padding: .9rem 0 .7rem; z-index: 5; }
+  .bar-label { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: .72rem; color: var(--faint); margin-bottom: .4rem; letter-spacing: .06em; }
+  .bar { height: 4px; background: var(--sunken); border-radius: 2px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; background: var(--accent); transition: width .25s ease; }
+
+  .spor-t { font-family: var(--f-display); font-weight: 600; font-size: 1.2rem; margin: 1.1rem 0 .2rem; letter-spacing: -.01em; text-wrap: balance; }
+  .spor-n { color: var(--muted); font-size: .93rem; margin-bottom: 1rem; }
+
+  .side { border: 1px solid var(--rule); background: var(--surface); border-radius: 3px; padding: 1.05rem 1.15rem; margin-top: .8rem; cursor: pointer; display: block; width: 100%; text-align: left; font-family: var(--f-body); color: var(--ink); }
+  .side:hover { border-color: var(--accent); }
+  .side .who { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .09em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: .45rem; }
+  .side .say { font-size: 1rem; line-height: 1.5; }
+  .side.pick { box-shadow: inset 0 0 0 2px var(--accent); background: var(--accent-soft); }
+  .side.dim { opacity: .55; }
+  .side[disabled] { cursor: default; }
+
+  .razbor { border-left: 3px solid var(--good); background: var(--good-soft); border-radius: 0 3px 3px 0; padding: 1rem 1.2rem; margin-top: 1rem; display: flex; flex-direction: column; gap: .5rem; }
+  .razbor .h { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--good); }
+  .razbor p { font-size: .97rem; line-height: 1.55; }
+  .razbor .src { font-family: var(--f-mono); font-size: .73rem; color: var(--muted); }
+
+  .nav { display: flex; gap: .7rem; margin-top: 1.4rem; flex-wrap: wrap; align-items: center; }
+  .hint { font-family: var(--f-mono); font-size: .73rem; color: var(--faint); }
+
+  .final { border: 2px solid var(--ink); border-radius: 3px; background: var(--surface); overflow: hidden; margin-top: 1rem; }
+  .final-head { padding: 1.1rem 1.3rem; border-bottom: 1px solid var(--rule); }
+  .final-head .ttl { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; letter-spacing: -.01em; }
+  .final-body { padding: 1.2rem 1.3rem; display: flex; flex-direction: column; gap: 1rem; }
+  .tally { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .chip { font-family: var(--f-mono); font-size: .74rem; border: 1px solid var(--rule); border-radius: 2px; padding: .3rem .55rem; color: var(--muted); }
+  .chip b { color: var(--ink); font-weight: 600; }
+
+  .cta { border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 3px 3px 0; padding: 1.1rem 1.25rem; margin-top: 1.3rem; display: flex; flex-direction: column; gap: .6rem; }
+  .cta .h { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+  .cta .t { font-family: var(--f-display); font-weight: 600; font-size: 1.12rem; line-height: 1.35; text-wrap: balance; }
+  .cta p { font-size: .95rem; color: var(--muted); }
+
+  footer { margin-top: 2.6rem; padding-top: 1.1rem; border-top: 1px solid var(--rule); font-family: var(--f-mono); font-size: .72rem; color: var(--faint); line-height: 1.7; }
+  .hidden { display: none; }
+  @media (prefers-reduced-motion: reduce) { .bar > i { transition: none; } }
+</style>
+
+<div class="page">
+
+  <!-- ВВОД -->
+  <div id="s-intro" class="intro">
+    <span class="kicker">пять споров · одна минута</span>
+    <h1>Кто прав</h1>
+    <p class="sub">Пять реальных споров со стройки. В каждом — две позиции,
+      и обе звучат разумно. Выберите ту, что ближе, и посмотрите, что на самом деле
+      сказал человек с другой стороны стола.</p>
+    <p class="sub">Реплики не выдуманы: собраны из разговоров с генподрядчиками,
+      техзаказчиками, инженерами ПТО и ГИПами в августе 2026-го. Имена не называются,
+      роли — да.</p>
+    <div class="nav">
+      <button class="go" id="btn-start" type="button">Начать</button>
+      <span class="hint" id="resume-hint"></span>
+    </div>
+  </div>
+
+  <!-- СПОР -->
+  <div id="s-game" class="hidden">
+    <div class="bar-wrap">
+      <div class="bar-label"><span id="bar-n">Спор 1 из 5</span><span id="bar-c">выбрано 0</span></div>
+      <div class="bar"><i id="bar-fill" style="width:0%"></i></div>
+    </div>
+    <h2 class="spor-t" id="sp-title"></h2>
+    <p class="spor-n" id="sp-note"></p>
+    <button class="side" id="side-a" type="button">
+      <span class="who" id="who-a"></span>
+      <span class="say" id="say-a"></span>
+    </button>
+    <button class="side" id="side-b" type="button">
+      <span class="who" id="who-b"></span>
+      <span class="say" id="say-b"></span>
+    </button>
+    <div class="razbor hidden" id="razbor">
+      <span class="h">что за этим стоит</span>
+      <p id="raz-text"></p>
+      <span class="src" id="raz-src"></span>
+    </div>
+    <div class="nav">
+      <button class="go hidden" id="btn-next" type="button">Дальше</button>
+      <span class="hint" id="nav-hint">выберите сторону</span>
+    </div>
+  </div>
+
+  <!-- ФИНАЛ -->
+  <div id="s-final" class="hidden">
+    <span class="kicker">пять споров пройдено</span>
+    <div class="final">
+      <div class="final-head"><span class="ttl">Чью сторону вы занимали</span></div>
+      <div class="final-body">
+        <div class="tally" id="tally"></div>
+        <p id="final-text" style="font-size:.97rem;color:var(--muted)"></p>
+      </div>
+    </div>
+
+    <div class="cta">
+      <span class="h">что дальше</span>
+      <span class="t">Пять споров — это пять мест, где на объекте теряются деньги и время.</span>
+      <p>Только что вы смотрели на них со стороны. Своя картина целиком — двадцать
+        вопросов и десять минут: на каком этапе операционка вашей компании, какие
+        скрытые работы не закрыты и какой этап можно начинать, не переделывая потом.</p>
+      <div class="nav">
+        <button class="go" id="btn-akt" type="button">Посмотреть свою картину</button>
+        <button class="go ghost" id="btn-again" type="button">Пройти споры заново</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Реплики собраны из разговоров с практиками отрасли в августе 2026 года.
+    Имена не публикуются, указаны только роли. Выбор стороны не запоминается
+    и никуда не отправляется вместе с вашим именем — считается только,
+    какая сторона набирает больше голосов.<br>
+    Сергей Месяцев · 25 лет в управлении строительством ·
+    <a href="https://sergey-mesyatsev.tech/" style="color:var(--accent)">sergey-mesyatsev.tech</a>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var SPORY = [
+    {
+      t: "Пакет вернули. Кто виноват?",
+      n: "Исполнительная документация подана на приёмку и не принята.",
+      a: { who: "генеральный подрядчик", say: "Возвращают из-за придирок. Работы сделаны, объёмы верные — просто бумага не той формы, каждый раз новые требования." },
+      b: { who: "инженер ПТО у застройщика", say: "Возвращаем за неполный комплект. И за несоответствие: работы выполнены с отклонениями, например по отметкам, а ИД предоставили как в проекте." },
+      raz: "Первая причина про форму, вторая — про факт. И это разные вещи: пока спор идёт о бланках, вторая причина остаётся невидимой, хотя именно она означает, что документ описывает не то, что построено. Проверяется просто: возьмите последний возврат и посмотрите, о чём была половина замечаний — о форме или о содержании.",
+      src: "реплика справа — дословно, инженер ПТО застройщика, август 2026"
+    },
+    {
+      t: "Переделки на объекте. Откуда они берутся?",
+      n: "Работы выполнены, приняты не полностью, часть переделывается.",
+      a: { who: "линия и производство", say: "Проект кривой — вот и переделываем. Разделы между собой не сходятся, а отвечать нам." },
+      b: { who: "ГИП со стороны техзаказчика", say: "Бо́льшая часть замечаний действительно родом из проекта. При хорошем проекте сложно сделать плохо. Думаю, это половина проблем." },
+      raz: "Неожиданность здесь в том, кто это говорит. Вторую реплику произнёс главный инженер проекта — то есть человек, свидетельствующий против своей же стороны. Если половина проблем приходит из документации, то компания с идеальной операционкой всё равно будет получать замечания, и мерить надо не только стройку.",
+      src: "реплика справа — дословно, ГИП в структуре техзаказчика, август 2026"
+    },
+    {
+      t: "Построили по старой версии рабочки.",
+      n: "На площадке работали по чертежу, который уже был изменён.",
+      a: { who: "участок", say: "Нам не выдали новую версию. Пришла бы вовремя — построили бы как надо." },
+      b: { who: "ГИП со стороны техзаказчика", say: "Понимают чаще после несостыковок. По неактуальным версиям строят очень часто, потому что нет системы изъятия старой версии с заменой на новую." },
+      raz: "Спор выглядит как «выдали или не выдали», а узкое место в другом: новую версию можно разослать сколько угодно раз, но пока старая лежит на площадке и её никто не забрал, работать будут по ней. Процедура выдачи есть почти у всех. Процедуры изъятия — почти ни у кого.",
+      src: "реплика справа — дословно, ГИП в структуре техзаказчика, август 2026"
+    },
+    {
+      t: "Бумага против цифры.",
+      n: "Разговор о том, с чего начинать наведение порядка.",
+      a: { who: "распространённое мнение", say: "Пока не оцифруемся, порядка не будет. Нужна система, всё остальное — костыли." },
+      b: { who: "инженер ПТО у застройщика", say: "У нас с ИД каменный век: всё ведётся на бумаге, сшивается в папки и в архив, ИИ никто не пользуется. Замечания подрядчику пишем один раз — со второго раза принимаем." },
+      raz: "Это две разные оси, а не одна. Порядок — это регламент и дисциплина; цифра — это инструмент. Бумажная компания с работающим регламентом принимает пакет со второго захода, а «оцифрованная» без регламента будет гонять его четыре раза, только быстрее. Сначала процесс, потом система — иначе автоматизируется беспорядок.",
+      src: "реплика справа — дословно, инженер ПТО застройщика, август 2026"
+    },
+    {
+      t: "Сколько кругов закрытия — это норма?",
+      n: "Пакет уходит на приёмку, возвращается с замечаниями, уходит снова.",
+      a: { who: "распространённое мнение", say: "Три-четыре круга — это нормально. Всегда так было, отрасль так устроена." },
+      b: { who: "застройщик, приёмная сторона", say: "Замечания подрядчику пишутся обычно один раз. Если он всё устраняет — со второго раза всё принимается." },
+      raz: "Норма — два круга: один заход с замечаниями и приёмка. Три и больше — не свойство отрасли, а привычка конкретной пары «подрядчик — заказчик». Разница между двумя кругами и четырьмя измеряется неделями оборота и деньгами, которые лежат в неподписанных актах.",
+      src: "реплика справа — дословно, инженер ПТО застройщика, август 2026"
+    }
+  ];
+
+  var LS = "spor-v1";
+  var MARKLS = "akt-k-v1";
+  var SIDLS = "akt-sid-v1";
+  var HOOK = "https://sergey-mesyatsev.dev/webhook/akt";
+
+  var i = 0;
+  var picks = new Array(SPORY.length).fill(null);
+  var sid = "";
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function getSid() {
+    if (sid) return sid;
+    try {
+      sid = window.localStorage.getItem(SIDLS) || "";
+      if (!sid) {
+        if (window.crypto && window.crypto.randomUUID) sid = window.crypto.randomUUID();
+        else sid = "s" + Math.floor(Math.random() * 1e12).toString(36) + Date.now().toString(36);
+        window.localStorage.setItem(SIDLS, sid);
+      }
+    } catch (e) { if (!sid) sid = "no-storage"; }
+    return sid;
+  }
+
+  // Метка адресата: /spor?k=komarov — переносится дальше в Акт,
+  // чтобы человек остался опознанным на всём пути.
+  function mark() {
+    try {
+      var m = (location.search.match(/[?&]k=([^&]{1,40})/) || [])[1];
+      if (m) {
+        m = decodeURIComponent(m).replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
+        if (m) { window.localStorage.setItem(MARKLS, m); return m; }
+      }
+      return window.localStorage.getItem(MARKLS) || "";
+    } catch (e) { return ""; }
+  }
+
+  function device() {
+    return (window.matchMedia && window.matchMedia("(max-width: 40rem)").matches) ? "mobile" : "desktop";
+  }
+
+  function ping(payload) {
+    if (location.protocol === "file:") return;
+    payload.sid = getSid();
+    payload.device = device();
+    payload.ref = mark() ? ("k:" + mark()) : (document.referrer || "").slice(0, 200);
+    try {
+      window.fetch(HOOK, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        keepalive: true,
+        mode: "cors"
+      }).then(function () {}, function () {});
+    } catch (e) {}
+  }
+
+  function save() {
+    try { window.localStorage.setItem(LS, JSON.stringify({ i: i, p: picks })); } catch (e) {}
+  }
+  function load() {
+    try {
+      var d = JSON.parse(window.localStorage.getItem(LS) || "null");
+      if (!d || Object.prototype.toString.call(d.p) !== "[object Array]" || d.p.length !== SPORY.length) return false;
+      picks = d.p; i = d.i || 0;
+      return picks.some(function (x) { return x !== null; });
+    } catch (e) { return false; }
+  }
+  function done() { return picks.filter(function (x) { return x !== null; }).length; }
+
+  function show(w) {
+    $("s-intro").classList.toggle("hidden", w !== "intro");
+    $("s-game").classList.toggle("hidden", w !== "game");
+    $("s-final").classList.toggle("hidden", w !== "final");
+    window.scrollTo(0, 0);
+  }
+
+  function render() {
+    var s = SPORY[i];
+    $("bar-n").textContent = "Спор " + (i + 1) + " из " + SPORY.length;
+    $("bar-c").textContent = "выбрано " + done();
+    $("bar-fill").style.width = (done() / SPORY.length * 100) + "%";
+    $("sp-title").textContent = s.t;
+    $("sp-note").textContent = s.n;
+    $("who-a").textContent = s.a.who;
+    $("say-a").textContent = s.a.say;
+    $("who-b").textContent = s.b.who;
+    $("say-b").textContent = s.b.say;
+
+    var A = $("side-a"), B = $("side-b");
+    A.className = "side"; B.className = "side";
+    A.disabled = false; B.disabled = false;
+    $("razbor").classList.add("hidden");
+    $("btn-next").classList.add("hidden");
+    $("nav-hint").textContent = "выберите сторону";
+
+    if (picks[i] !== null) reveal(picks[i], true);
+  }
+
+  function reveal(pick, silent) {
+    var s = SPORY[i];
+    var A = $("side-a"), B = $("side-b");
+    A.disabled = true; B.disabled = true;
+    A.className = "side" + (pick === 0 ? " pick" : " dim");
+    B.className = "side" + (pick === 1 ? " pick" : " dim");
+    $("raz-text").textContent = s.raz;
+    $("raz-src").textContent = s.src;
+    $("razbor").classList.remove("hidden");
+    $("btn-next").classList.remove("hidden");
+    $("btn-next").textContent = (i === SPORY.length - 1) ? "Показать итог" : "Дальше";
+    $("nav-hint").textContent = "";
+    $("bar-c").textContent = "выбрано " + done();
+    $("bar-fill").style.width = (done() / SPORY.length * 100) + "%";
+    if (!silent) ping({ type: "spor", step: i + 1, answered: done(), role: "спор " + (i + 1) + " · сторона " + (pick === 0 ? "A" : "Б") });
+  }
+
+  function pickSide(n) {
+    if (picks[i] !== null) return;
+    picks[i] = n;
+    save();
+    reveal(n, false);
+  }
+
+  function final() {
+    var a = picks.filter(function (x) { return x === 0; }).length;
+    var b = picks.filter(function (x) { return x === 1; }).length;
+    var t = $("tally");
+    t.textContent = "";
+    var c1 = document.createElement("span");
+    c1.className = "chip";
+    c1.innerHTML = "сторона исполнителя: <b>" + a + "</b>";
+    var c2 = document.createElement("span");
+    c2.className = "chip";
+    c2.innerHTML = "сторона приёмки: <b>" + b + "</b>";
+    t.appendChild(c1); t.appendChild(c2);
+
+    var txt;
+    if (b >= 4) txt = "Вы почти везде встали на сторону приёмки — это взгляд человека, который принимает работу и отвечает за то, что подписал.";
+    else if (a >= 4) txt = "Вы почти везде встали на сторону исполнителя — это взгляд того, кто сдаёт работу и живёт с чужими требованиями.";
+    else txt = "Вы выбирали разные стороны — обычно так отвечают те, кто успел поработать и там, и там.";
+    $("final-text").textContent = txt + " Ни один из ответов не был правильным: в каждом споре обе реплики верны для своей стороны, а разница между ними и есть то место, где теряются недели.";
+
+    ping({ type: "spor", step: 9, answered: SPORY.length, role: "итог · исполнитель " + a + " приёмка " + b, answers: picks });
+    show("final");
+  }
+
+  $("btn-start").addEventListener("click", function () {
+    if (done() === SPORY.length) { final(); return; }
+    for (var k = 0; k < SPORY.length; k++) { if (picks[k] === null) { i = k; break; } }
+    render(); show("game");
+  });
+
+  $("side-a").addEventListener("click", function () { pickSide(0); });
+  $("side-b").addEventListener("click", function () { pickSide(1); });
+
+  $("btn-next").addEventListener("click", function () {
+    if (i === SPORY.length - 1) { final(); return; }
+    i += 1; save(); render();
+  });
+
+  $("btn-again").addEventListener("click", function () {
+    picks = new Array(SPORY.length).fill(null); i = 0; save(); show("intro");
+    $("resume-hint").textContent = "";
+  });
+
+  $("btn-akt").addEventListener("click", function () {
+    ping({ type: "spor", step: 10, answered: SPORY.length, role: "переход в акт" });
+    var m = mark();
+    window.location.href = "https://sergey-mesyatsev.tech/akt" + (m ? ("?k=" + encodeURIComponent(m)) : "");
+  });
+
+  ping({ type: "open", step: 0, answered: 0, role: "споры" });
+
+  if (load()) {
+    var n = done();
+    $("btn-start").textContent = n === SPORY.length ? "Показать итог" : "Продолжить";
+    $("resume-hint").textContent = n === SPORY.length ? "все споры пройдены" : ("выбрано " + n + " из " + SPORY.length);
+  }
+})();
+</script>
+</body>
+</html>
