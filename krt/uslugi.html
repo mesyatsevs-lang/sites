@@ -102,6 +102,17 @@
   .modal button.otmena{background:transparent;color:var(--ink3);border:1px solid var(--line2)}
   .modal .lovushka{position:absolute;left:-9999px}
   .modal .itog{font-size:14.5px;color:var(--signal)}
+  /* --- Контакты: живой человек рядом с формой и в подвале --- */
+  .svyaz{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:baseline;
+    margin-top:22px;padding-top:16px;border-top:1px solid var(--line);}
+  .svyaz .kto{font-size:14px;color:var(--ink2);}
+  .svyaz a{font-family:"JetBrains Mono",monospace;font-size:13.5px;color:var(--signal);
+    text-decoration:none;border-bottom:1px solid var(--line2);padding-bottom:1px;}
+  .svyaz a:hover{border-bottom-color:var(--signal)}
+  .modal .pryamo{margin-top:2px;font-size:13.5px;color:var(--ink3);}
+  .modal .pryamo a{color:var(--signal);text-decoration:none;
+    font-family:"JetBrains Mono",monospace;border-bottom:1px solid var(--line2);}
+  .modal .pryamo a:hover{border-bottom-color:var(--signal)}
 </style>
 
 <div class="wrap">
@@ -237,6 +248,12 @@
     </div>
   </section>
 
+    <div class="svyaz">
+    <span class="kto">Сергей Месяцев · вопросы по участку — напрямую:</span>
+    <a href="https://t.me/sergeymesyatsev">@sergeymesyatsev</a>
+    <a href="mailto:mesyatsev.s@gmail.com">mesyatsev.s@gmail.com</a>
+  </div>
+
   <footer>
     <span>Радар КРТ · Москва</span>
     <span>данные: torgi.gov.ru, категория 701PP · 81 площадок в базе</span>
@@ -247,6 +264,10 @@
   <form id="zform">
     <h4 id="ztitle">Оставить заявку</h4>
     <p>Отвечаем в тот же день. Если по вашему участку идёт срок — в первую очередь.</p>
+    <p class="pryamo">Не любите формы — напишите напрямую:
+      <a href="https://t.me/sergeymesyatsev">@sergeymesyatsev</a> ·
+      <a href="mailto:mesyatsev.s@gmail.com">mesyatsev.s@gmail.com</a></p>
+
     <div><label for="zkontakt">Телефон или почта</label>
       <input id="zkontakt" name="kontakt" required placeholder="+7 900 000-00-00"></div>
     <div><label for="zobekt">Кадастровый номер или адрес</label>
