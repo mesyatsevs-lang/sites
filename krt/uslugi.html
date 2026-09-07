@@ -69,9 +69,9 @@
   .net p{margin:0;font-size:14px;color:var(--ink3)}
 
   .kak{display:flex;flex-direction:column;counter-reset:s;}
-  .kak div{counter-increment:s;display:grid;grid-template-columns:40px minmax(0,1fr);
+  .kak > div{counter-increment:s;display:grid;grid-template-columns:40px minmax(0,1fr);
     gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:start;}
-  .kak div::before{content:counter(s);font-family:"Unbounded",sans-serif;font-size:22px;
+  .kak > div::before{content:counter(s);font-family:"Unbounded",sans-serif;font-size:22px;
     color:var(--signal);line-height:1}
   .kak b{display:block;font-size:16px;margin-bottom:2px}
   .kak span{color:var(--ink2);font-size:15px}
