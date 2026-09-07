@@ -2,6 +2,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B0E10">
 <meta name="description" content="Разбор договора о КРТ, сборка правообладателей, расчёт лота: что входит, сроки и цены.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Радар КРТ">
+<meta property="og:title" content="Что мы делаем и сколько это стоит">
+<meta property="og:description" content="Открытый прайс по стадиям площадки: разбор под таймер, позиция к комиссии, сборка правообладателей. И список того, чего мы не делаем.">
+<meta property="og:url" content="https://sergey-mesyatsev.tech/krt/uslugi.html">
+<meta property="og:image" content="https://sergey-mesyatsev.tech/krt/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="icon-192.png">
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -102,6 +111,20 @@
   .modal button.otmena{background:transparent;color:var(--ink3);border:1px solid var(--line2)}
   .modal .lovushka{position:absolute;left:-9999px}
   .modal .itog{font-size:14.5px;color:var(--signal)}
+  /* --- Условия работы: цена без рамки вызывает вопрос первой же строкой --- */
+  .ramka{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:1px;background:var(--line);border:1px solid var(--line);}
+  .ramka > div{background:var(--bg2);padding:16px 18px;}
+  .ramka b{display:block;font-size:14.5px;margin-bottom:3px;color:var(--ink)}
+  .ramka span{font-size:14px;color:var(--ink2);line-height:1.45}
+  .ramka .vazhno b{color:var(--money)}
+
+  /* --- Согласие на обработку данных: форма собирает телефон и почту --- */
+  .modal .soglasie{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;
+    color:var(--ink3);line-height:1.4;cursor:pointer}
+  .modal .soglasie input{width:16px;height:16px;flex:none;margin-top:1px;accent-color:var(--signal)}
+  .modal .soglasie a{color:var(--signal)}
+
   /* --- Контакты: живой человек рядом с формой и в подвале --- */
   .svyaz{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:baseline;
     margin-top:22px;padding-top:16px;border-top:1px solid var(--line);}
@@ -239,6 +262,21 @@
   </section>
 
   <section>
+    <h3>Условия работы</h3>
+    <p class="sub">Чтобы цена выше не висела в воздухе. Полностью — в договоре, здесь главное.</p>
+    <div class="ramka">
+      <div><b>Договор</b><span>Возмездное оказание услуг, глава 39 ГК РФ. NDA подписывается всегда.</span></div>
+      <div><b>Оплата</b><span>50 % предоплата, 50 % по факту. На стадии изъятия возможна оплата по результату.</span></div>
+      <div><b>Срок предложения</b><span>30 календарных дней с даты расчёта.</span></div>
+      <div class="vazhno"><b>Что гарантируется</b><span>Квалифицированное выполнение работы, а не исход. Решение принимает орган власти, и обещать его не может никто.</span></div>
+      <div><b>Ответственность</b><span>Ограничена суммой вознаграждения по договору.</span></div>
+      <div><b>Отказ заказчика</b><span>Вправе отказаться в любой момент, оплатив расходы и 30 % от невыполненной части.</span></div>
+      <div><b>За чей счёт прочее</b><span>Госпошлины, судебные издержки и сторонние эксперты — за счёт заказчика.</span></div>
+      <div><b>Цены</b><span>Для юридических лиц, без НДС. Территории свыше 5 га и сложная структура собственности — расчёт отдельно.</span></div>
+    </div>
+  </section>
+
+  <section>
     <h3>Как начинается работа</h3>
     <p class="sub">Дорогое покупают после дешёвого. Поэтому вход бесплатный и ни к чему не обязывает.</p>
     <div class="kak">
@@ -264,6 +302,9 @@
   <form id="zform">
     <h4 id="ztitle">Оставить заявку</h4>
     <p>Отвечаем в тот же день. Если по вашему участку идёт срок — в первую очередь.</p>
+    <label class="soglasie"><input type="checkbox" id="zsoglasie" required>
+      <span>Согласен на обработку персональных данных для ответа на обращение —
+      <a href="politika.html" target="_blank" rel="noopener">как мы с ними обращаемся</a></span></label>
     <p class="pryamo">Не любите формы — напишите напрямую:
       <a href="https://t.me/sergeymesyatsev">@sergeymesyatsev</a> ·
       <a href="mailto:mesyatsev.s@gmail.com">mesyatsev.s@gmail.com</a></p>

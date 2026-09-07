@@ -1,0 +1,100 @@
+<title>Как мы обращаемся с вашими данными · Радар КРТ</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0B0E10">
+<meta name="description" content="Что собирает форма на радаре КРТ, зачем, сколько это хранится и как отозвать согласие.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#0B0E10; --bg2:#11161A; --line:#243138; --line2:#2E3D46;
+    --ink:#EEF3F2; --ink2:#9FADAC; --ink3:#68787A; --signal:#5FD6B4;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);
+    font-family:"Golos Text","Segoe UI",system-ui,sans-serif;font-size:16px;line-height:1.62;
+    -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px 90px;}
+  a{color:var(--signal)}
+  .nav{display:flex;gap:20px;padding:22px 0 0;
+    font-family:"JetBrains Mono",monospace;font-size:12.5px;}
+  .nav a{text-decoration:none;border-bottom:1px solid var(--line2);padding-bottom:2px}
+  h1{font-family:"Unbounded",sans-serif;font-weight:500;
+    font-size:clamp(28px,4.4vw,42px);line-height:1.06;margin:44px 0 14px;letter-spacing:-.02em;}
+  .lede{color:var(--ink2);font-size:17px;margin:0 0 8px;}
+  .data{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--ink3);
+    letter-spacing:.06em;text-transform:uppercase;}
+  h2{font-family:"Unbounded",sans-serif;font-weight:500;font-size:20px;
+    margin:44px 0 12px;letter-spacing:-.01em;}
+  p{margin:0 0 12px;color:var(--ink2)}
+  ul{margin:0 0 12px;padding:0;list-style:none}
+  li{position:relative;padding-left:20px;margin-bottom:8px;color:var(--ink2)}
+  li::before{content:"—";position:absolute;left:0;color:var(--signal)}
+  li b{color:var(--ink);font-weight:500}
+  .kart{background:var(--bg2);border-left:2px solid var(--signal);padding:16px 18px;margin:0 0 12px}
+  .kart p:last-child{margin-bottom:0}
+  footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);
+    font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--ink3);
+    display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;}
+  footer a{text-decoration:none}
+</style>
+
+<div class="wrap">
+  <nav class="nav">
+    <a href="./">← Проверить участок</a>
+    <a href="uslugi.html">Услуги и цены</a>
+  </nav>
+
+  <h1>Как мы обращаемся с вашими данными</h1>
+  <p class="lede">Коротко и по делу: форма на сайте собирает контакт, чтобы вам ответить. Больше она ничего не делает.</p>
+  <p class="data">редакция от 07.09.2026</p>
+
+  <h2>Кто оператор</h2>
+  <p>Сергей Месяцев. Связь по любому вопросу об этих данных:
+     <a href="mailto:mesyatsev.s@gmail.com">mesyatsev.s@gmail.com</a> или
+     <a href="https://t.me/sergeymesyatsev">@sergeymesyatsev</a>.</p>
+
+  <h2>Что собирается</h2>
+  <p>Только то, что вы сами напишете в форме заявки, плюс одно техническое поле:</p>
+  <ul>
+    <li><b>Телефон или почта</b> — обязательное поле, иначе ответить некуда.</li>
+    <li><b>Кадастровый номер или адрес объекта</b> — если вы его указали.</li>
+    <li><b>Комментарий</b> — если вы его написали.</li>
+    <li><b>Название выбранной услуги</b> — чтобы понимать, о чём речь.</li>
+    <li><b>IP-адрес запроса</b> — записывается автоматически и нужен только для
+        защиты от потока заявок: с одного адреса заявка принимается не чаще
+        одного раза в двадцать секунд.</li>
+  </ul>
+  <div class="kart">
+    <p><b>Чего нет.</b> Проверка участка на радаре работает <b>без всякой формы</b>:
+    кадастровый номер, который вы вводите в поиск, никуда не отправляется —
+    вся база лежит в самой странице, и поиск идёт в вашем браузере. Счётчиков,
+    рекламных пикселей и внешней аналитики на страницах нет.</p>
+  </div>
+
+  <h2>Зачем</h2>
+  <p>Единственная цель — ответить на ваше обращение и, если вы этого захотите,
+     обсудить работу по вашему объекту. Рассылок мы не ведём, данные никому
+     не продаём и не передаём третьим лицам.</p>
+
+  <h2>Сколько хранится</h2>
+  <p>Заявка сохраняется в журнале обращений и дублируется сообщением в мессенджер,
+     чтобы не потеряться. Храним, пока идёт переписка по вашему вопросу, и
+     удаляем по вашей просьбе в любой момент — без объяснения причин.</p>
+
+  <h2>Как отозвать согласие</h2>
+  <p>Напишите на <a href="mailto:mesyatsev.s@gmail.com">mesyatsev.s@gmail.com</a> или в
+     <a href="https://t.me/sergeymesyatsev">@sergeymesyatsev</a> — «удалите мои данные».
+     Удалим запись из журнала и подтвердим. Ничего доказывать и объяснять не нужно.</p>
+
+  <h2>Изменения</h2>
+  <p>Если форма начнёт собирать что-то ещё, эта страница будет переписана
+     в тот же день. Дата редакции — вверху.</p>
+
+  <footer>
+    <span>Радар КРТ · Москва</span>
+    <span><a href="mailto:mesyatsev.s@gmail.com">mesyatsev.s@gmail.com</a> · <a href="https://t.me/sergeymesyatsev">@sergeymesyatsev</a></span>
+  </footer>
+</div>

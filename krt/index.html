@@ -2,6 +2,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B0E10">
 <meta name="description" content="Проверьте, попал ли ваш участок в границы КРТ Москвы: срок, последствия и что успеть.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Радар КРТ">
+<meta property="og:title" content="Ваш участок в границах КРТ?">
+<meta property="og:description" content="Проверка по кадастровому номеру за секунду, без регистрации. Если участок попал — сколько дней осталось и что вы теряете, если промолчите.">
+<meta property="og:url" content="https://sergey-mesyatsev.tech/krt/">
+<meta property="og:image" content="https://sergey-mesyatsev.tech/krt/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="icon-192.png">
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -237,6 +246,43 @@ if ('serviceWorker' in navigator) {
   footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);
     font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--ink3);
     display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;}
+  /* --- Календарь 45 дней: то же, что продаётся, показанное до оплаты --- */
+  .srok{display:grid;grid-template-columns:minmax(240px,.8fr) 1.2fr;gap:1px;
+    background:var(--line);border:1px solid var(--line);}
+  .srok > div{background:var(--bg2);padding:22px 24px;}
+  .srok label{display:block;font-family:"JetBrains Mono",monospace;font-size:11px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px;}
+  .srok input{width:100%;padding:12px 14px;background:var(--card);color:var(--ink);
+    border:1px solid var(--line2);border-bottom:2px solid var(--alarm);
+    font-family:"JetBrains Mono",monospace;font-size:17px;border-radius:2px;
+    color-scheme:dark;}
+  .srok input:focus{outline:none;border-color:var(--signal);border-bottom-color:var(--signal)}
+  .srok .ogovorka{margin-top:12px;font-size:12.5px;color:var(--ink3);line-height:1.45}
+  .srok .tablo{font-family:"Unbounded",sans-serif;font-size:clamp(30px,4.4vw,52px);
+    line-height:1;color:var(--alarm);margin-bottom:12px;}
+  .srok .tablo.idet{color:var(--ink)}
+  .srok .pod{color:var(--ink2);font-size:15px;margin-bottom:16px;max-width:52ch}
+  .srok .daty{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+  .srok .daty div{display:flex;justify-content:space-between;gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--line);font-size:14px;color:var(--ink3);}
+  .srok .daty b{color:var(--ink2);font-weight:500;font-family:"JetBrains Mono",monospace;}
+  @media (max-width:760px){ .srok{grid-template-columns:1fr} }
+
+  /* --- Соседи в границах: на этом стоит сборка правообладателей --- */
+  .sosedi{margin:16px 0 18px;padding:16px 18px;background:var(--bg2);
+    border-left:2px solid var(--money);}
+  .sosedi b{color:var(--money);font-weight:500}
+  .sosedi p{margin:0;font-size:15px;color:var(--ink2)}
+
+  /* --- Устаревание данных: проверяемость держится на свежести --- */
+  .staro{color:var(--alarm);font-family:"JetBrains Mono",monospace;font-size:11.5px}
+
+  /* --- Согласие на обработку данных: форма собирает телефон и почту --- */
+  .modal .soglasie{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;
+    color:var(--ink3);line-height:1.4;cursor:pointer}
+  .modal .soglasie input{width:16px;height:16px;flex:none;margin-top:1px;accent-color:var(--signal)}
+  .modal .soglasie a{color:var(--signal)}
+
   /* --- Контакты: живой человек рядом с формой и в подвале --- */
   .svyaz{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:baseline;
     margin-top:22px;padding-top:16px;border-top:1px solid var(--line);}
@@ -258,7 +304,7 @@ if ('serviceWorker' in navigator) {
      Услуги и цены →</a>
   <div class="wrap" style="width:100%">
     <div class="hero-in">
-      <div class="kicker"><span class="pulse"></span> база на 2026-09-04 · Москва</div>
+      <div class="kicker"><span class="pulse"></span> база на 2026-09-04 · Москва <span id="ustarelo"></span></div>
       <h1>Ваш участок <em>в границах КРТ?</em></h1>
       <p>Проверьте за секунду по кадастровому номеру или адресу. Если участок попал — увидите, сколько дней осталось и что вы теряете, если промолчите.</p>
       <div class="find">
@@ -274,19 +320,40 @@ if ('serviceWorker' in navigator) {
 <div class="wrap">
 
   <section>
-    <div class="sh"><span>01</span><h2>Сейчас идёт приём заявок</h2></div>
+    <div class="sh"><span>01</span><h2>Пришло предложение? Посчитайте свой срок</h2></div>
+    <p class="sub">Сорок пять дней на согласие всех правообладателей считаются со дня, когда вы <b>получили</b> предложение заключить договор, — не со дня отправки и не с публикации решения (п. 4 ч. 7 ст. 66 ГрК).</p>
+    <div class="srok">
+      <div>
+        <label for="dpolucheno">Предложение получено</label>
+        <input type="date" id="dpolucheno">
+        <p class="ogovorka">Здесь ориентир по календарю. Последний день считайте по своим документам: дата вручения, выходные и порядок исчисления сроков могут его сдвинуть.</p>
+      </div>
+      <div>
+        <div class="tablo" id="stablo">—</div>
+        <p class="pod" id="spod">Поставьте дату, и увидите, сколько осталось.</p>
+        <div class="daty">
+          <div><span>Сорок пятый день</span><b id="sd45">—</b></div>
+          <div><span>Сегодня</span><b id="sdnes">—</b></div>
+          <div><span>Что должно быть в органе к этому дню</span><b>согласие всех</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh"><span>02</span><h2>Сейчас идёт приём заявок</h2></div>
     <p class="sub">Площадки, по которым решение принимается в эти дни. Счётчик считается от сегодняшней даты при каждом открытии.</p>
     <div class="cards" id="timers"></div>
   </section>
 
   <section>
-    <div class="sh"><span>02</span><h2>Что мы для вас сделаем</h2></div>
+    <div class="sh"><span>03</span><h2>Что мы для вас сделаем</h2></div>
     <p class="sub">Работа начинается с той же проверки, что наверху, — дальше зависит от того, на чьей вы стороне.</p>
     <div class="offers" id="offers"></div>
   </section>
 
   <section>
-    <div class="sh"><span>03</span><h2>Откуда данные</h2></div>
+    <div class="sh"><span>04</span><h2>Откуда данные</h2></div>
     <p class="sub">Всё собрано из открытых источников: официальная категория торгов «Комплексное развитие территорий», приложенные к лотам выписки ЕГРН и сведения о земельных участках, протоколы подведения итогов, повестки Градостроительно-земельной комиссии Москвы. Ничего закрытого, ничего купленного.</p>
     <div class="proof" id="proof"></div>
     <details class="all">
@@ -320,6 +387,9 @@ if ('serviceWorker' in navigator) {
   <form id="zform">
     <h3 id="ztitle">Оставить заявку</h3>
     <p>Отвечаем в тот же день. Если по вашему участку идёт срок — в первую очередь.</p>
+    <label class="soglasie"><input type="checkbox" id="zsoglasie" required>
+      <span>Согласен на обработку персональных данных для ответа на обращение —
+      <a href="politika.html" target="_blank" rel="noopener">как мы с ними обращаемся</a></span></label>
     <p class="pryamo">Не любите формы — напишите напрямую:
       <a href="https://t.me/sergeymesyatsev">@sergeymesyatsev</a> ·
       <a href="mailto:mesyatsev.s@gmail.com">mesyatsev.s@gmail.com</a></p>
@@ -445,6 +515,7 @@ function otvet(r) {
       ${srochno ? `<div><span class="n alarm">${d}</span><span class="l">дней до конца<br>приёма заявок</span></div>` : ''}
       <div><span class="n">${F(p.ga, 1)}</span><span class="l">га площадка<br>целиком</span></div>
       <div><span class="n">${F(p.uchastkov || 0)}</span><span class="l">участков<br>в границах</span></div>
+      ${p.zdaniy ? `<div><span class="n">${F(p.zdaniy)}</span><span class="l">зданий<br>в границах</span></div>` : ''}
       <div><span class="n money">${p.cena ? F(Math.round(p.cena / 1e6)) : '—'}</span><span class="l">млн стартовая<br>цена лота</span></div>
       <div><span class="n">${F(p.poetazhnaya)}</span><span class="l">м² застройки<br>по нормативам</span></div>
     </div>
@@ -453,8 +524,76 @@ function otvet(r) {
       <div><b>02</b><span>Выяснить, кто ещё в границах: согласие нужно от всех правообладателей сразу, и без соглашения между ними договор не заключат.</span></div>
       <div><b>03</b><span>Решить до конца срока: входить в проект, договариваться с застройщиком или готовиться к изъятию. После суда спорить можно будет только о размере компенсации.</span></div>
     </div>
-    <a class="cta" href="#" data-zayavka="Разбор под таймер">Разобрать мою ситуацию</a></div>`;
+    ${(p.uchastkov > 1 || p.zdaniy > 1) ? `<div class="sosedi"><p>В этих границах вы <b>не один</b>: ${F(p.uchastkov || 0)} участк${sklon(p.uchastkov, 'ов', '', 'а')}${p.zdaniy ? ` и ${F(p.zdaniy)} здани${sklon(p.zdaniy, 'й', 'е', 'я')}` : ''}. Договор заключают только при согласии <b>всех</b>, кому направлено предложение, и к согласию прикладывается соглашение между самими правообладателями (п. 4 ч. 7 ст. 66 ГрК). Один несогласный сосед останавливает всех — и это работает в обе стороны.</p></div>` : ''}
+    <a class="cta" href="#" data-zayavka="Разбор под таймер">Разобрать мою ситуацию</a>
+    ${(p.uchastkov > 1 || p.zdaniy > 1) ? `<a class="cta calm" href="#" data-zayavka="Сборка правообладателей">Собрать соседей</a>` : ''}
+    <a class="cta calm" href="#" data-zayavka="Мониторинг участка">Поставить на мониторинг</a></div>`;
 }
+
+/* Склонение по числу: 1 участок, 2 участка, 5 участков. */
+function sklon(n, mnogo, odin, malo) {
+  const a = Math.abs(n) % 100, b = a % 10;
+  if (a > 10 && a < 20) return mnogo;
+  if (b > 1 && b < 5) return malo;
+  if (b === 1) return odin;
+  return mnogo;
+}
+
+/* --- Календарь 45 дней. Считает то же, что продаётся в «разборе под таймер»,
+   но только по календарю: точный расчёт срока — работа, а не виджет. --- */
+(function () {
+  const SUTKI = 86400000;
+  const MES = ['января','февраля','марта','апреля','мая','июня','июля',
+               'августа','сентября','октября','ноября','декабря'];
+  const dat = (d) => d.getDate() + ' ' + MES[d.getMonth()] + ' ' + d.getFullYear();
+  const pole = $('dpolucheno'), tablo = $('stablo'), pod = $('spod');
+  if (!pole) return;
+  const segodnya = new Date(); segodnya.setHours(0, 0, 0, 0);
+  $('sdnes').textContent = dat(segodnya);
+
+  function schitat() {
+    if (!pole.value) {
+      tablo.textContent = '—'; tablo.className = 'tablo';
+      pod.textContent = 'Поставьте дату, и увидите, сколько осталось.';
+      $('sd45').textContent = '—';
+      return;
+    }
+    const ch = pole.value.split('-');
+    const start = new Date(+ch[0], +ch[1] - 1, +ch[2]);
+    const konec = new Date(start.getTime() + 45 * SUTKI);
+    const ost = Math.round((konec - segodnya) / SUTKI);
+    $('sd45').textContent = dat(konec);
+    if (ost > 0) {
+      tablo.textContent = ost + ' ' + sklon(ost, 'дней', 'день', 'дня');
+      tablo.className = ost > 14 ? 'tablo idet' : 'tablo';
+      pod.textContent = 'Столько осталось, чтобы собрать согласие всех правообладателей '
+        + 'и представить его в орган вместе с соглашением между вами.';
+    } else if (ost === 0) {
+      tablo.textContent = 'сегодня'; tablo.className = 'tablo';
+      pod.textContent = 'По календарю это последний день срока. Согласие всех должно быть в органе.';
+    } else {
+      tablo.textContent = '−' + Math.abs(ost) + ' ' + sklon(ost, 'дней', 'день', 'дня');
+      tablo.className = 'tablo';
+      pod.textContent = 'Срок по календарю истёк. Путь через договор по согласию закрыт: '
+        + 'дальше торги, оператор или самостоятельная реализация. Остаётся стадия изъятия — '
+        + 'и там спор идёт уже о размере компенсации.';
+    }
+  }
+  pole.addEventListener('input', schitat);
+  schitat();
+})();
+
+/* --- Свежесть базы: вся позиция держится на проверяемости, поэтому
+   протухшую дату страница называет сама, а не ждёт, пока заметит клиент. --- */
+(function () {
+  const el = $('ustarelo');
+  if (!el || !S || !S.sobrano) return;
+  const dney = Math.round((Date.now() - new Date(S.sobrano + 'T00:00:00')) / 86400000);
+  if (dney > 30) {
+    el.className = 'staro';
+    el.textContent = '· данным ' + dney + ' ' + sklon(dney, 'дней', 'день', 'дня') + ', нужна пересборка';
+  }
+})();
 
 $('go').addEventListener('click', () => otvet(naiti($('q').value)));
 $('q').addEventListener('keydown', e => { if (e.key === 'Enter') otvet(naiti($('q').value)); });
