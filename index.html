@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Сергей Месяцев - партнёр по стратегическому развитию девелоперских и строительных компаний</title>
+    <title>Сергей Месяцев — довожу ИИ в стройке от пилота до денег</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta
       name="description"
-      content="Сергей Месяцев - партнёр по стратегическому развитию девелоперских и строительных компаний: контракты, упаковка услуг, земля и КРТ, Элемент Контроль, AI-автоматизация."
+      content="Сергей Месяцев — строитель и AI-Developer. 25 лет в управлении строительством. Разбираю, почему ИИ в стройке не пошёл, и довожу его от пилота до денег: замер процесса, комплект внедрения, пилот на ваших данных."
     >
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Сергей Месяцев">
+    <meta property="og:title" content="Сергей Месяцев — довожу ИИ в стройке от пилота до денег">
     <meta
       property="og:description"
-      content="Партнёр по стратегическому развитию девелоперских и строительных компаний: контракты, земля и КРТ, Элемент Контроль, AI-автоматизация."
+      content="Строитель и AI-Developer. Довожу ИИ в стройке от пилота до денег: замер процесса на ваших документах, комплект внедрения, пилот."
     >
     <meta property="og:url" content="https://sergey-mesyatsev.tech/">
     <meta property="og:image" content="https://sergey-mesyatsev.tech/og-preview.png">
@@ -311,6 +311,28 @@
         display: block;
         object-fit: cover;
         object-position: 52% 35%;
+      }
+
+      .hero-note {
+        max-width: 640px;
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .hero-figures {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 46px;
+      }
+
+      .metric-source {
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.4;
       }
 
       .hero-card-body {
@@ -982,8 +1004,14 @@
         }
 
         .metric-row,
+        .hero-figures,
         .routes {
           grid-template-columns: 1fr;
+        }
+
+        .hero-figures {
+          margin-top: 28px;
+          gap: 8px;
         }
 
         .metric-row {
@@ -1155,7 +1183,7 @@
             <span class="brand-mark">SM</span>
             <span>
               <span class="brand-name">Сергей Месяцев</span>
-              <span class="brand-role">стратегическое развитие девелоперских и строительных компаний</span>
+              <span class="brand-role">строитель и AI-Developer</span>
             </span>
           </a>
           <div class="nav-links" aria-label="Разделы сайта">
@@ -1175,20 +1203,24 @@
         <section class="hero" aria-labelledby="hero-title">
           <div class="container hero-grid">
             <div>
-              <p class="kicker">строительство · девелопмент · территории · digital</p>
-              <h1 id="hero-title">Сергей Месяцев</h1>
+              <p class="kicker">25 лет в управлении строительством</p>
+              <h1 id="hero-title">Довожу ИИ в стройке от пилота до денег</h1>
               <p class="hero-role">
-                Партнёр по стратегическому развитию девелоперских и строительных компаний.
+                Сергей Месяцев — строитель и AI-Developer.
               </p>
               <p class="hero-copy">
-                Помогаю девелоперским и строительным компаниям привлекать контракты, упаковывать услуги, запускать территориальные проекты,
-                развивать продукты и внедрять AI / BIM / digital-инструменты в строительный бизнес.
+                Две трети строительных компаний уже пробуют ИИ. <strong>До масштаба доходят меньше десяти процентов</strong> —
+                решение не вшивают в процесс и не считают эффект. Разбираюсь, почему у вас не пошло, и делаю, чтобы пошло.
+                Решения собираю сам.
               </p>
               <div class="hero-actions" aria-label="Основные действия">
-                <a class="button button-primary" href="#contact">Обсудить задачу</a>
-                <a class="button button-secondary" href="#directions">Смотреть направления</a>
+                <a class="button button-primary" href="/stupeni/">Пройти диагностику за три минуты</a>
+                <a class="button button-secondary" href="#contact">Обсудить задачу</a>
                 <a class="button button-secondary" href="sergey-mesyatsev-profile.pdf">Скачать PDF-профиль</a>
               </div>
+              <p class="hero-note">
+                Десять вопросов по вашей роли, около трёх минут. Балл — сразу после отправки.
+              </p>
             </div>
 
             <aside class="hero-card" aria-label="Профессиональный профиль">
@@ -1201,19 +1233,25 @@
                   height="1350"
                 >
               </div>
-              <div class="hero-card-body">
-                <div class="metric-row">
-                  <div class="metric">
-                    <strong>7</strong>
-                    <span>направлений для задач развития, контрактов, территорий и digital</span>
-                  </div>
-                  <div class="metric">
-                    <strong>4</strong>
-                    <span>практичных сценария, с которых удобно начать разговор</span>
-                  </div>
-                </div>
-              </div>
             </aside>
+          </div>
+
+          <div class="container">
+            <div class="hero-figures">
+              <div class="metric">
+                <strong>0,9 трлн ₽</strong>
+                <span>годовой эффект ИИ для строительной отрасли</span>
+              </div>
+              <div class="metric">
+                <strong>65 %</strong>
+                <span>девелоперов уже пробуют ИИ хотя бы в одной функции</span>
+              </div>
+              <div class="metric">
+                <strong>менее 10 %</strong>
+                <span>довели хотя бы один процесс до масштаба</span>
+              </div>
+            </div>
+            <p class="metric-source">Оценки «Яков и Партнёры» и отраслевых исследований 2025–2026.</p>
           </div>
         </section>
 
