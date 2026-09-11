@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Комплект внедрения ИИ для строительной компании — методика, промпты, регламент</title>
+<meta name="description" content="Всё, что нужно, чтобы внедрять ИИ своими силами: методика по восьми ступеням, 36 промптов по отделам, регламент безопасности, план на 90 дней. 300 тыс., две недели.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Комплект внедрения ИИ · 300 тыс. · две недели">
+<meta property="og:description" content="Не исполнитель, а методика. Компания получает готовый порядок работы и двигается сама.">
+<meta property="og:url" content="https://sergey-mesyatsev.tech/komplekt/">
+<style>
+  :root{
+    --bg:#0E1013; --surface:#171A1E; --ink:#ECEFF2; --muted:#7C848E;
+    --accent:#FF6A13; --line:rgba(255,255,255,.14);
+    --disp:'Bahnschrift SemiCondensed','Bahnschrift','DIN Next','Oswald','Arial Narrow',system-ui,sans-serif;
+    --body:'Bahnschrift','Segoe UI',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+       font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:clamp(16px,4vw,40px)}
+  .inner{border:1px solid var(--line);padding:clamp(20px,5vw,56px)}
+  h1,h2,h3{font-family:var(--disp);font-weight:700;margin:0;text-wrap:balance}
+  p{margin:0}
+  a{color:var(--accent)}
+
+  .eyebrow{font-family:var(--disp);font-size:.8rem;letter-spacing:.2em;
+           text-transform:uppercase;color:var(--muted)}
+  h1{font-size:clamp(2rem,6vw,3.6rem);line-height:1.02;text-transform:uppercase;
+     margin-top:22px;letter-spacing:-.01em}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lead{margin-top:24px;font-family:var(--disp);font-weight:700;
+        font-size:clamp(1.1rem,2.4vw,1.5rem);line-height:1.32;max-width:36ch}
+  .note{margin-top:18px;color:var(--muted);max-width:64ch}
+
+  .tag{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:26px;
+       font-family:var(--disp);font-weight:700;letter-spacing:.04em}
+  .tag b{color:var(--accent);font-size:1.5rem;line-height:1}
+  .tag span{display:flex;align-items:baseline;gap:10px}
+  .tag i{font-style:normal;color:var(--muted);font-size:.82rem;
+         letter-spacing:.16em;text-transform:uppercase}
+
+  section{margin-top:clamp(40px,6vw,72px)}
+  .shead{display:flex;align-items:baseline;gap:14px;padding-bottom:10px;
+         border-bottom:1px solid var(--line);margin-bottom:24px}
+  .shead h2{font-size:clamp(1.05rem,2.2vw,1.35rem);text-transform:uppercase}
+  .shead .n{font-family:var(--disp);color:var(--accent);font-size:.78rem;
+            letter-spacing:.16em;font-weight:700}
+
+  .rule{margin-top:4px;padding:20px 22px;border-left:5px solid var(--accent);
+        background:var(--surface);font-family:var(--disp);font-weight:700;
+        font-size:clamp(1rem,2vw,1.2rem);line-height:1.35}
+
+  .fit{display:grid;gap:14px}
+  @media(min-width:680px){.fit{grid-template-columns:1fr 1fr}}
+  .fit div{border:1px solid var(--line);background:var(--surface);padding:20px 22px}
+  .fit b{display:block;font-family:var(--disp);font-size:1.05rem;letter-spacing:.04em;
+         text-transform:uppercase}
+  .fit.yes b{color:var(--accent)}
+  .fit p{margin-top:10px;color:var(--muted);font-size:.95rem}
+
+  .items{display:flex;flex-direction:column;gap:1px;background:var(--line);
+         border:1px solid var(--line)}
+  .item{background:var(--surface);padding:18px 22px;display:grid;gap:4px 20px}
+  @media(min-width:680px){.item{grid-template-columns:minmax(0,1fr) 128px}}
+  .item b{font-family:var(--disp);font-size:1.08rem}
+  .item span{color:var(--muted);font-size:.95rem}
+  .item .vol{font-family:var(--disp);color:var(--accent);font-size:.85rem;
+             letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+  @media(min-width:680px){.item .vol{text-align:right;grid-row:span 2}}
+
+  .why{display:flex;flex-direction:column;gap:16px}
+  .why div{border-left:2px solid var(--line);padding-left:18px}
+  .why b{font-family:var(--disp);font-size:1.05rem;display:block}
+  .why p{margin-top:7px;color:var(--muted);max-width:62ch}
+
+  .steps{display:flex;flex-direction:column;gap:12px;counter-reset:s}
+  .stp{border:1px solid var(--line);background:var(--surface);padding:18px 22px;
+       display:flex;gap:18px;align-items:baseline}
+  .stp .num{font-family:var(--disp);font-weight:700;font-size:1.8rem;line-height:1;
+            color:var(--accent);min-width:1.3em;font-variant-numeric:tabular-nums}
+  .stp b{font-family:var(--disp);font-size:1.05rem;display:block}
+  .stp p{margin-top:6px;color:var(--muted);font-size:.95rem}
+
+  .zform{margin-top:26px;display:flex;flex-direction:column;gap:12px;max-width:640px}
+  .zrow{display:grid;gap:12px}
+  @media(min-width:620px){.zrow{grid-template-columns:1fr 1fr}}
+  .zform input,.zform textarea{
+    width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);
+    padding:13px 15px;font-family:var(--body);font-size:1rem;border-radius:0}
+  .zform textarea{min-height:110px;resize:vertical}
+  .zform input::placeholder,.zform textarea::placeholder{color:var(--muted)}
+  .zform input:focus,.zform textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .zform button{
+    align-self:flex-start;background:var(--accent);color:#0E1013;border:0;
+    font-family:var(--disp);font-weight:700;font-size:1.05rem;letter-spacing:.06em;
+    text-transform:uppercase;padding:14px 30px;cursor:pointer}
+  .zform button:hover{filter:brightness(1.08)}
+  .zform button:disabled{opacity:.6;cursor:default}
+  .zform button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  .zstatus{min-height:1.4em;font-size:.95rem;color:var(--muted)}
+  .zstatus.ok{color:#9ecfa8}
+  .zstatus.err{color:#e8a08a}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+  .more{margin-top:clamp(40px,6vw,72px);border:1px solid var(--line);
+        background:var(--surface);padding:22px 24px;color:var(--muted)}
+  .more b{display:block;font-family:var(--disp);color:var(--ink);font-size:1.05rem;
+          text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+
+  footer{margin-top:clamp(36px,5vw,60px);padding-top:20px;border-top:1px solid var(--line);
+         color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="inner">
+
+  <p class="eyebrow">Сергей Месяцев · Строитель и AI-Developer</p>
+  <h1>Комплект<br><em>внедрения</em></h1>
+  <p class="lead">Всё, что нужно компании, чтобы внедрять ИИ своими силами.</p>
+  <p class="note">Не исполнитель, а методика. Вы получаете готовый порядок работы,
+    библиотеку промптов под свои отделы и подписываемый регламент безопасности —
+    и дальше двигаетесь сами, без меня.</p>
+
+  <div class="tag">
+    <span><b>300 тыс.</b><i>цена</i></span>
+    <span><b>2 недели</b><i>изготовление</i></span>
+    <span><b>126 страниц</b><i>объём пакета</i></span>
+  </div>
+
+  <section>
+    <div class="shead"><span class="n">Кому</span>
+      <h2>Подходит не всем, и это честно</h2></div>
+    <div class="fit yes">
+      <div>
+        <b>Подходит</b>
+        <p>Компания уже пробовала ИИ, но бессистемно, и упирается не в технологию,
+          а в отсутствие правил. Внутри есть кому взяться за работу. Нужен порядок,
+          а не подрядчик.</p>
+      </div>
+      <div>
+        <b>Не подходит</b>
+        <p>Если нужно, чтобы сделали за вас. Комплект не заменяет замер и не
+          описывает агентов — это методика, а не услуга. Внедрять по ней
+          придётся своими руками.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead"><span class="n">Состав</span>
+      <h2>Что вы получаете</h2></div>
+    <div class="items">
+      <div class="item">
+        <b>Методика по восьми ступеням</b>
+        <span class="vol">≈800 строк</span>
+        <span>Признаки своей ступени, чек-листы готовности, работы на подъём,
+          сроки по трём размерам компании и что ломается при прыжке через ступень.</span>
+      </div>
+      <div class="item">
+        <b>Отраслевая вкладка под вашу роль</b>
+        <span class="vol">≈170 строк</span>
+        <span>Одна из девяти: девелопер, застройщик, технический заказчик,
+          генпроектный и проектный институт, генподряд, подряд, управляющая
+          и эксплуатирующая компания. Что закрывает ступень именно у вас,
+          примеры провала, три задачи для старта.</span>
+      </div>
+      <div class="item">
+        <b>Библиотека промптов</b>
+        <span class="vol">36 карточек</span>
+        <span>По восьми отделам: ПТО, снабжение, сметный, юристы, тендеры,
+          эксплуатация, секретариат, управление проектом. У каждой карточки
+          девять полей, пример входа и пример выхода на реальном обезличенном
+          документе.</span>
+      </div>
+      <div class="item">
+        <b>Регламент безопасности</b>
+        <span class="vol">≈600 строк</span>
+        <span>Шесть разделов, готов к подписи. Что нельзя отдавать нейросети
+          и почему, порядок обезличивания. Приложения: страница А4 на стену,
+          лист ознакомления сотрудников, журнал исключений.</span>
+      </div>
+      <div class="item">
+        <b>План на 90 дней</b>
+        <span class="vol">≈250 строк</span>
+        <span>Три спринта, ответственные, проверяемый результат и метрика
+          каждого месяца.</span>
+      </div>
+      <div class="item">
+        <b>Установочная сессия</b>
+        <span class="vol">60 минут</span>
+        <span>Разбор комплекта под вашу компанию плюс месяц письменных ответов
+          на вопросы, которые появятся по ходу.</span>
+      </div>
+    </div>
+    <p class="note">Передаётся в печатном виде: восемь PDF и таблица промптов
+      для копирования — методика, вкладка по роли, промпты, регламент с двумя
+      приложениями, план на 90 дней и опросный лист.</p>
+  </section>
+
+  <section>
+    <div class="shead"><span class="n">Почему две недели</span>
+      <h2>Ядро написано до вашей покупки</h2></div>
+    <div class="rule">За две недели можно адаптировать готовое.<br>
+      Сочинить три документа за две недели нельзя.</div>
+    <div class="why" style="margin-top:24px">
+      <div>
+        <b>Восемьдесят процентов — инвариант</b>
+        <p>Написано один раз и годится любой строительной компании.
+          Это и позволяет держать срок и цену.</p>
+      </div>
+      <div>
+        <b>Двадцать процентов — адаптация</b>
+        <p>Из девяти отраслевых веток берётся ваша, одиннадцать слотов
+          подстановки заполняются из опросного листа. Срок считается
+          от даты полного пакета исходных, а не от оплаты.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead"><span class="n">На чём стоит</span>
+      <h2>Примеры настоящие, нормы проверены</h2></div>
+    <div class="why">
+      <div>
+        <b>Документы из практики, а не выдуманные</b>
+        <p>Примеры взяты из архива пяти девелоперских и подрядных компаний
+          и обезличены. Демонстрация на выдуманной смете теряет инженера ПТО
+          за полминуты — поэтому синтетики в комплекте нет.</p>
+      </div>
+      <div>
+        <b>Нормативная опора названа поимённо</b>
+        <p>Состав и порядок ведения исполнительной документации — приказ
+          Минстроя России от 16.05.2023 № 344/пр в редакции от 23.06.2025.
+          Ведение в электронном виде — ГОСТ Р 70108-2025, действует
+          с 1 октября 2025 года. Оформление — СП 48.13330.2019.</p>
+      </div>
+      <div>
+        <b>Двадцать пять лет в управлении строительством</b>
+        <p>Методика собрана не из статей про ИИ, а из того, как на самом деле
+          возвращают пакет исполнительной, считают КС-2 и передают фронт работ.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="kupit">
+    <div class="shead"><span class="n">Как купить</span>
+      <h2>Четыре шага</h2></div>
+    <div class="steps">
+      <div class="stp"><span class="num">1</span><span>
+        <b>Оставляете заявку</b>
+        <p>Форма ниже. Напишите свою роль и что уже пробовали — это сократит
+          переписку.</p></span></div>
+      <div class="stp"><span class="num">2</span><span>
+        <b>Счёт и договор</b>
+        <p>Выставляю счёт от ИП Месяцев С. Б. Оплата по счёту, для юрлиц
+          и предпринимателей.</p></span></div>
+      <div class="stp"><span class="num">3</span><span>
+        <b>Опросный лист</b>
+        <p>Отправляю после оплаты. От даты полного пакета исходных считается
+          двухнедельный срок.</p></span></div>
+      <div class="stp"><span class="num">4</span><span>
+        <b>Передача и установочная сессия</b>
+        <p>Восемь PDF, таблица промптов, шестьдесят минут разбора
+          и месяц письменных ответов.</p></span></div>
+    </div>
+
+    <form class="zform" id="k-form" novalidate>
+      <div class="zrow">
+        <label class="sr" for="k-name">Как к вам обращаться</label>
+        <input id="k-name" name="name" type="text" placeholder="Как к вам обращаться" autocomplete="name">
+        <label class="sr" for="k-contact">Контакт для ответа</label>
+        <input id="k-contact" name="contact" type="text" placeholder="Телеграм, почта или телефон" autocomplete="email">
+      </div>
+      <label class="sr" for="k-message">Роль и задача</label>
+      <textarea id="k-message" name="message" placeholder="Ваша роль в проекте и что уже пробовали с ИИ"></textarea>
+      <button type="submit">Запросить счёт</button>
+      <p class="zstatus" id="k-status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <div class="more">
+    <b>Не уверены, что комплект — это про вас</b>
+    Пройдите анкету по своей роли: десять вопросов, около трёх минут, балл сразу
+    после отправки. По результату будет видно, на какой вы ступени и закрывает ли
+    её комплект. <a href="/stupeni/">Открыть лестницу из восьми ступеней →</a>
+  </div>
+
+  <footer>
+    Сергей Месяцев · Строитель и AI-Developer ·
+    <a href="https://sergey-mesyatsev.tech/">sergey-mesyatsev.tech</a><br>
+    Граница простая: бесплатно — пока я не открываю ваши файлы.
+  </footer>
+
+</div></div>
+
+<script>
+  /* Отправка заявки на комплект. Механизм тот же, что на главной (с 21.08.2026). */
+  (function () {
+    var f = document.getElementById('k-form');
+    if (!f) return;
+    var st = document.getElementById('k-status');
+    var btn = f.querySelector('button');
+    var ENDPOINT = 'https://sergey-mesyatsev.dev/webhook/zayavka';
+
+    function say(text, cls) {
+      st.className = 'zstatus' + (cls ? ' ' + cls : '');
+      st.textContent = text;
+    }
+
+    function byMail(name, contact, message) {
+      var body = 'Имя: ' + name + '\nКонтакт: ' + contact + '\n\nРоль и задача:\n' + message;
+      window.location.href =
+        'mailto:mesyatsev.s@gmail.com?subject=' + encodeURIComponent('Заявка на комплект внедрения') +
+        '&body=' + encodeURIComponent(body);
+    }
+
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = (f.elements['name'].value || '').trim() || 'Без имени';
+      var contact = (f.elements['contact'].value || '').trim();
+      var message = (f.elements['message'].value || '').trim();
+
+      if (!contact) {
+        say('Оставьте контакт — иначе не получится ответить.', 'err');
+        f.elements['contact'].focus();
+        return;
+      }
+      if (message.length < 10) {
+        say('Напишите хотя бы одной фразой, какая у вас роль.', 'err');
+        f.elements['message'].focus();
+        return;
+      }
+
+      btn.disabled = true;
+      say('Отправляю…');
+
+      var ctl = ('AbortController' in window) ? new AbortController() : null;
+      var timer = ctl ? setTimeout(function () { ctl.abort(); }, 10000) : null;
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name,
+          contact: contact,
+          message: message,
+          source: 'komplekt'
+        }),
+        signal: ctl ? ctl.signal : undefined
+      })
+        .then(function (r) {
+          if (!r.ok) throw new Error('status ' + r.status);
+          return r.json().catch(function () { return {}; });
+        })
+        .then(function () {
+          if (timer) clearTimeout(timer);
+          btn.disabled = false;
+          f.reset();
+          say('Заявка отправлена. Выставлю счёт и отвечу в течение дня.', 'ok');
+        })
+        .catch(function () {
+          if (timer) clearTimeout(timer);
+          btn.disabled = false;
+          say('Не получилось отправить — открываю письмо.', 'err');
+          byMail(name, contact, message);
+        });
+    });
+  })();
+</script>
+</body>
+</html>
