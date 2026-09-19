@@ -93,6 +93,12 @@
       font-weight: 800;
     }
 
+    .brand-mark img {
+      max-width: 34px;
+      max-height: 28px;
+      object-fit: contain;
+    }
+
     .brand h1 {
       margin: 0;
       font-family: var(--display);
@@ -254,6 +260,32 @@
       flex-wrap: wrap;
     }
 
+    .client-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 8px 18px rgba(23,32,38,.06);
+    }
+
+    .client-lockup img {
+      width: 150px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .client-lockup span {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
     .btn {
       min-height: 38px;
       padding: 9px 12px;
@@ -292,6 +324,62 @@
       border: 1px solid var(--line);
       border-radius: 8px;
       backdrop-filter: blur(10px);
+    }
+
+    .entry-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+
+    .entry-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 11px;
+      align-items: center;
+      min-height: 76px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.88);
+      box-shadow: 0 9px 20px rgba(23,32,38,.06);
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .entry-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--deep);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .entry-card:nth-child(2) .entry-icon {
+      background: var(--grid);
+    }
+
+    .entry-card:nth-child(3) .entry-icon {
+      background: var(--energy);
+    }
+
+    .entry-card strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 14px;
+    }
+
+    .entry-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
     }
 
     .field label {
@@ -1269,6 +1357,7 @@
       .topbar,
       .toolbar,
       .meeting-route,
+      .entry-strip,
       .two-col,
       .diagnostic-grid,
       .comparison,
@@ -1344,7 +1433,7 @@
   <div class="app">
     <aside class="sidebar" id="sidebar">
       <div class="brand">
-        <div class="brand-mark">AC</div>
+        <div class="brand-mark"><img src="assets/avensol/avensol-logo.png" alt="AVENSOL"></div>
         <div>
           <h1>AVENSOL<br>Control Room</h1>
           <p>Единая управленческая цепочка от тендера до денежного потока.</p>
@@ -1386,6 +1475,10 @@
 
       <section class="topbar">
         <div>
+          <div class="client-lockup">
+            <img src="assets/avensol/avensol-logo.png" alt="AVENSOL">
+            <span>EPC Management & Control System</span>
+          </div>
           <div class="title-kicker">Прототип стратегического дашборда</div>
           <h2>Единая цепочка управления: от тендерных допущений до решений по деньгам.</h2>
           <p>AVENSOL Control Room связывает тендер, бюджет, закупки, склад, площадку, акты, финансы и персонал в один управленческий пульт. ИИ работает верхним аналитическим слоем: объясняет отклонения, находит риски и готовит брифы для руководства.</p>
@@ -1434,6 +1527,21 @@
           </select>
         </div>
         <button class="btn primary" data-action="refresh">Обновить пульт</button>
+      </section>
+
+      <section class="entry-strip" aria-label="Входные точки экосистемы">
+        <a class="entry-card" href="assets/avensol/avensol_short_deck_ru.pdf" target="_blank" rel="noopener">
+          <span class="entry-icon">PDF</span>
+          <span><strong>Презентация компании</strong>Короткий рассказ на 10 слайдов перед показом пульта.</span>
+        </a>
+        <a class="entry-card" href="https://avensol.az/" target="_blank" rel="noopener">
+          <span class="entry-icon">WEB</span>
+          <span><strong>Сайт AVENSOL</strong>Публичный образ компании: smarter energy, EPC и инфраструктура.</span>
+        </a>
+        <button class="entry-card" data-detail="Личный кабинет сотрудника">
+          <span class="entry-icon">ID</span>
+          <span><strong>Личный кабинет</strong>Вход для сотрудников с доступом к проектам, задачам и отчётам.</span>
+        </button>
       </section>
 
       <section class="chain" id="chainNav" aria-label="Process chain navigation">
