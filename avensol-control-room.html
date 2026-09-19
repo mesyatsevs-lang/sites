@@ -814,6 +814,189 @@
       line-height: 1.35;
     }
 
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .story-card {
+      min-height: 176px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.92);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-card::after {
+      content: attr(data-code);
+      position: absolute;
+      right: 12px;
+      bottom: -6px;
+      color: rgba(13,110,136,.08);
+      font-family: var(--display);
+      font-size: 74px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .story-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.15;
+    }
+
+    .story-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .compare-col {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .compare-col h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .compare-col ul,
+    .owner-list,
+    .start-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .compare-col li,
+    .owner-list li,
+    .start-list li {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.35;
+    }
+
+    .compare-col.before li {
+      border-color: rgba(182,55,55,.22);
+      background: rgba(182,55,55,.06);
+    }
+
+    .compare-col.after li {
+      border-color: rgba(47,118,95,.22);
+      background: rgba(47,118,95,.07);
+    }
+
+    .owner-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .owner-hero {
+      min-height: 100%;
+      padding: 18px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--deep), #0d6e88);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .owner-hero h3 {
+      margin: 0 0 10px;
+      font-size: 26px;
+      line-height: 1.05;
+    }
+
+    .owner-hero p {
+      margin: 0;
+      color: rgba(255,255,255,.76);
+      line-height: 1.5;
+    }
+
+    .pilot-map {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .pilot-step {
+      min-height: 150px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      position: relative;
+    }
+
+    .pilot-step span {
+      display: inline-flex;
+      margin-bottom: 9px;
+      padding: 4px 8px;
+      border-radius: 7px;
+      color: #fff;
+      background: var(--grid);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .pilot-step strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .pilot-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .usecase-grid,
+    .start-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .usecase {
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .usecase strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .usecase p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
     .drawer {
       position: fixed;
       top: 0;
@@ -982,7 +1165,9 @@
       .topbar,
       .toolbar,
       .two-col,
-      .diagnostic-grid {
+      .diagnostic-grid,
+      .comparison,
+      .owner-board {
         grid-template-columns: 1fr;
       }
 
@@ -992,6 +1177,10 @@
 
       .kpi-grid,
       .pain-matrix,
+      .story-grid,
+      .pilot-map,
+      .usecase-grid,
+      .start-grid,
       .three-col {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -1000,6 +1189,10 @@
     @media (max-width: 660px) {
       .kpi-grid,
       .pain-matrix,
+      .story-grid,
+      .pilot-map,
+      .usecase-grid,
+      .start-grid,
       .three-col {
         grid-template-columns: 1fr;
       }
@@ -1048,16 +1241,22 @@
       <div class="nav-group-label">Управленческие слои</div>
       <nav class="nav" id="sideNav">
         <button class="active" data-view="cockpit"><span class="nav-icon">EX</span><span>Пульт руководства</span><span class="nav-code">01</span></button>
-        <button data-view="project"><span class="nav-icon">PR</span><span>Управление проектом</span><span class="nav-code">02</span></button>
-        <button data-view="tender"><span class="nav-icon">TN</span><span>Тендер → бюджет</span><span class="nav-code">03</span></button>
-        <button data-view="procurement"><span class="nav-icon">PO</span><span>Закупки</span><span class="nav-code">04</span></button>
-        <button data-view="warehouse"><span class="nav-icon">WH</span><span>Склад</span><span class="nav-code">05</span></button>
-        <button data-view="site"><span class="nav-icon">ST</span><span>Площадка</span><span class="nav-code">06</span></button>
-        <button data-view="hakedis"><span class="nav-icon">HK</span><span>Hakediş</span><span class="nav-code">07</span></button>
-        <button data-view="finance"><span class="nav-icon">FN</span><span>Финансы</span><span class="nav-code">08</span></button>
-        <button data-view="hr"><span class="nav-icon">HR</span><span>Персонал</span><span class="nav-code">09</span></button>
-        <button data-view="planning"><span class="nav-icon">PL</span><span>Планирование</span><span class="nav-code">10</span></button>
-        <button data-view="ai"><span class="nav-icon">AI</span><span>AI-слой управления</span><span class="nav-code">11</span></button>
+        <button data-view="losses"><span class="nav-icon">LS</span><span>Где теряется управление</span><span class="nav-code">02</span></button>
+        <button data-view="beforeafter"><span class="nav-icon">BA</span><span>До / после</span><span class="nav-code">03</span></button>
+        <button data-view="owner"><span class="nav-icon">OW</span><span>Вид собственника</span><span class="nav-code">04</span></button>
+        <button data-view="pilot"><span class="nav-icon">NP</span><span>Пилот Neftçala</span><span class="nav-code">05</span></button>
+        <button data-view="aiuse"><span class="nav-icon">UC</span><span>AI-сценарии</span><span class="nav-code">06</span></button>
+        <button data-view="startpack"><span class="nav-icon">ST</span><span>Данные для старта</span><span class="nav-code">07</span></button>
+        <button data-view="project"><span class="nav-icon">PR</span><span>Управление проектом</span><span class="nav-code">08</span></button>
+        <button data-view="tender"><span class="nav-icon">TN</span><span>Тендер → бюджет</span><span class="nav-code">09</span></button>
+        <button data-view="procurement"><span class="nav-icon">PO</span><span>Закупки</span><span class="nav-code">10</span></button>
+        <button data-view="warehouse"><span class="nav-icon">WH</span><span>Склад</span><span class="nav-code">11</span></button>
+        <button data-view="site"><span class="nav-icon">SA</span><span>Площадка</span><span class="nav-code">12</span></button>
+        <button data-view="hakedis"><span class="nav-icon">HK</span><span>Hakediş</span><span class="nav-code">13</span></button>
+        <button data-view="finance"><span class="nav-icon">FN</span><span>Финансы</span><span class="nav-code">14</span></button>
+        <button data-view="hr"><span class="nav-icon">HR</span><span>Персонал</span><span class="nav-code">15</span></button>
+        <button data-view="planning"><span class="nav-icon">PL</span><span>Планирование</span><span class="nav-code">16</span></button>
+        <button data-view="ai"><span class="nav-icon">AI</span><span>AI-слой управления</span><span class="nav-code">17</span></button>
       </nav>
 
       <div class="sidebar-note">
@@ -1120,6 +1319,12 @@
 
       <section class="chain" id="chainNav" aria-label="Process chain navigation">
         <button class="active" data-view="cockpit">Пульт</button>
+        <button data-view="losses">Боль</button>
+        <button data-view="beforeafter">До / после</button>
+        <button data-view="owner">Owner</button>
+        <button data-view="pilot">Пилот</button>
+        <button data-view="aiuse">AI use</button>
+        <button data-view="startpack">Старт</button>
         <button data-view="tender">Тендер</button>
         <button data-view="procurement">Закупки</button>
         <button data-view="warehouse">Склад</button>
@@ -1276,6 +1481,118 @@
               <div class="phase"><div><strong>Архитектура данных</strong><span>Единые WBS, cost codes, роли, approval matrix и структура отчётности.</span></div></div>
               <div class="phase"><div><strong>Пилотная цепочка</strong><span>Закупка → склад → расход → себестоимость → hakediş → cash сигнал.</span></div></div>
               <div class="phase"><div><strong>Масштабирование</strong><span>Перенос на остальные площадки, обучение и weekly management report.</span></div></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="losses">
+        <div class="grid three-col">
+          <article class="story-card" data-code="01"><h3>Tender считает одно</h3><p>BOQ, assumptions и final budget живут отдельно от площадки. После выигрыша тендер не всегда превращается в управляемые лимиты.</p></article>
+          <article class="story-card" data-code="02"><h3>Склад списывает по-своему</h3><p>Приход, transfer, выдача и фактический расход не всегда связаны с work item, cost code и hakediş.</p></article>
+          <article class="story-card" data-code="03"><h3>Финансы видят поздно</h3><p>Finance сталкивается с проблемой на этапе оплаты, когда обязательство уже создано и спорить поздно.</p></article>
+          <article class="story-card" data-code="04"><h3>HR не связан с себестоимостью</h3><p>Puantaj, overtime и субподрядный персонал должны попадать в проектную себестоимость, а не оставаться отдельной кадровой таблицей.</p></article>
+          <article class="story-card" data-code="05"><h3>Hakediş скрывает структуру</h3><p>Одна строка betonarme может прятать бетон, арматуру, опалубку, труд, технику, потери и тесты.</p></article>
+          <article class="story-card" data-code="06"><h3>Руководство принимает поздно</h3><p>Когда данные не соединены, решение появляется после потери маржи, а не до неё.</p></article>
+        </div>
+      </section>
+
+      <section class="view" id="beforeafter">
+        <div class="comparison">
+          <article class="compare-col before">
+            <h3>Сейчас: данные есть, но цепочка разорвана</h3>
+            <ul>
+              <li>Excel, WhatsApp и ручные отчёты конкурируют за статус “источника правды”.</li>
+              <li>Тендер, склад, финансы, HR и площадка работают разными кодами.</li>
+              <li>Открытые заказы и будущие платежи видны не как ранний риск, а как факт к оплате.</li>
+              <li>Маржа по hakediş выглядит формально, но реальная себестоимость не раскрыта.</li>
+              <li>AI можно купить, но без связанной модели данных он будет отвечать общими словами.</li>
+            </ul>
+          </article>
+          <article class="compare-col after">
+            <h3>После: единая EPC-цепочка принятия решений</h3>
+            <ul>
+              <li>Каждое действие связано с проектом, WBS, cost code, ответственным и датой.</li>
+              <li>Закупка, склад, расход, hakediş и финансы видны в одном управленческом контуре.</li>
+              <li>Finance контролирует обязательства до оплаты, а не после возникновения проблемы.</li>
+              <li>Руководитель видит маржу, cash need, критичные закупки и решения на сегодня.</li>
+              <li>AI объясняет отклонения, готовит вопросы и собирает owner brief на фактических данных.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="owner">
+        <div class="owner-board">
+          <article class="owner-hero">
+            <h3>Что видит собственник утром</h3>
+            <p>Не набор таблиц, а список решений: где деньги под риском, где срок сорвётся, какой объект требует вмешательства и какую оплату нельзя выпускать без проверки цепочки.</p>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><h3 class="panel-title">Owner decision board</h3><p class="panel-sub">Пять сигналов, которые должны появляться первыми.</p></div></div>
+            <div class="panel-body">
+              <ul class="owner-list">
+                <li><strong>1. Остановить оплату</strong><br>Нет связи: PO → поставка → склад → work item → бюджет.</li>
+                <li><strong>2. Ускорить закупку</strong><br>Материал нужен через 10 дней, а PO ещё не согласован.</li>
+                <li><strong>3. Проверить маржу</strong><br>Hakediş показывает плюс, real cost breakdown уже уводит позицию в минус.</li>
+                <li><strong>4. Усилить площадку</strong><br>Puantaj показывает переработки и нехватку роли на критичном участке.</li>
+                <li><strong>5. Принять решение по scope</strong><br>MEP-проект начинает расширяться в civil, но бюджетные лимиты не обновлены.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="pilot">
+        <div class="panel">
+          <div class="panel-head">
+            <div><h3 class="panel-title">Pilot Launch: Neftçala как тестовый контур</h3><p class="panel-sub">Пилот можно заменить другим объектом, но логика остаётся той же: один объект, одна цепочка, измеримый результат.</p></div>
+            <button class="mini-btn" data-detail="Пилот Neftçala">Открыть</button>
+          </div>
+          <div class="panel-body pilot-map">
+            <div class="pilot-step"><span>W1</span><strong>Диагностика</strong><p>Собрать BOQ, бюджет, складские движения, PO, puantaj и отчёты площадки.</p></div>
+            <div class="pilot-step"><span>W2</span><strong>Коды и роли</strong><p>Зафиксировать WBS, cost codes, ответственных и матрицу согласований.</p></div>
+            <div class="pilot-step"><span>W3</span><strong>Рабочая цепочка</strong><p>Провести процесс: заявка → PO → склад → расход → себестоимость.</p></div>
+            <div class="pilot-step"><span>W4</span><strong>Management signal</strong><p>Показать cash need, отклонения, решения и owner brief по пилоту.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="aiuse">
+        <div class="usecase-grid">
+          <article class="usecase"><strong>AI Tender Review</strong><p>Проверить BOQ, пропуски, странные цены, слабые assumptions и вопросы к заказчику.</p></article>
+          <article class="usecase"><strong>Price Anomaly Finder</strong><p>Найти позиции, где цена выбивается из базы, рынка или прошлых проектов.</p></article>
+          <article class="usecase"><strong>Cost Variance Explainer</strong><p>Объяснить, почему actual cost ушёл от final budget и кто должен действовать.</p></article>
+          <article class="usecase"><strong>Stock Risk AI</strong><p>Показать дефицит, пересорт, подозрительный расход и закупки, которые сорвут график.</p></article>
+          <article class="usecase"><strong>Finance Brief</strong><p>Собрать open PO, долги, счета, cash need и оплаты, которые требуют стоп-контроля.</p></article>
+          <article class="usecase"><strong>Meeting / Owner Brief</strong><p>Подготовить короткий бриф: что изменилось, где риск, какие решения нужны сегодня.</p></article>
+        </div>
+      </section>
+
+      <section class="view" id="startpack">
+        <div class="grid two-col">
+          <article class="panel">
+            <div class="panel-head"><div><h3 class="panel-title">Что запросить у AVENSOL для старта</h3><p class="panel-sub">Минимальный набор данных, чтобы перейти от красивой концепции к диагностике.</p></div></div>
+            <div class="panel-body">
+              <ul class="start-list">
+                <li>Список 4 площадок: название, локация, роль AVENSOL, ответственные.</li>
+                <li>BOQ / tender file и зафиксированные assumptions.</li>
+                <li>Final budget или текущий бюджет проекта.</li>
+                <li>Пример hakediş и breakdown по спорной позиции.</li>
+                <li>Warehouse movement: приход, выдача, transfer, остатки.</li>
+                <li>Purchase order / sipariş и цепочка согласования.</li>
+                <li>Puantaj, overtime, свой и субподрядный персонал.</li>
+                <li>Management report и список текущих программ / Excel / ERP.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><h3 class="panel-title">Что обещаем на первом этапе</h3><p class="panel-sub">Не “сразу внедрить всё”, а дать управляемый диагностический результат.</p></div></div>
+            <div class="panel-body roadmap">
+              <div class="phase"><div><strong>Current State Map</strong><span>Как реально идут данные между tender, saha, depo, finance и HR.</span></div></div>
+              <div class="phase"><div><strong>Data Gap Register</strong><span>Где теряются WBS, cost code, ответственный, дата, подтверждение и статус.</span></div></div>
+              <div class="phase"><div><strong>Pilot Blueprint</strong><span>Какой объект берём, какую цепочку запускаем и какой KPI доказывает пользу.</span></div></div>
+              <div class="phase"><div><strong>90-day Roadmap</strong><span>План внедрения: люди, данные, процессы, интерфейсы и AI-слой.</span></div></div>
             </div>
           </article>
         </div>
