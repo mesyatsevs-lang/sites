@@ -1209,6 +1209,79 @@
       line-height: 1.35;
     }
 
+    .ops-board {
+      display: grid;
+      grid-template-columns: minmax(0, .8fr) minmax(420px, 1.2fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .ops-hero {
+      padding: 20px;
+      border-radius: 8px;
+      color: #fff;
+      background: linear-gradient(135deg, rgba(18,57,71,.98), rgba(13,110,136,.9));
+      box-shadow: var(--shadow);
+    }
+
+    .ops-hero h3 {
+      margin: 0 0 10px;
+      font-family: var(--display);
+      font-size: 30px;
+      line-height: 1.05;
+    }
+
+    .ops-hero p {
+      margin: 0 0 16px;
+      color: rgba(255,255,255,.72);
+      line-height: 1.45;
+    }
+
+    .ops-proof {
+      display: grid;
+      gap: 8px;
+      margin: 18px 0;
+    }
+
+    .ops-proof div {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px;
+      background: rgba(255,255,255,.08);
+    }
+
+    .ops-proof b {
+      color: var(--energy);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .ops-proof span {
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .ops-frame {
+      min-height: 620px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .ops-frame iframe {
+      width: 100%;
+      height: 620px;
+      border: 0;
+      display: block;
+      background: #fff;
+    }
+
     .gate-list {
       display: grid;
       gap: 8px;
@@ -1632,6 +1705,7 @@
       .two-col,
       .diagnostic-grid,
       .standards-rail,
+      .ops-board,
       .comparison,
       .owner-board {
         grid-template-columns: 1fr;
@@ -1739,17 +1813,18 @@
         <button data-view="pilot"><span class="nav-icon">NP</span><span>Пилот Нефтчала</span><span class="nav-code">05</span></button>
         <button data-view="aiuse"><span class="nav-icon">UC</span><span>ИИ-сценарии</span><span class="nav-code">06</span></button>
         <button data-view="standards"><span class="nav-icon">SM</span><span>SMK / HSE / EDMS</span><span class="nav-code">07</span></button>
-        <button data-view="startpack"><span class="nav-icon">ST</span><span>Данные для старта</span><span class="nav-code">08</span></button>
-        <button data-view="project"><span class="nav-icon">PR</span><span>Управление проектом</span><span class="nav-code">09</span></button>
-        <button data-view="tender"><span class="nav-icon">TN</span><span>Тендер → бюджет</span><span class="nav-code">10</span></button>
-        <button data-view="procurement"><span class="nav-icon">PO</span><span>Закупки</span><span class="nav-code">11</span></button>
-        <button data-view="warehouse"><span class="nav-icon">WH</span><span>Склад</span><span class="nav-code">12</span></button>
-        <button data-view="site"><span class="nav-icon">SA</span><span>Площадка</span><span class="nav-code">13</span></button>
-        <button data-view="hakedis"><span class="nav-icon">HK</span><span>Акты</span><span class="nav-code">14</span></button>
-        <button data-view="finance"><span class="nav-icon">FN</span><span>Финансы</span><span class="nav-code">15</span></button>
-        <button data-view="hr"><span class="nav-icon">КД</span><span>Персонал</span><span class="nav-code">16</span></button>
-        <button data-view="planning"><span class="nav-icon">PL</span><span>Планирование</span><span class="nav-code">17</span></button>
-        <button data-view="ai"><span class="nav-icon">ИИ</span><span>ИИ-слой управления</span><span class="nav-code">18</span></button>
+        <button data-view="operational"><span class="nav-icon">OP</span><span>Операционное демо</span><span class="nav-code">08</span></button>
+        <button data-view="startpack"><span class="nav-icon">ST</span><span>Данные для старта</span><span class="nav-code">09</span></button>
+        <button data-view="project"><span class="nav-icon">PR</span><span>Управление проектом</span><span class="nav-code">10</span></button>
+        <button data-view="tender"><span class="nav-icon">TN</span><span>Тендер → бюджет</span><span class="nav-code">11</span></button>
+        <button data-view="procurement"><span class="nav-icon">PO</span><span>Закупки</span><span class="nav-code">12</span></button>
+        <button data-view="warehouse"><span class="nav-icon">WH</span><span>Склад</span><span class="nav-code">13</span></button>
+        <button data-view="site"><span class="nav-icon">SA</span><span>Площадка</span><span class="nav-code">14</span></button>
+        <button data-view="hakedis"><span class="nav-icon">HK</span><span>Акты</span><span class="nav-code">15</span></button>
+        <button data-view="finance"><span class="nav-icon">FN</span><span>Финансы</span><span class="nav-code">16</span></button>
+        <button data-view="hr"><span class="nav-icon">КД</span><span>Персонал</span><span class="nav-code">17</span></button>
+        <button data-view="planning"><span class="nav-icon">PL</span><span>Планирование</span><span class="nav-code">18</span></button>
+        <button data-view="ai"><span class="nav-icon">ИИ</span><span>ИИ-слой управления</span><span class="nav-code">19</span></button>
       </nav>
 
       <div class="sidebar-note">
@@ -1775,7 +1850,7 @@
           <p>AVENSOL Control Room связывает тендер, бюджет, закупки, склад, площадку, акты, финансы и персонал в один управленческий пульт. ИИ работает верхним аналитическим слоем: объясняет отклонения, находит риски и готовит брифы для руководства.</p>
           <div class="signal-strip" aria-label="Ключевые параметры прототипа">
             <span class="signal-chip">4 площадки</span>
-            <span class="signal-chip">17 экранов</span>
+            <span class="signal-chip">18 экранов</span>
             <span class="signal-chip">Пилот 30 дней</span>
             <span class="signal-chip">ИИ после структуры данных</span>
           </div>
@@ -1848,6 +1923,10 @@
           <span class="entry-icon">WEB</span>
           <span><strong>Сайт AVENSOL</strong>Публичный образ компании: smarter energy, EPC и инфраструктура.</span>
         </a>
+        <button class="entry-card" data-view="operational">
+          <span class="entry-icon">OP</span>
+          <span><strong>Операционное демо</strong>Живые цифры пилота: AZN, склад, закупки, cash flow, hakediş и ИИ-сигналы.</span>
+        </button>
         <button class="entry-card" data-detail="Личный кабинет сотрудника">
           <span class="entry-icon">ID</span>
           <span><strong>Личный кабинет</strong>Вход для сотрудников с доступом к проектам, задачам и отчётам.</span>
@@ -1862,6 +1941,7 @@
         <button data-view="pilot">Пилот</button>
         <button data-view="aiuse">ИИ-сценарии</button>
         <button data-view="standards">Стандарты</button>
+        <button data-view="operational">Опер. демо</button>
         <button data-view="startpack">Старт</button>
         <button data-view="tender">Тендер</button>
         <button data-view="procurement">Закупки</button>
@@ -1886,6 +1966,7 @@
           <button class="route-step" data-view="finance"><b>06</b><span>Финансы</span></button>
           <button class="route-step" data-view="aiuse"><b>07</b><span>ИИ-сценарии</span></button>
           <button class="route-step" data-view="standards"><b>08</b><span>SMK как gatekeeper</span></button>
+          <button class="route-step" data-view="operational"><b>09</b><span>Операционное демо</span></button>
         </div>
       </section>
 
@@ -2200,6 +2281,25 @@
               <div class="phase"><div><strong>Digital evidence</strong><span>Фото, сертификат, чек-лист, версия чертежа и согласование привязаны к операции.</span></div></div>
               <div class="phase"><div><strong>ИИ только поверх дисциплины данных</strong><span>Сначала gatekeeper и структура, затем предиктивные сигналы по срокам, марже и оплатам.</span></div></div>
             </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="operational">
+        <div class="ops-board">
+          <article class="ops-hero">
+            <h3>Операционное доказательство</h3>
+            <p>Этот экран отвечает на вопрос Нежата: “А как это будет выглядеть в работе?” Здесь стратегическая рамка превращается в цифры, заявки, склад, акты, cash flow и ИИ-вопросы.</p>
+            <div class="ops-proof">
+              <div><b>AZN</b><span>Бюджет, факт, обязательства, маржа и прогноз денежных разрывов.</span></div>
+              <div><b>4x</b><span>Четыре площадки с разными статусами: подстанция, ЛЭП, СЭС, MEP.</span></div>
+              <div><b>AI</b><span>Вопросы обычным языком: где перерасход, какие заказы угрожают графику, где склад не сходится с актом.</span></div>
+              <div><b>TR/RU</b><span>Турецкий и русский интерфейс для совместного показа с командой AVENSOL.</span></div>
+            </div>
+            <a class="btn primary" href="avensol-operational-demo.html" target="_blank" rel="noopener">Открыть в отдельной вкладке</a>
+          </article>
+          <article class="ops-frame" aria-label="Операционный дашборд AVENSOL">
+            <iframe title="AVENSOL operational demo" src="avensol-operational-demo.html"></iframe>
           </article>
         </div>
       </section>

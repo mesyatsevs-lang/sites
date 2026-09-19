@@ -1,0 +1,1017 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Entegre kontrol paneli</title>
+<style>
+:root{
+  --ground:#EFF2F2; --panel:#FFFFFF; --panel-2:#F7F9F9; --ink:#141F1E; --muted:#59675F; --rule:#D3DCDA; --accent:#0E727C; --accent-soft:#D9EDEF;
+  --red:#AF3826; --red-bg:#F8DED8; --amber:#8C5F0E; --amber-bg:#F8EBCE; --green:#256B41; --green-bg:#DCF0E2;
+  --shadow:0 1px 2px rgba(20,31,30,.07);
+  --yantar:#9A6212; --yantar-fon:#FBF0DC;
+  --indigo:#33509B; --indigo-fon:#E4E9F7;
+  --biryuza:#0E727C; --biryuza-fon:#DCEEF0;
+  --sliva:#7A3E86; --sliva-fon:#F2E6F4;
+  --hvoya:#256B41; --hvoya-fon:#DFF0E6;
+  --terrakot:#A94D33; --terrakot-fon:#FBE6E0;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0E1615; --panel:#16201F; --panel-2:#1B2625; --ink:#E5ECEA; --muted:#93A29C;
+  --rule:#2A3A37; --accent:#57BDC6; --accent-soft:#17383B;
+  --red:#EE8B78; --red-bg:#3B201B; --amber:#E0B264; --amber-bg:#372C15; --green:#77C894; --green-bg:#1A3123;
+  --shadow:none;
+  --yantar:#E2B263; --yantar-fon:#33280F;
+  --indigo:#8AA4E8; --indigo-fon:#1B2340;
+  --biryuza:#57BDC6; --biryuza-fon:#123338;
+  --sliva:#C994D4; --sliva-fon:#2C1A31;
+  --hvoya:#7CCB98; --hvoya-fon:#14301F;
+  --terrakot:#EFA189; --terrakot-fon:#37201A;
+}}
+:root[data-theme="dark"]{
+  --ground:#0E1615; --panel:#16201F; --panel-2:#1B2625; --ink:#E5ECEA; --muted:#93A29C;
+  --rule:#2A3A37; --accent:#57BDC6; --accent-soft:#17383B;
+  --red:#EE8B78; --red-bg:#3B201B; --amber:#E0B264; --amber-bg:#372C15; --green:#77C894; --green-bg:#1A3123;
+  --shadow:none;
+  --yantar:#E2B263; --yantar-fon:#33280F;
+  --indigo:#8AA4E8; --indigo-fon:#1B2340;
+  --biryuza:#57BDC6; --biryuza-fon:#123338;
+  --sliva:#C994D4; --sliva-fon:#2C1A31;
+  --hvoya:#7CCB98; --hvoya-fon:#14301F;
+  --terrakot:#EFA189; --terrakot-fon:#37201A;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--ground);color:var(--ink);
+  font:15px/1.5 "Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  padding-block:0 48px}
+.obolochka{max-width:1180px;margin:0 auto;padding-inline:18px}
+h1{font-size:21px;font-weight:650;margin:0;letter-spacing:-.01em}
+h2{font-size:16px;font-weight:650;margin:0}
+h3{font-size:14px;font-weight:650;margin:0}
+p{margin:0}
+.tihiy{color:var(--muted)}
+.melko{font-size:13px}
+
+header{background:var(--panel);border-bottom:1px solid var(--rule);
+  padding-top:env(safe-area-inset-top,0px);position:sticky;top:0;z-index:5}
+.shapka{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;padding-block:14px}
+.shapka-levo{display:grid;gap:3px}
+.shapka-pravo{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.plashka{display:inline-flex;align-items:center;gap:7px;background:var(--amber-bg);color:var(--amber);
+  border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:600}
+.plashka::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.yazyki{display:flex;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+.yazyki button{border:0;background:var(--panel);color:var(--muted);font:600 13px/1 inherit;
+  padding:8px 13px;cursor:pointer}
+.yazyki button[aria-pressed="true"]{background:var(--accent);color:#fff}
+
+nav{display:flex;gap:2px;overflow-x:auto;border-top:1px solid var(--rule);scrollbar-width:thin}
+nav button{border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);
+  font:600 13.5px/1 inherit;padding:13px 14px;cursor:pointer;white-space:nowrap}
+nav button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+nav button:hover{color:var(--ink)}
+
+main{padding-top:22px;display:grid;gap:20px}
+section{display:grid;gap:14px}
+.zagolovok-ekrana{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
+
+.karty{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:12px}
+.karta{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:15px;
+  display:grid;gap:10px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.karta::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--rule)}
+.karta.krasny::before{background:var(--red)}
+.karta.zheltyy::before{background:var(--amber)}
+.karta.zelenyy::before{background:var(--green)}
+.karta-verh{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.karta-imya{font-weight:650}
+.tochka{width:9px;height:9px;border-radius:50%;flex:none;margin-top:6px}
+.tochka.krasny{background:var(--red)} .tochka.zheltyy{background:var(--amber)} .tochka.zelenyy{background:var(--green)}
+.pary{display:grid;gap:5px}
+.para{display:flex;justify-content:space-between;gap:12px;font-size:13.5px}
+.para span:last-child{font-variant-numeric:tabular-nums;font-weight:600}
+.polosa{height:6px;border-radius:3px;background:var(--panel-2);border:1px solid var(--rule);overflow:hidden}
+.polosa i{display:block;height:100%;background:var(--accent)}
+
+.tabl{background:var(--panel);border:1px solid var(--rule);border-radius:10px;overflow-x:auto;box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--rule);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+th{font-size:11.5px;font-weight:650;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);
+  background:var(--panel-2);white-space:nowrap}
+td.ch,th.ch{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.kod{white-space:nowrap}
+tr.klikabelnaya{cursor:pointer}
+tr.klikabelnaya:hover{background:var(--panel-2)}
+tr.podsvechena>td{background:var(--accent-soft)}
+.znachok{display:inline-block;font-size:11.5px;font-weight:650;padding:3px 7px;border-radius:4px;white-space:nowrap}
+.znachok.krasny{background:var(--red-bg);color:var(--red)}
+.znachok.zheltyy{background:var(--amber-bg);color:var(--amber)}
+.znachok.zelenyy{background:var(--green-bg);color:var(--green)}
+.znachok.seryy{background:var(--panel-2);color:var(--muted);border:1px solid var(--rule)}
+.krasnoe{color:var(--red);font-weight:650}
+.zelenoe{color:var(--green);font-weight:650}
+.zheltoe{color:var(--amber);font-weight:650}
+.knopka{border:1px solid var(--rule);background:var(--panel);color:var(--accent);font:600 12.5px/1 inherit;
+  padding:6px 10px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.knopka:hover{background:var(--accent-soft)}
+.knopki{display:flex;gap:7px;flex-wrap:wrap}
+.knopki .knopka[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+button:focus-visible,tr:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+.raskrytie{background:var(--panel-2)}
+.raskrytie td{padding:0}
+.vnutri{padding:12px 13px;display:grid;gap:9px}
+.vnutri table{background:var(--panel);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+
+.dvoyka{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:12px;align-items:start}
+.blok{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:15px;display:grid;gap:10px;box-shadow:var(--shadow)}
+.spisok{display:grid;gap:7px;margin:0;padding:0;list-style:none;font-size:13.5px}
+.spisok li{display:flex;gap:9px}
+.spisok li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;margin-top:7px}
+.spisok.riski li::before{background:var(--red)}
+.spisok.nehvatka li::before{background:var(--amber)}
+
+.lenta{display:grid;gap:8px}
+.zakaz{display:grid;gap:8px;background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:13px 15px;box-shadow:var(--shadow)}
+.zakaz-verh{display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:space-between;align-items:baseline}
+.shkala{position:relative;height:26px;background:var(--panel-2);border:1px solid var(--rule);border-radius:6px}
+.shkala i{position:absolute;top:0;bottom:0;background:var(--accent-soft);border-right:2px solid var(--accent)}
+.metka{position:absolute;top:-1px;bottom:-1px;width:2px;background:var(--ink)}
+.metka.krasny{background:var(--red)} .metka.zheltyy{background:var(--amber)}
+.shkala-podpisi{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+
+.zvenya{display:flex;flex-wrap:wrap;gap:6px 10px;border-top:1px dashed var(--rule);padding-top:9px;font-size:12.5px}
+.zveno{display:inline-flex;align-items:center;gap:6px;color:var(--muted)}
+.zveno b{color:var(--ink);font-weight:650}
+.zveno+.zveno::before{content:"→";margin-right:4px;color:var(--rule)}
+.krupno{font-size:21px;font-weight:650;font-variant-numeric:tabular-nums}
+.stolbiki{display:grid;gap:3px;min-width:120px}
+.stolbiki i{display:block;height:7px;border-radius:2px}
+.stolbiki .prihod{background:var(--green)}
+.stolbiki .rashod{background:var(--red)}
+/* плитки подразделений */
+.plitki{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.plitka{background:var(--panel);border:1px solid var(--rule);border-radius:12px;overflow:hidden;
+  display:grid;grid-template-rows:auto 1fr;box-shadow:var(--shadow);transition:transform .15s ease,box-shadow .15s ease}
+.plitka:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(20,31,30,.10)}
+.plitka header{display:flex;align-items:center;gap:10px;padding:13px 16px;color:#fff}
+.plitka header h3{font-size:15px;font-weight:650;color:inherit}
+
+.plitka-telo{padding:15px 16px;display:flex;flex-direction:column;gap:11px}
+.plitka-telo .knopki{margin-top:auto;padding-top:3px}
+.plitka .krupno{font-size:27px;line-height:1.05}
+.plitka.yantar header{background:var(--yantar)} .plitka.yantar .krupno{color:var(--yantar)}
+.plitka.indigo header{background:var(--indigo)} .plitka.indigo .krupno{color:var(--indigo)}
+.plitka.biryuza header{background:var(--biryuza)} .plitka.biryuza .krupno{color:var(--biryuza)}
+.plitka.sliva header{background:var(--sliva)} .plitka.sliva .krupno{color:var(--sliva)}
+.plitka.hvoya header{background:var(--hvoya)} .plitka.hvoya .krupno{color:var(--hvoya)}
+.plitka.terrakot header{background:var(--terrakot)} .plitka.terrakot .krupno{color:var(--terrakot)}
+.plitka .pary{border-top:1px solid var(--rule);padding-top:9px}
+
+/* карточки материалов */
+.materialy{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.material{display:grid;gap:5px;align-content:start;text-align:left;text-decoration:none;cursor:pointer;
+  background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:15px 16px;color:inherit;
+  font:inherit;transition:border-color .15s ease,transform .15s ease}
+.material:hover{border-color:var(--accent);transform:translateY(-2px)}
+.material-znak{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;
+  border-radius:9px;background:var(--accent-soft);color:var(--accent);font:650 13px/1 var(--mono,inherit);
+  font-variant-numeric:tabular-nums;margin-bottom:4px}
+.material-imya{font-weight:650}
+
+/* презентация */
+.tochki{display:flex;gap:6px;flex-wrap:wrap}
+.tochka{width:26px;height:5px;border:0;border-radius:3px;background:var(--rule);cursor:pointer;padding:0}
+.tochka.tekushchaya{background:var(--accent)}
+.slaydy{display:grid;gap:18px}
+.slayd{background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:26px 28px;
+  display:grid;gap:18px;align-content:start;min-height:360px;box-shadow:var(--shadow)}
+.slayd-shapka{display:flex;align-items:baseline;gap:14px;justify-content:space-between;
+  border-bottom:1px solid var(--rule);padding-bottom:12px}
+.slayd-shapka h3{font-size:20px;font-weight:650;flex:1}
+.slayd-schet{font:650 13px/1 inherit;color:var(--muted);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:11.5px;font-weight:650;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.slayd-oblozhka{display:grid;gap:14px;align-content:center;min-height:300px;
+  background:linear-gradient(135deg,var(--accent-soft),transparent 65%);border-radius:10px;padding:26px}
+.slayd-titul{font-size:clamp(24px,3.6vw,38px);font-weight:700;line-height:1.1;letter-spacing:-.015em}
+.slayd-lid{font-size:17px;color:var(--muted);max-width:52ch}
+.slayd-setka{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:13px}
+.slayd-karta{background:var(--panel-2);border:1px solid var(--rule);border-radius:10px;padding:15px;display:grid;gap:6px;align-content:start}
+.slayd-karta h4,.slayd-sloy h4,.slayd-zveno h4,.slayd-etap h4{font-size:15px;font-weight:650;margin:0}
+.slayd-nomer{font:650 12px/1 inherit;color:var(--accent);font-variant-numeric:tabular-nums}
+.slayd-sloi{display:grid;gap:9px}
+.slayd-sloy{display:flex;gap:14px;align-items:flex-start;background:var(--panel-2);border:1px solid var(--rule);
+  border-radius:10px;padding:14px 16px}
+.sloy-nomer{display:flex;align-items:center;justify-content:center;width:30px;height:30px;flex:none;
+  border-radius:8px;background:var(--accent);color:#fff;font-weight:650}
+.slayd-cepochka{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}
+.slayd-zveno{background:var(--panel-2);border:1px solid var(--rule);border-radius:10px;padding:13px;display:grid;gap:5px;
+  border-top:3px solid var(--accent)}
+.zveno-nomer{font:650 11px/1 inherit;color:var(--muted)}
+.slayd-razlozhenie{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center}
+.storona{background:var(--panel-2);border:1px solid var(--rule);border-radius:10px;padding:18px;display:grid;gap:8px}
+.storona.levo{align-content:center;text-align:center}
+.storona.levo .poz{font-size:19px;font-weight:700;letter-spacing:.01em}
+.strelka{font-size:22px;color:var(--muted)}
+.resurs-stroka{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--rule);padding-bottom:5px;font-size:14px}
+.resurs-stroka:last-child{border-bottom:0;padding-bottom:0}
+.slayd-zony{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.slayd-zona{background:var(--panel-2);border:1px solid var(--rule);border-radius:9px;padding:13px;display:grid;gap:5px;font-weight:600}
+.zona-nomer{font:650 11px/1 inherit;color:var(--accent)}
+.slayd-etapy{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.slayd-etap{background:var(--panel-2);border:1px solid var(--rule);border-radius:10px;padding:15px;display:grid;gap:6px;
+  border-left:3px solid var(--accent)}
+.slayd-resheniya{display:grid;gap:8px}
+.slayd-reshenie{display:flex;gap:12px;align-items:baseline;background:var(--panel-2);border:1px solid var(--rule);
+  border-radius:9px;padding:12px 15px;font-size:15px}
+.slayd-snoska{font-size:13.5px;color:var(--muted);border-top:1px solid var(--rule);padding-top:12px;max-width:80ch}
+
+@media print{
+  header,nav,.zagolovok-ekrana,.tochki,footer{display:none!important}
+  body{background:#fff;padding:0}
+  .slayd{break-after:page;border:0;box-shadow:none;min-height:auto;padding:0 0 24px}
+  .slayd[hidden]{display:grid!important}
+}
+
+.vopros{display:grid;gap:9px}
+.otvet{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0;padding:13px 15px;display:grid;gap:9px}
+.snoska{font-size:13px;color:var(--muted);max-width:70ch}
+footer{margin-top:26px;border-top:1px solid var(--rule);padding-top:14px;font-size:12.5px;color:var(--muted)}
+@media (max-width:620px){
+  .para{font-size:13px}
+  th,td{padding:8px 10px}
+}
+body.auth-lock{overflow:hidden}
+body.auth-lock header,body.auth-lock main{display:none}
+.auth-gate{position:fixed;inset:0;z-index:9999;display:none;place-items:center;padding:24px;color:#F5FAF9;background:linear-gradient(135deg,rgba(18,57,71,.96),rgba(23,32,38,.97))}
+body.auth-lock .auth-gate{display:grid}
+.auth-card{width:min(440px,100%);padding:26px;border:1px solid rgba(255,255,255,.18);border-radius:8px;background:rgba(255,255,255,.08);box-shadow:0 22px 60px rgba(0,0,0,.28)}
+.auth-mark{width:42px;height:42px;display:grid;place-items:center;margin-bottom:16px;border:1px solid rgba(255,255,255,.28);border-radius:8px;background:linear-gradient(135deg,#D8912B,#2F765F);font-weight:800}
+.auth-card h2{margin:0 0 8px;font-size:28px;line-height:1.05;text-transform:uppercase}
+.auth-card p{margin:0 0 18px;color:rgba(245,250,249,.72);font-size:14px;line-height:1.45}
+.auth-form{display:grid;gap:10px}
+.auth-form label{color:rgba(245,250,249,.72);font-size:11px;text-transform:uppercase}
+.auth-form input{width:100%;padding:13px 14px;border:1px solid rgba(255,255,255,.18);border-radius:8px;color:#fff;background:rgba(0,0,0,.18);outline:none}
+.auth-form input:focus{border-color:rgba(216,145,43,.95);box-shadow:0 0 0 3px rgba(216,145,43,.16)}
+.auth-form button{padding:13px 14px;border:0;border-radius:8px;color:#fff;background:#0E727C;font-weight:700;cursor:pointer}
+.auth-error{min-height:18px;color:#ffb6a8;font-size:12px}
+</style>
+</head>
+<body class="auth-lock">
+
+<section class="auth-gate" aria-labelledby="authTitle">
+  <div class="auth-card">
+    <div class="auth-mark">AV</div>
+    <h2 id="authTitle">Operational Demo</h2>
+    <p>Закрытый операционный прототип AVENSOL. Введите пароль доступа для просмотра данных пилота.</p>
+    <form class="auth-form" id="authForm">
+      <label for="authPassword">Пароль</label>
+      <input id="authPassword" name="password" type="password" autocomplete="current-password" required>
+      <button type="submit">Открыть демо</button>
+      <div class="auth-error" id="authError" role="alert"></div>
+    </form>
+  </div>
+</section>
+
+<header>
+  <div class="obolochka">
+    <div class="shapka">
+      <div class="shapka-levo">
+        <h1 id="zagolovok">Entegre kontrol paneli</h1>
+        <p class="tihiy melko" id="podzagolovok">Dört şantiye, tek veri zinciri</p>
+      </div>
+      <div class="shapka-pravo">
+        <span class="plashka" id="plashka">Örnek veriler</span>
+        <div class="yazyki" role="group" aria-label="Dil / Язык">
+          <button id="yaz-tr" type="button" aria-pressed="true">TR</button>
+          <button id="yaz-ru" type="button" aria-pressed="false">RU</button>
+        </div>
+      </div>
+    </div>
+    <nav id="vkladki" role="tablist"></nav>
+  </div>
+</header>
+
+<main class="obolochka">
+  <section id="ekran-otdely" role="tabpanel"></section>
+  <section id="ekran-svodka" role="tabpanel" hidden></section>
+  <section id="ekran-sklad" role="tabpanel" hidden></section>
+  <section id="ekran-akt" role="tabpanel" hidden></section>
+  <section id="ekran-zakupki" role="tabpanel" hidden></section>
+  <section id="ekran-dengi" role="tabpanel" hidden></section>
+  <section id="ekran-tender" role="tabpanel" hidden></section>
+  <section id="ekran-personal" role="tabpanel" hidden></section>
+  <section id="ekran-ii" role="tabpanel" hidden></section>
+  <section id="ekran-sunum" role="tabpanel" hidden></section>
+  <footer id="podval"></footer>
+</main>
+
+<script>
+const AUTH_HASH = "c854e5673d58a9c30acd0cf8e2d480637993e483b17df88cbd92e405036d0904";
+const AUTH_KEY = "avensol-control-room-unlocked";
+const authForm = document.getElementById("authForm");
+const authPassword = document.getElementById("authPassword");
+const authError = document.getElementById("authError");
+
+async function sha256(value) {
+  const buffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return [...new Uint8Array(buffer)].map(byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function unlockDemo() {
+  document.body.classList.remove("auth-lock");
+  sessionStorage.setItem(AUTH_KEY, "1");
+}
+
+if (sessionStorage.getItem(AUTH_KEY) === "1") {
+  unlockDemo();
+}
+
+setInterval(() => {
+  if (document.body.classList.contains("auth-lock") && sessionStorage.getItem(AUTH_KEY) === "1") {
+    unlockDemo();
+  }
+}, 300);
+
+authForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  authError.textContent = "";
+  try {
+    if (await sha256(authPassword.value.trim()) === AUTH_HASH) {
+      unlockDemo();
+      return;
+    }
+    authError.textContent = "Пароль не подошёл. Проверьте регистр и дефисы.";
+  } catch (error) {
+    authError.textContent = "Браузер не смог проверить пароль. Откройте страницу по HTTPS.";
+  }
+});
+
+const DANNYE = {"meta": {"valyuta": "AZN", "zerno": 20260922, "data": "2026-09-22"}, "ploshchadki": [{"id": "A", "kod_tr": "Şantiye A", "kod_ru": "Площадка A", "tip_tr": "110/35 kV trafo merkezi", "tip_ru": "Подстанция 110/35 кВ", "stadiya_tr": "Uygulama", "stadiya_ru": "Середина стройки", "byudzhet": 12400000.0, "fakt": 7850000.0, "vypolneno_pct": 63, "rukovoditel_tr": "Şantiye şefi", "rukovoditel_ru": "Начальник участка", "obyazatelstva": 960000.0, "zakazat_predstoit": 0.0, "summa_akt": 102800.0, "summa_zatrat": 77619.0, "marzha": 25181.0, "poteryano": 3546.4, "ostatok_byudzheta": 3590000.0, "lyudey": 68, "signal": "krasny"}, {"id": "B", "kod_tr": "Şantiye B", "kod_ru": "Площадка B", "tip_tr": "220 kV enerji iletim hattı, 42 km", "tip_ru": "ВЛ 220 кВ, 42 км", "stadiya_tr": "Uygulama", "stadiya_ru": "Середина стройки", "byudzhet": 18900000.0, "fakt": 9450000.0, "vypolneno_pct": 50, "rukovoditel_tr": "Hat şefi", "rukovoditel_ru": "Начальник линейного участка", "obyazatelstva": 568400.0, "zakazat_predstoit": 0.0, "summa_akt": 1467000.0, "summa_zatrat": 1209962.0, "marzha": 257038.0, "poteryano": 12134.0, "ostatok_byudzheta": 8881600.0, "lyudey": 94, "signal": "zheltyy"}, {"id": "C", "kod_tr": "Şantiye C", "kod_ru": "Площадка C", "tip_tr": "120 MWac güneş enerji santralı", "tip_ru": "СЭС 120 MWac", "stadiya_tr": "Mobilizasyon", "stadiya_ru": "Старт стройки", "byudzhet": 41500000.0, "fakt": 2075000.0, "vypolneno_pct": 5, "rukovoditel_tr": "Proje müdürü", "rukovoditel_ru": "Руководитель проекта", "obyazatelstva": 0.0, "zakazat_predstoit": 32624000.0, "summa_akt": 0.0, "summa_zatrat": 0.0, "marzha": 0.0, "poteryano": 0.0, "ostatok_byudzheta": 39425000.0, "lyudey": 21, "signal": "krasny"}, {"id": "D", "kod_tr": "Şantiye D", "kod_ru": "Площадка D", "tip_tr": "AVM mekanik ve elektrik işleri", "tip_ru": "Инженерные системы ТЦ", "stadiya_tr": "Kapanış", "stadiya_ru": "Завершение", "byudzhet": 6700000.0, "fakt": 6030000.0, "vypolneno_pct": 90, "rukovoditel_tr": "MEP şefi", "rukovoditel_ru": "Начальник участка инженерных систем", "obyazatelstva": 49600.0, "zakazat_predstoit": 0.0, "summa_akt": 327520.0, "summa_zatrat": 234138.0, "marzha": 93382.0, "poteryano": -20334.0, "ostatok_byudzheta": 620400.0, "lyudey": 47, "signal": "zheltyy"}], "resursy": [{"id": "beton_c30", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "cena": 120.0, "skladskoy": true}, {"id": "armatura", "tr": "Donatı demiri", "ru": "Арматура", "ed_tr": "ton", "ed_ru": "т", "cena": 1450.0, "skladskoy": true}, {"id": "opalubka", "tr": "Kalıp (bir kullanım)", "ru": "Опалубка (оборот)", "ed_tr": "m²", "ed_ru": "м²", "cena": 18.0, "skladskoy": true}, {"id": "opora_metal", "tr": "Çelik direk", "ru": "Металлическая опора", "ed_tr": "ton", "ed_ru": "т", "cena": 3950.0, "skladskoy": true}, {"id": "iletken", "tr": "ACSR iletken", "ru": "Провод АС", "ed_tr": "km", "ed_ru": "км", "cena": 9800.0, "skladskoy": true}, {"id": "kabel_nn", "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "cena": 12.4, "skladskoy": true}, {"id": "kabel_orta", "tr": "OG kablo", "ru": "Кабель СН", "ed_tr": "m", "ed_ru": "м", "cena": 46.0, "skladskoy": true}, {"id": "trafo", "tr": "Güç trafosu", "ru": "Силовой трансформатор", "ed_tr": "adet", "ed_ru": "шт", "cena": 480000.0, "skladskoy": true}, {"id": "pv_panel", "tr": "Güneş paneli", "ru": "Солнечная панель", "ed_tr": "adet", "ed_ru": "шт", "cena": 118.0, "skladskoy": true}, {"id": "invertor", "tr": "İnvertör", "ru": "Инвертор", "ed_tr": "adet", "ed_ru": "шт", "cena": 34500.0, "skladskoy": true}, {"id": "konstrukciya", "tr": "Taşıyıcı konstrüksiyon", "ru": "Несущая конструкция", "ed_tr": "ton", "ed_ru": "т", "cena": 2150.0, "skladskoy": true}, {"id": "trud", "tr": "İşçilik", "ru": "Трудозатраты", "ed_tr": "saat", "ed_ru": "час", "cena": 9.0, "skladskoy": false}, {"id": "nasos", "tr": "Beton pompası", "ru": "Бетононасос", "ed_tr": "saat", "ed_ru": "час", "cena": 85.0, "skladskoy": false}, {"id": "vinc", "tr": "Vinç", "ru": "Кран", "ed_tr": "saat", "ed_ru": "час", "cena": 130.0, "skladskoy": false}], "raboty": [{"id": "A-FND-01", "ploshchadka": "A", "tr": "Betonarme imalatı — trafo temelleri", "ru": "Железобетон — фундаменты трансформаторов", "ed_tr": "m³", "ed_ru": "м³", "obem_plan": 120.0, "obem_fakt": 100.0, "cena_akt": 620.0, "normy": [{"resurs": "beton_c30", "norma": 1.02}, {"resurs": "armatura", "norma": 0.12}, {"resurs": "opalubka", "norma": 4.5}, {"resurs": "trud", "norma": 7.0, "spisano": 742.0}, {"resurs": "nasos", "norma": 0.35, "spisano": 37.0}], "resursy": [{"resurs": "beton_c30", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "skladskoy": true, "norma": 1.02, "teoreticheskiy": 102.0, "vydano": 103.5, "otklonenie": 1.5, "cena": 120.0, "summa_teor": 12240.0, "summa_fakt": 12420.0, "summa_otkloneniya": 180.0}, {"resurs": "armatura", "tr": "Donatı demiri", "ru": "Арматура", "ed_tr": "ton", "ed_ru": "т", "skladskoy": true, "norma": 0.12, "teoreticheskiy": 12.0, "vydano": 13.9, "otklonenie": 1.9, "cena": 1450.0, "summa_teor": 17400.0, "summa_fakt": 20155.0, "summa_otkloneniya": 2755.0}, {"resurs": "opalubka", "tr": "Kalıp (bir kullanım)", "ru": "Опалубка (оборот)", "ed_tr": "m²", "ed_ru": "м²", "skladskoy": true, "norma": 4.5, "teoreticheskiy": 450.0, "vydano": 450.0, "otklonenie": 0.0, "cena": 18.0, "summa_teor": 8100.0, "summa_fakt": 8100.0, "summa_otkloneniya": 0.0}, {"resurs": "trud", "tr": "İşçilik", "ru": "Трудозатраты", "ed_tr": "saat", "ed_ru": "час", "skladskoy": false, "norma": 7.0, "teoreticheskiy": 700.0, "vydano": 742.0, "otklonenie": 42.0, "cena": 9.0, "summa_teor": 6300.0, "summa_fakt": 6678.0, "summa_otkloneniya": 378.0}, {"resurs": "nasos", "tr": "Beton pompası", "ru": "Бетононасос", "ed_tr": "saat", "ed_ru": "час", "skladskoy": false, "norma": 0.35, "teoreticheskiy": 35.0, "vydano": 37.0, "otklonenie": 2.0, "cena": 85.0, "summa_teor": 2975.0, "summa_fakt": 3145.0, "summa_otkloneniya": 170.0}], "summa_akt": 62000.0, "summa_zatrat": 50498.0, "summa_zatrat_po_norme": 47015.0, "marzha": 11502.0, "marzha_po_norme": 14985.0, "marzha_pct": 18.55, "poteryano": 3483.0}, {"id": "A-KAB-02", "ploshchadka": "A", "tr": "Kablo kanalı ve topraklama", "ru": "Кабельные каналы и заземление", "ed_tr": "m", "ed_ru": "м", "obem_plan": 1600.0, "obem_fakt": 1200.0, "cena_akt": 34.0, "normy": [{"resurs": "kabel_nn", "norma": 1.02}, {"resurs": "trud", "norma": 1.1, "spisano": 1305.0}], "resursy": [{"resurs": "kabel_nn", "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "skladskoy": true, "norma": 1.02, "teoreticheskiy": 1224.0, "vydano": 1240.0, "otklonenie": 16.0, "cena": 12.4, "summa_teor": 15177.6, "summa_fakt": 15376.0, "summa_otkloneniya": 198.4}, {"resurs": "trud", "tr": "İşçilik", "ru": "Трудозатраты", "ed_tr": "saat", "ed_ru": "час", "skladskoy": false, "norma": 1.1, "teoreticheskiy": 1320.0, "vydano": 1305.0, "otklonenie": -15.0, "cena": 9.0, "summa_teor": 11880.0, "summa_fakt": 11745.0, "summa_otkloneniya": -135.0}], "summa_akt": 40800.0, "summa_zatrat": 27121.0, "summa_zatrat_po_norme": 27057.6, "marzha": 13679.0, "marzha_po_norme": 13742.4, "marzha_pct": 33.53, "poteryano": 63.4}, {"id": "B-DRK-01", "ploshchadka": "B", "tr": "Direk montajı", "ru": "Монтаж опор", "ed_tr": "adet", "ed_ru": "шт", "obem_plan": 96.0, "obem_fakt": 36.0, "cena_akt": 21500.0, "normy": [{"resurs": "opora_metal", "norma": 4.2}, {"resurs": "beton_c30", "norma": 1.8}, {"resurs": "trud", "norma": 46.0, "spisano": 1690.0}, {"resurs": "vinc", "norma": 6.0, "spisano": 224.0}], "resursy": [{"resurs": "opora_metal", "tr": "Çelik direk", "ru": "Металлическая опора", "ed_tr": "ton", "ed_ru": "т", "skladskoy": true, "norma": 4.2, "teoreticheskiy": 151.2, "vydano": 152.6, "otklonenie": 1.4, "cena": 3950.0, "summa_teor": 597240.0, "summa_fakt": 602770.0, "summa_otkloneniya": 5530.0}, {"resurs": "beton_c30", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "skladskoy": true, "norma": 1.8, "teoreticheskiy": 64.8, "vydano": 66.0, "otklonenie": 1.2, "cena": 120.0, "summa_teor": 7776.0, "summa_fakt": 7920.0, "summa_otkloneniya": 144.0}, {"resurs": "trud", "tr": "İşçilik", "ru": "Трудозатраты", "ed_tr": "saat", "ed_ru": "час", "skladskoy": false, "norma": 46.0, "teoreticheskiy": 1656.0, "vydano": 1690.0, "otklonenie": 34.0, "cena": 9.0, "summa_teor": 14904.0, "summa_fakt": 15210.0, "summa_otkloneniya": 306.0}, {"resurs": "vinc", "tr": "Vinç", "ru": "Кран", "ed_tr": "saat", "ed_ru": "час", "skladskoy": false, "norma": 6.0, "teoreticheskiy": 216.0, "vydano": 224.0, "otklonenie": 8.0, "cena": 130.0, "summa_teor": 28080.0, "summa_fakt": 29120.0, "summa_otkloneniya": 1040.0}], "summa_akt": 774000.0, "summa_zatrat": 655020.0, "summa_zatrat_po_norme": 648000.0, "marzha": 118980.0, "marzha_po_norme": 126000.0, "marzha_pct": 15.37, "poteryano": 7020.0}, {"id": "B-PRV-02", "ploshchadka": "B", "tr": "İletken çekimi", "ru": "Монтаж провода", "ed_tr": "km", "ed_ru": "км", "obem_plan": 42.0, "obem_fakt": 18.0, "cena_akt": 38500.0, "normy": [{"resurs": "iletken", "norma": 3.06}, {"resurs": "trud", "norma": 62.0, "spisano": 1118.0}], "resursy": [{"resurs": "iletken", "tr": "ACSR iletken", "ru": "Провод АС", "ed_tr": "km", "ed_ru": "км", "skladskoy": true, "norma": 3.06, "teoreticheskiy": 55.08, "vydano": 55.6, "otklonenie": 0.52, "cena": 9800.0, "summa_teor": 539784.0, "summa_fakt": 544880.0, "summa_otkloneniya": 5096.0}, {"resurs": "trud", "tr": "İşçilik", "ru": "Трудозатраты", "ed_tr": "saat", "ed_ru": "час", "skladskoy": false, "norma": 62.0, "teoreticheskiy": 1116.0, "vydano": 1118.0, "otklonenie": 2.0, "cena": 9.0, "summa_teor": 10044.0, "summa_fakt": 10062.0, "summa_otkloneniya": 18.0}], "summa_akt": 693000.0, "summa_zatrat": 554942.0, "summa_zatrat_po_norme": 549828.0, "marzha": 138058.0, "marzha_po_norme": 143172.0, "marzha_pct": 19.92, "poteryano": 5114.0}, {"id": "D-KBL-01", "ploshchadka": "D", "tr": "Kablo çekimi", "ru": "Прокладка кабеля", "ed_tr": "m", "ed_ru": "м", "obem_plan": 19500.0, "obem_fakt": 18400.0, "cena_akt": 17.8, "normy": [{"resurs": "kabel_nn", "norma": 1.05}, {"resurs": "trud", "norma": 0.09, "spisano": 1794.0}], "resursy": [{"resurs": "kabel_nn", "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "skladskoy": true, "norma": 1.05, "teoreticheskiy": 19320.0, "vydano": 17580.0, "otklonenie": -1740.0, "cena": 12.4, "summa_teor": 239568.0, "summa_fakt": 217992.0, "summa_otkloneniya": -21576.0}, {"resurs": "trud", "tr": "İşçilik", "ru": "Трудозатраты", "ed_tr": "saat", "ed_ru": "час", "skladskoy": false, "norma": 0.09, "teoreticheskiy": 1656.0, "vydano": 1794.0, "otklonenie": 138.0, "cena": 9.0, "summa_teor": 14904.0, "summa_fakt": 16146.0, "summa_otkloneniya": 1242.0}], "summa_akt": 327520.0, "summa_zatrat": 234138.0, "summa_zatrat_po_norme": 254472.0, "marzha": 93382.0, "marzha_po_norme": 73048.0, "marzha_pct": 28.51, "poteryano": -20334.0}], "sklad_dvizheniya": [{"data": "2026-07-14", "ploshchadka": "A", "resurs": "beton_c30", "tip": "prihod", "kol": 180.0, "kto_tr": "Depo sorumlusu R.M.", "kto_ru": "Кладовщик Р.М.", "dokument": "IRS-1841", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "bez_dokumenta": false}, {"data": "2026-07-16", "ploshchadka": "A", "resurs": "armatura", "tip": "prihod", "kol": 20.0, "kto_tr": "Depo sorumlusu R.M.", "kto_ru": "Кладовщик Р.М.", "dokument": "IRS-1852", "tr": "Donatı demiri", "ru": "Арматура", "ed_tr": "ton", "ed_ru": "т", "bez_dokumenta": false}, {"data": "2026-07-18", "ploshchadka": "A", "resurs": "opalubka", "tip": "prihod", "kol": 600.0, "kto_tr": "Depo sorumlusu R.M.", "kto_ru": "Кладовщик Р.М.", "dokument": "IRS-1860", "tr": "Kalıp (bir kullanım)", "ru": "Опалубка (оборот)", "ed_tr": "m²", "ed_ru": "м²", "bez_dokumenta": false}, {"data": "2026-07-28", "ploshchadka": "A", "resurs": "beton_c30", "tip": "vydacha", "kol": 61.5, "rabota": "A-FND-01", "kto_tr": "Formen A.Q.", "kto_ru": "Бригадир А.К.", "dokument": "SRF-204", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "bez_dokumenta": false}, {"data": "2026-08-11", "ploshchadka": "A", "resurs": "beton_c30", "tip": "vydacha", "kol": 42.0, "rabota": "A-FND-01", "kto_tr": "Formen A.Q.", "kto_ru": "Бригадир А.К.", "dokument": "SRF-231", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "bez_dokumenta": false}, {"data": "2026-07-27", "ploshchadka": "A", "resurs": "armatura", "tip": "vydacha", "kol": 8.4, "rabota": "A-FND-01", "kto_tr": "Formen A.Q.", "kto_ru": "Бригадир А.К.", "dokument": "SRF-201", "tr": "Donatı demiri", "ru": "Арматура", "ed_tr": "ton", "ed_ru": "т", "bez_dokumenta": false}, {"data": "2026-08-10", "ploshchadka": "A", "resurs": "armatura", "tip": "vydacha", "kol": 5.5, "rabota": "A-FND-01", "kto_tr": "Formen A.Q.", "kto_ru": "Бригадир А.К.", "dokument": "SRF-229", "tr": "Donatı demiri", "ru": "Арматура", "ed_tr": "ton", "ed_ru": "т", "bez_dokumenta": false}, {"data": "2026-07-29", "ploshchadka": "A", "resurs": "opalubka", "tip": "vydacha", "kol": 450.0, "rabota": "A-FND-01", "kto_tr": "Formen A.Q.", "kto_ru": "Бригадир А.К.", "dokument": "SRF-206", "tr": "Kalıp (bir kullanım)", "ru": "Опалубка (оборот)", "ed_tr": "m²", "ed_ru": "м²", "bez_dokumenta": false}, {"data": "2026-08-25", "ploshchadka": "A", "resurs": "kabel_nn", "tip": "prihod", "kol": 1500.0, "kto_tr": "Depo sorumlusu R.M.", "kto_ru": "Кладовщик Р.М.", "dokument": "IRS-1903", "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "bez_dokumenta": false}, {"data": "2026-09-08", "ploshchadka": "A", "resurs": "kabel_nn", "tip": "vydacha", "kol": 1240.0, "rabota": "A-KAB-02", "kto_tr": "Formen S.H.", "kto_ru": "Бригадир С.Х.", "dokument": "SRF-268", "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "bez_dokumenta": false}, {"data": "2026-06-30", "ploshchadka": "B", "resurs": "opora_metal", "tip": "prihod", "kol": 210.0, "kto_tr": "Depo sorumlusu E.V.", "kto_ru": "Кладовщик Э.В.", "dokument": "IRS-1770", "tr": "Çelik direk", "ru": "Металлическая опора", "ed_tr": "ton", "ed_ru": "т", "bez_dokumenta": false}, {"data": "2026-07-20", "ploshchadka": "B", "resurs": "opora_metal", "tip": "vydacha", "kol": 152.6, "rabota": "B-DRK-01", "kto_tr": "Formen T.Ə.", "kto_ru": "Бригадир Т.А.", "dokument": "SRF-188", "tr": "Çelik direk", "ru": "Металлическая опора", "ed_tr": "ton", "ed_ru": "т", "bez_dokumenta": false}, {"data": "2026-07-02", "ploshchadka": "B", "resurs": "beton_c30", "tip": "prihod", "kol": 90.0, "kto_tr": "Depo sorumlusu E.V.", "kto_ru": "Кладовщик Э.В.", "dokument": "IRS-1774", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "bez_dokumenta": false}, {"data": "2026-07-21", "ploshchadka": "B", "resurs": "beton_c30", "tip": "vydacha", "kol": 66.0, "rabota": "B-DRK-01", "kto_tr": "Formen T.Ə.", "kto_ru": "Бригадир Т.А.", "dokument": "SRF-190", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "bez_dokumenta": false}, {"data": "2026-07-05", "ploshchadka": "B", "resurs": "armatura", "tip": "prihod", "kol": 6.0, "kto_tr": "Depo sorumlusu E.V.", "kto_ru": "Кладовщик Э.В.", "dokument": "IRS-1779", "tr": "Donatı demiri", "ru": "Арматура", "ed_tr": "ton", "ed_ru": "т", "bez_dokumenta": false}, {"data": "2026-08-09", "ploshchadka": "B", "resurs": "armatura", "tip": "peremeshchenie", "kol": 2.0, "kuda": "A", "kto_tr": "Formen T.Ə.", "kto_ru": "Бригадир Т.А.", "dokument": "", "tr": "Donatı demiri", "ru": "Арматура", "ed_tr": "ton", "ed_ru": "т", "bez_dokumenta": true}, {"data": "2026-08-01", "ploshchadka": "B", "resurs": "iletken", "tip": "prihod", "kol": 62.0, "kto_tr": "Depo sorumlusu E.V.", "kto_ru": "Кладовщик Э.В.", "dokument": "IRS-1866", "tr": "ACSR iletken", "ru": "Провод АС", "ed_tr": "km", "ed_ru": "км", "bez_dokumenta": false}, {"data": "2026-08-30", "ploshchadka": "B", "resurs": "iletken", "tip": "vydacha", "kol": 55.6, "rabota": "B-PRV-02", "kto_tr": "Formen T.Ə.", "kto_ru": "Бригадир Т.А.", "dokument": "SRF-248", "tr": "ACSR iletken", "ru": "Провод АС", "ed_tr": "km", "ed_ru": "км", "bez_dokumenta": false}, {"data": "2026-09-10", "ploshchadka": "C", "resurs": "beton_c30", "tip": "prihod", "kol": 40.0, "kto_tr": "Depo sorumlusu N.C.", "kto_ru": "Кладовщик Н.Дж.", "dokument": "IRS-1940", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "bez_dokumenta": false}, {"data": "2026-09-12", "ploshchadka": "C", "resurs": "kabel_nn", "tip": "prihod", "kol": 800.0, "kto_tr": "Depo sorumlusu N.C.", "kto_ru": "Кладовщик Н.Дж.", "dokument": "IRS-1944", "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "bez_dokumenta": false}, {"data": "2026-06-15", "ploshchadka": "D", "resurs": "kabel_nn", "tip": "prihod", "kol": 19800.0, "kto_tr": "Depo sorumlusu K.Ş.", "kto_ru": "Кладовщик К.Ш.", "dokument": "IRS-1702", "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "bez_dokumenta": false}, {"data": "2026-07-06", "ploshchadka": "D", "resurs": "kabel_nn", "tip": "vydacha", "kol": 9300.0, "rabota": "D-KBL-01", "kto_tr": "Formen M.Ə.", "kto_ru": "Бригадир М.А.", "dokument": "SRF-171", "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "bez_dokumenta": false}, {"data": "2026-08-17", "ploshchadka": "D", "resurs": "kabel_nn", "tip": "vydacha", "kol": 8280.0, "rabota": "D-KBL-01", "kto_tr": "Formen M.Ə.", "kto_ru": "Бригадир М.А.", "dokument": "SRF-239", "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "bez_dokumenta": false}, {"data": "2026-06-20", "ploshchadka": "D", "resurs": "kabel_orta", "tip": "prihod", "kol": 2400.0, "kto_tr": "Depo sorumlusu K.Ş.", "kto_ru": "Кладовщик К.Ш.", "dokument": "IRS-1710", "tr": "OG kablo", "ru": "Кабель СН", "ed_tr": "m", "ed_ru": "м", "bez_dokumenta": false}], "ostatki": [{"ploshchadka": "A", "resurs": "armatura", "tr": "Donatı demiri", "ru": "Арматура", "ed_tr": "ton", "ed_ru": "т", "kol": 8.1, "stoimost": 11745.0}, {"ploshchadka": "A", "resurs": "beton_c30", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "kol": 76.5, "stoimost": 9180.0}, {"ploshchadka": "A", "resurs": "kabel_nn", "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "kol": 260.0, "stoimost": 3224.0}, {"ploshchadka": "A", "resurs": "opalubka", "tr": "Kalıp (bir kullanım)", "ru": "Опалубка (оборот)", "ed_tr": "m²", "ed_ru": "м²", "kol": 150.0, "stoimost": 2700.0}, {"ploshchadka": "B", "resurs": "armatura", "tr": "Donatı demiri", "ru": "Арматура", "ed_tr": "ton", "ed_ru": "т", "kol": 4.0, "stoimost": 5800.0}, {"ploshchadka": "B", "resurs": "beton_c30", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "kol": 24.0, "stoimost": 2880.0}, {"ploshchadka": "B", "resurs": "iletken", "tr": "ACSR iletken", "ru": "Провод АС", "ed_tr": "km", "ed_ru": "км", "kol": 6.4, "stoimost": 62720.0}, {"ploshchadka": "B", "resurs": "opora_metal", "tr": "Çelik direk", "ru": "Металлическая опора", "ed_tr": "ton", "ed_ru": "т", "kol": 57.4, "stoimost": 226730.0}, {"ploshchadka": "C", "resurs": "beton_c30", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "kol": 40.0, "stoimost": 4800.0}, {"ploshchadka": "C", "resurs": "kabel_nn", "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "kol": 800.0, "stoimost": 9920.0}, {"ploshchadka": "D", "resurs": "kabel_nn", "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "kol": 2220.0, "stoimost": 27528.0}, {"ploshchadka": "D", "resurs": "kabel_orta", "tr": "OG kablo", "ru": "Кабель СН", "ed_tr": "m", "ed_ru": "м", "kol": 2400.0, "stoimost": 110400.0}], "zakazy": [{"id": "A-ZAK-TRAFO", "ploshchadka": "A", "resurs": "trafo", "kol": 2.0, "srok_nedel": 26, "data_potrebnosti": "2026-09-22", "razmeshchen": "2026-06-10", "zayavka": {"data": "2026-03-02", "kto_tr": "Satın alma uzmanı", "kto_ru": "Специалист снабжения"}, "onay": {"data": "2026-06-08", "kto_tr": "Genel müdür", "kto_ru": "Генеральный директор", "status": "utverzhden"}, "polnomochie": 100000.0, "tr": "Güç trafosu", "ru": "Силовой трансформатор", "ed_tr": "adet", "ed_ru": "шт", "summa": 960000.0, "data_zakaza": "2026-03-24", "prosrochen": true, "opozdanie_nedel": 11, "postavka_ozhidaetsya": "2026-12-09", "dney_do_zakaza": null, "srochnyy": false, "trebuet_onaya": true, "dney_na_onay": 98}, {"id": "B-ZAK-ILETKEN", "ploshchadka": "B", "resurs": "iletken", "kol": 58.0, "srok_nedel": 10, "data_potrebnosti": "2026-11-02", "razmeshchen": "2026-08-19", "zayavka": {"data": "2026-08-10", "kto_tr": "Hat şefi", "kto_ru": "Начальник участка"}, "onay": {"data": "2026-08-17", "kto_tr": "Genel müdür", "kto_ru": "Генеральный директор", "status": "utverzhden"}, "polnomochie": 100000.0, "tr": "ACSR iletken", "ru": "Провод АС", "ed_tr": "km", "ed_ru": "км", "summa": 568400.0, "data_zakaza": "2026-08-24", "prosrochen": false, "opozdanie_nedel": 0, "postavka_ozhidaetsya": "2026-10-28", "dney_do_zakaza": null, "srochnyy": false, "trebuet_onaya": true, "dney_na_onay": 7}, {"id": "C-ZAK-KONSTRUKCIYA", "ploshchadka": "C", "resurs": "konstrukciya", "kol": 1840.0, "srok_nedel": 14, "data_potrebnosti": "2026-12-21", "razmeshchen": null, "zayavka": {"data": "2026-09-05", "kto_tr": "Proje müdürü", "kto_ru": "Руководитель проекта"}, "onay": {"data": null, "kto_tr": "Genel müdür", "kto_ru": "Генеральный директор", "status": "zhdet"}, "polnomochie": 100000.0, "tr": "Taşıyıcı konstrüksiyon", "ru": "Несущая конструкция", "ed_tr": "ton", "ed_ru": "т", "summa": 3956000.0, "data_zakaza": "2026-09-14", "prosrochen": true, "opozdanie_nedel": 1, "postavka_ozhidaetsya": null, "dney_do_zakaza": -8, "srochnyy": false, "trebuet_onaya": true, "dney_na_onay": 17}, {"id": "C-ZAK-INVERTOR", "ploshchadka": "C", "resurs": "invertor", "kol": 24.0, "srok_nedel": 22, "data_potrebnosti": "2027-03-01", "razmeshchen": null, "zayavka": {"data": "2026-09-16", "kto_tr": "Proje müdürü", "kto_ru": "Руководитель проекта"}, "onay": {"data": null, "kto_tr": "Genel müdür", "kto_ru": "Генеральный директор", "status": "zhdet"}, "polnomochie": 100000.0, "tr": "İnvertör", "ru": "Инвертор", "ed_tr": "adet", "ed_ru": "шт", "summa": 828000.0, "data_zakaza": "2026-09-28", "prosrochen": false, "opozdanie_nedel": 0, "postavka_ozhidaetsya": null, "dney_do_zakaza": 6, "srochnyy": true, "trebuet_onaya": true, "dney_na_onay": 6}, {"id": "C-ZAK-PANEL", "ploshchadka": "C", "resurs": "pv_panel", "kol": 218000.0, "srok_nedel": 18, "data_potrebnosti": "2027-02-15", "razmeshchen": null, "zayavka": {"data": "2026-09-16", "kto_tr": "Proje müdürü", "kto_ru": "Руководитель проекта"}, "onay": {"data": null, "kto_tr": "Genel müdür", "kto_ru": "Генеральный директор", "status": "zhdet"}, "polnomochie": 100000.0, "tr": "Güneş paneli", "ru": "Солнечная панель", "ed_tr": "adet", "ed_ru": "шт", "summa": 25724000.0, "data_zakaza": "2026-10-12", "prosrochen": false, "opozdanie_nedel": 0, "postavka_ozhidaetsya": null, "dney_do_zakaza": 20, "srochnyy": true, "trebuet_onaya": true, "dney_na_onay": 6}, {"id": "C-ZAK-KABEL-ORTA", "ploshchadka": "C", "resurs": "kabel_orta", "kol": 46000.0, "srok_nedel": 12, "data_potrebnosti": "2027-01-11", "razmeshchen": null, "zayavka": {"data": "2026-09-17", "kto_tr": "Proje müdürü", "kto_ru": "Руководитель проекта"}, "onay": {"data": null, "kto_tr": "Genel müdür", "kto_ru": "Генеральный директор", "status": "zhdet"}, "polnomochie": 100000.0, "tr": "OG kablo", "ru": "Кабель СН", "ed_tr": "m", "ed_ru": "м", "summa": 2116000.0, "data_zakaza": "2026-10-19", "prosrochen": false, "opozdanie_nedel": 0, "postavka_ozhidaetsya": null, "dney_do_zakaza": 27, "srochnyy": true, "trebuet_onaya": true, "dney_na_onay": 5}, {"id": "D-ZAK-KABEL", "ploshchadka": "D", "resurs": "kabel_nn", "kol": 4000.0, "srok_nedel": 6, "data_potrebnosti": "2026-10-05", "razmeshchen": "2026-08-21", "zayavka": {"data": "2026-08-18", "kto_tr": "MEP şefi", "kto_ru": "Начальник участка"}, "onay": {"data": null, "kto_tr": "", "kto_ru": "", "status": "ne_trebuetsya"}, "polnomochie": 100000.0, "tr": "AG kablo", "ru": "Кабель НН", "ed_tr": "m", "ed_ru": "м", "summa": 49600.0, "data_zakaza": "2026-08-24", "prosrochen": false, "opozdanie_nedel": 0, "postavka_ozhidaetsya": "2026-10-02", "dney_do_zakaza": null, "srochnyy": false, "trebuet_onaya": false, "dney_na_onay": 0}], "tabel": [{"ploshchadka": "A", "lyudey": 68, "chasov": 11560.0, "pererabotki": 640.0, "subpodryad_lyudey": 34, "subpodryad_chasov": 5780.0, "subpodryad_stavka": 11.5, "subpodryad_tr": "Kalıp ve donatı taşeronu", "subpodryad_ru": "Субподряд на опалубку и арматуру", "kvalifikaciya_tr": "Kalıpçı, demirci, elektrikçi", "kvalifikaciya_ru": "Опалубщики, арматурщики, электромонтажники", "stoimost": 104040.0, "stoimost_pererabotok": 8640.0, "dolya_pererabotok_pct": 5.54, "stoimost_subpodryada": 66470.0, "vsego_chasov": 17340.0, "vsego_lyudey": 102, "dolya_subpodryada_pct": 33.33, "stoimost_vsego": 170510.0}, {"ploshchadka": "B", "lyudey": 94, "chasov": 15980.0, "pererabotki": 1020.0, "subpodryad_lyudey": 62, "subpodryad_chasov": 10540.0, "subpodryad_stavka": 12.2, "subpodryad_tr": "Direk montaj taşeronu", "subpodryad_ru": "Субподряд на монтаж опор", "kvalifikaciya_tr": "Hat montaj ekibi, vinç operatörü", "kvalifikaciya_ru": "Линейные монтажники, крановщики", "stoimost": 143820.0, "stoimost_pererabotok": 13770.0, "dolya_pererabotok_pct": 6.38, "stoimost_subpodryada": 128588.0, "vsego_chasov": 26520.0, "vsego_lyudey": 156, "dolya_subpodryada_pct": 39.74, "stoimost_vsego": 272408.0}, {"ploshchadka": "C", "lyudey": 21, "chasov": 3570.0, "pererabotki": 0.0, "subpodryad_lyudey": 0, "subpodryad_chasov": 0.0, "subpodryad_stavka": 11.0, "subpodryad_tr": "Henüz yok", "subpodryad_ru": "Пока нет", "kvalifikaciya_tr": "Mobilizasyon ekibi", "kvalifikaciya_ru": "Бригада мобилизации", "stoimost": 32130.0, "stoimost_pererabotok": 0.0, "dolya_pererabotok_pct": 0.0, "stoimost_subpodryada": 0.0, "vsego_chasov": 3570.0, "vsego_lyudey": 21, "dolya_subpodryada_pct": 0.0, "stoimost_vsego": 32130.0}, {"ploshchadka": "D", "lyudey": 47, "chasov": 7990.0, "pererabotki": 1240.0, "subpodryad_lyudey": 58, "subpodryad_chasov": 9860.0, "subpodryad_stavka": 13.4, "subpodryad_tr": "Mekanik montaj taşeronu", "subpodryad_ru": "Субподряд на монтаж систем", "kvalifikaciya_tr": "Mekanik ve elektrik ekibi", "kvalifikaciya_ru": "Механики и электромонтажники", "stoimost": 71910.0, "stoimost_pererabotok": 16740.0, "dolya_pererabotok_pct": 15.52, "stoimost_subpodryada": 132124.0, "vsego_chasov": 17850.0, "vsego_lyudey": 105, "dolya_subpodryada_pct": 55.24, "stoimost_vsego": 204034.0}], "tendery": [{"id": "T-01", "obekt_tr": "154/35 kV şalt sahası", "obekt_ru": "ОРУ 154/35 кВ", "srok": "2026-10-06", "summa": 24800000.0, "status_tr": "Teklif hazırlanıyor", "status_ru": "Готовим предложение", "razbor": true}, {"id": "T-02", "obekt_tr": "60 MWac GES — EPC", "obekt_ru": "СЭС 60 MWac — EPC", "srok": "2026-10-20", "summa": 78400000.0, "status_tr": "Değerlendirmede", "status_ru": "На оценке", "razbor": false}, {"id": "T-03", "obekt_tr": "OSB altyapı işleri", "obekt_ru": "Инфраструктура промзоны", "srok": "2026-09-30", "summa": 12300000.0, "status_tr": "Teklif verildi", "status_ru": "Предложение подано", "razbor": false}], "razbor_tendera": {"tender": "T-01", "trebovaniya": [{"tr": "Son 5 yılda en az iki adet 110 kV üstü şalt sahası referansı", "ru": "Не менее двух объектов ОРУ выше 110 кВ за последние 5 лет"}, {"tr": "Teklifle birlikte iş takvimi ve nakit akış tablosu", "ru": "Вместе с предложением — график работ и таблица движения денег"}, {"tr": "Teklif geçerlilik süresi 120 gün", "ru": "Срок действия предложения 120 дней"}], "riski": [{"tr": "Trafo teslim süresi 26 hafta — iş takvimine sığmıyor", "ru": "Срок поставки трансформатора 26 недель не помещается в график"}, {"tr": "Fiyat farkı maddesi yok, çelik fiyatı riski yüklenicide", "ru": "Нет пункта об изменении цены: риск по стали на подрядчике"}, {"tr": "Gecikme cezası günlük %0,1 — üst sınır belirtilmemiş", "ru": "Пеня 0,1 % в день, верхний предел не указан"}], "nehvatka": [{"tr": "Zemin etüt raporu paylaşılmamış", "ru": "Не приложен отчёт об изысканиях"}, {"tr": "Şantiye elektrik ve su bağlantı noktaları belirsiz", "ru": "Не определены точки подключения воды и электричества"}]}, "sravnenie_tendera": [{"resurs": "beton_c30", "tr": "Hazır beton C30", "ru": "Бетон C30", "ed_tr": "m³", "ed_ru": "м³", "v_tendere": 1.0, "norma": 1.02, "fakt": 1.03, "raznica_pct": 3.0, "cena_oshibki": 360.0}, {"resurs": "armatura", "tr": "Donatı demiri", "ru": "Арматура", "ed_tr": "ton", "ed_ru": "т", "v_tendere": 0.115, "norma": 0.12, "fakt": 0.14, "raznica_pct": 21.74, "cena_oshibki": 3625.0}, {"resurs": "trud", "tr": "İşçilik", "ru": "Трудозатраты", "ed_tr": "saat", "ed_ru": "час", "v_tendere": 6.4, "norma": 7.0, "fakt": 7.42, "raznica_pct": 15.94, "cena_oshibki": 918.0}], "akty": [{"id": "A-HAK-08", "ploshchadka": "A", "data_podachi": "2026-09-05", "summa": 1240000.0, "otsrochka_dney": 30}, {"id": "B-HAK-08", "ploshchadka": "B", "data_podachi": "2026-09-08", "summa": 1890000.0, "otsrochka_dney": 30}, {"id": "D-HAK-09", "ploshchadka": "D", "data_podachi": "2026-09-15", "summa": 620000.0, "otsrochka_dney": 30}, {"id": "A-HAK-09", "ploshchadka": "A", "data_podachi": "2026-09-30", "summa": 980000.0, "otsrochka_dney": 30}], "denezhnyy_potok": {"ostatok_na_starte": 1450000.0, "fot_v_nedelyu": 93150.0, "nedeli": [{"nachalo": "2026-09-21", "konec": "2026-09-27", "postupleniya": 0.0, "vyplaty": 1279950.0, "saldo": -1279950.0, "nakoplennoe": 170050.0}, {"nachalo": "2026-09-28", "konec": "2026-10-04", "postupleniya": 0.0, "vyplaty": 376270.0, "saldo": -376270.0, "nakoplennoe": -206220.0}, {"nachalo": "2026-10-05", "konec": "2026-10-11", "postupleniya": 3130000.0, "vyplaty": 93150.0, "saldo": 3036850.0, "nakoplennoe": 2830630.0}, {"nachalo": "2026-10-12", "konec": "2026-10-18", "postupleniya": 620000.0, "vyplaty": 7810350.0, "saldo": -7190350.0, "nakoplennoe": -4359720.0}, {"nachalo": "2026-10-19", "konec": "2026-10-25", "postupleniya": 0.0, "vyplaty": 727950.0, "saldo": -727950.0, "nakoplennoe": -5087670.0}, {"nachalo": "2026-10-26", "konec": "2026-11-01", "postupleniya": 980000.0, "vyplaty": 491030.0, "saldo": 488970.0, "nakoplennoe": -4598700.0}], "platezhi": [{"data": "2026-09-21", "zakaz": null, "tr": "Haftalık işçilik", "ru": "Недельный фонд оплаты труда", "summa": 93150.0, "vid_tr": "İşçilik", "vid_ru": "Труд"}, {"data": "2026-09-22", "zakaz": "C-ZAK-KONSTRUKCIYA", "tr": "Taşıyıcı konstrüksiyon", "ru": "Несущая конструкция", "summa": 1186800.0, "vid_tr": "Sipariş avansı", "vid_ru": "Аванс по заказу"}, {"data": "2026-09-28", "zakaz": "C-ZAK-INVERTOR", "tr": "İnvertör", "ru": "Инвертор", "summa": 248400.0, "vid_tr": "Sipariş avansı", "vid_ru": "Аванс по заказу"}, {"data": "2026-09-28", "zakaz": null, "tr": "Haftalık işçilik", "ru": "Недельный фонд оплаты труда", "summa": 93150.0, "vid_tr": "İşçilik", "vid_ru": "Труд"}, {"data": "2026-10-02", "zakaz": "D-ZAK-KABEL", "tr": "AG kablo", "ru": "Кабель НН", "summa": 34720.0, "vid_tr": "Teslimde ödeme", "vid_ru": "Оплата при поставке"}, {"data": "2026-10-05", "zakaz": null, "tr": "Haftalık işçilik", "ru": "Недельный фонд оплаты труда", "summa": 93150.0, "vid_tr": "İşçilik", "vid_ru": "Труд"}, {"data": "2026-10-12", "zakaz": "C-ZAK-PANEL", "tr": "Güneş paneli", "ru": "Солнечная панель", "summa": 7717200.0, "vid_tr": "Sipariş avansı", "vid_ru": "Аванс по заказу"}, {"data": "2026-10-12", "zakaz": null, "tr": "Haftalık işçilik", "ru": "Недельный фонд оплаты труда", "summa": 93150.0, "vid_tr": "İşçilik", "vid_ru": "Труд"}, {"data": "2026-10-19", "zakaz": "C-ZAK-KABEL-ORTA", "tr": "OG kablo", "ru": "Кабель СН", "summa": 634800.0, "vid_tr": "Sipariş avansı", "vid_ru": "Аванс по заказу"}, {"data": "2026-10-19", "zakaz": null, "tr": "Haftalık işçilik", "ru": "Недельный фонд оплаты труда", "summa": 93150.0, "vid_tr": "İşçilik", "vid_ru": "Труд"}, {"data": "2026-10-26", "zakaz": null, "tr": "Haftalık işçilik", "ru": "Недельный фонд оплаты труда", "summa": 93150.0, "vid_tr": "İşçilik", "vid_ru": "Труд"}, {"data": "2026-10-28", "zakaz": "B-ZAK-ILETKEN", "tr": "ACSR iletken", "ru": "Провод АС", "summa": 397880.0, "vid_tr": "Teslimde ödeme", "vid_ru": "Оплата при поставке"}], "prihody": [{"data": "2026-10-05", "akt": "A-HAK-08", "ploshchadka": "A", "summa": 1240000.0, "vid_tr": "Hakediş tahsilatı", "vid_ru": "Оплата по акту"}, {"data": "2026-10-08", "akt": "B-HAK-08", "ploshchadka": "B", "summa": 1890000.0, "vid_tr": "Hakediş tahsilatı", "vid_ru": "Оплата по акту"}, {"data": "2026-10-15", "akt": "D-HAK-09", "ploshchadka": "D", "summa": 620000.0, "vid_tr": "Hakediş tahsilatı", "vid_ru": "Оплата по акту"}, {"data": "2026-10-30", "akt": "A-HAK-09", "ploshchadka": "A", "summa": 980000.0, "vid_tr": "Hakediş tahsilatı", "vid_ru": "Оплата по акту"}], "razryv": -5087670.0}, "podrazdeleniya": [{"id": "snab", "cvet": "yantar", "ekran": "zakupki", "tr": "Satın alma", "ru": "Снабжение", "znachenie": 5, "vid": "shtuk", "podpis_tr": "riskli sipariş", "podpis_ru": "заказа в зоне риска", "stroki": [{"tr": "Onay bekleyen talep", "ru": "Заявок ждёт утверждения", "znachenie": 4, "vid": "shtuk"}, {"tr": "Sipariş edilecek tutar", "ru": "Предстоит заказать", "znachenie": 32624000.0, "vid": "dengi"}, {"tr": "En yakın son tarih", "ru": "Ближайшая дата заказа", "znachenie": "2026-09-14", "vid": "data"}], "knopki": [{"ekran": "zakupki", "tr": "Sipariş takvimi", "ru": "Календарь заказов"}, {"ekran": "zakupki", "tr": "Onay zinciri", "ru": "Цепочка утверждения", "ssylka": "C-ZAK-KONSTRUKCIYA"}]}, {"id": "sklad", "cvet": "indigo", "ekran": "sklad", "tr": "Depo", "ru": "Склад", "znachenie": 477627.0, "vid": "dengi", "podpis_tr": "depo değeri", "podpis_ru": "стоимость остатков", "stroki": [{"tr": "Depo sayısı", "ru": "Складов", "znachenie": 4, "vid": "shtuk"}, {"tr": "Belgesiz hareket", "ru": "Движений без документа", "znachenie": 1, "vid": "shtuk"}, {"tr": "Depo ile hakediş farkı", "ru": "Расхождение со актом", "znachenie": 20334.0, "vid": "dengi"}], "knopki": [{"ekran": "sklad", "tr": "Depo mevcudu", "ru": "Остатки"}, {"ekran": "akt", "tr": "Hakediş farkı", "ru": "Расхождение с актом", "ssylka": "D-KBL-01"}]}, {"id": "saha", "cvet": "biryuza", "ekran": "akt", "tr": "Saha ve imalat", "ru": "Площадка и работы", "znachenie": 15680.4, "vid": "dengi", "podpis_tr": "norm üstü sarfiyat", "podpis_ru": "перерасход против нормы", "stroki": [{"tr": "İş kalemi", "ru": "Строк акта", "znachenie": 5, "vid": "shtuk"}, {"tr": "Toplam fark", "ru": "Маржа всего", "znachenie": 375601.0, "vid": "dengi"}, {"tr": "Şantiye", "ru": "Площадок", "znachenie": 4, "vid": "shtuk"}], "knopki": [{"ekran": "akt", "tr": "Kalemi aç", "ru": "Раскрыть строку", "ssylka": "A-FND-01"}, {"ekran": "svodka", "tr": "Şantiye durumu", "ru": "Состояние площадок"}]}, {"id": "finans", "cvet": "sliva", "ekran": "dengi", "tr": "Finans", "ru": "Финансы", "znachenie": -5087670.0, "vid": "dengi", "podpis_tr": "en düşük nakit noktası", "podpis_ru": "низшая точка за 6 недель", "stroki": [{"tr": "Kritik hafta", "ru": "Критическая неделя", "znachenie": "2026-10-19", "vid": "data"}, {"tr": "Haftalık işçilik", "ru": "ФОТ в неделю", "znachenie": 93150.0, "vid": "dengi"}, {"tr": "Açık taahhüt", "ru": "Открытые обязательства", "znachenie": 1578000.0, "vid": "dengi"}], "knopki": [{"ekran": "dengi", "tr": "Nakit takvimi", "ru": "Календарь денег"}, {"ekran": "dengi", "tr": "Büyük ödemeler", "ru": "Крупные выплаты"}]}, {"id": "tender", "cvet": "hvoya", "ekran": "tender", "tr": "Tender", "ru": "Тендер", "znachenie": 3, "vid": "shtuk", "podpis_tr": "aktif tender", "podpis_ru": "тендера в работе", "stroki": [{"tr": "Teklif tutarı", "ru": "Сумма предложений", "znachenie": 115500000.0, "vid": "dengi"}, {"tr": "En yakın teslim", "ru": "Ближайшая подача", "znachenie": "2026-09-30", "vid": "data"}, {"tr": "Varsayım sapması", "ru": "Отклонение допущений", "znachenie": 3, "vid": "shtuk"}], "knopki": [{"ekran": "tender", "tr": "Tender çözümlemesi", "ru": "Разбор пакета"}, {"ekran": "tender", "tr": "Varsayım ve saha", "ru": "Допущения против факта"}]}, {"id": "hr", "cvet": "terrakot", "ekran": "personal", "tr": "İnsan kaynakları", "ru": "Персонал", "znachenie": 384, "vid": "shtuk", "podpis_tr": "kişi, taşeron dahil", "podpis_ru": "человек вместе с субподрядом", "stroki": [{"tr": "Taşeron personeli", "ru": "Людей субподряда", "znachenie": 154, "vid": "shtuk"}, {"tr": "Fazla mesai", "ru": "Часов переработок", "znachenie": 2900.0, "vid": "chasy"}, {"tr": "İşçilik maliyeti", "ru": "Стоимость труда", "znachenie": 679082.0, "vid": "dengi"}], "knopki": [{"ekran": "personal", "tr": "Personel tablosu", "ru": "Таблица персонала"}, {"ekran": "personal", "tr": "İş kalemlerine dağılım", "ru": "Разнесение по работам"}]}], "signaly": [{"id": "S-1", "uroven": "krasny", "ploshchadka": "A", "ssylka": "A-FND-01", "tr": "Temellerde donatı sarfiyatı normun üzerinde", "ru": "На фундаментах перерасход арматуры", "otvetstvennyy_tr": "Şantiye şefi", "otvetstvennyy_ru": "Начальник участка", "srok": "2026-09-25"}, {"id": "S-2", "uroven": "krasny", "ploshchadka": "A", "ssylka": "A-ZAK-TRAFO", "tr": "Trafo siparişi gecikmeli verildi, teslim iş takviminin dışında", "ru": "Заказ трансформатора размещён позже расчётной даты, поставка выходит за график", "otvetstvennyy_tr": "Satın alma müdürü", "otvetstvennyy_ru": "Руководитель снабжения", "srok": "2026-09-24"}, {"id": "S-3", "uroven": "krasny", "ploshchadka": "C", "ssylka": "C-ZAK-KONSTRUKCIYA", "tr": "Konstrüksiyon siparişi için son tarih geçti", "ru": "Дата заказа несущих конструкций прошла", "otvetstvennyy_tr": "Proje müdürü", "otvetstvennyy_ru": "Руководитель проекта", "srok": "2026-09-23"}, {"id": "S-4", "uroven": "zheltyy", "ploshchadka": "B", "ssylka": "B-DRK-01", "tr": "Belgesiz depo transferi: 2 ton donatı B'den A'ya", "ru": "Перемещение без документа: 2 т арматуры со склада B на A", "otvetstvennyy_tr": "Depo sorumlusu", "otvetstvennyy_ru": "Кладовщик", "srok": "2026-09-26"}, {"id": "S-5", "uroven": "zheltyy", "ploshchadka": "D", "ssylka": "D-KBL-01", "tr": "Kablo çıkışı norm altında: hakediş miktarı ile depo uyuşmuyor", "ru": "Выдача кабеля ниже нормы: объём в акте и склад не сходятся", "otvetstvennyy_tr": "MEP şefi", "otvetstvennyy_ru": "Начальник участка", "srok": "2026-09-29"}, {"id": "S-6", "uroven": "zheltyy", "ploshchadka": "C", "ssylka": "C-ZAK-INVERTOR", "tr": "İnvertör siparişi için 6 gün kaldı", "ru": "До даты заказа инверторов осталось 6 дней", "otvetstvennyy_tr": "Satın alma müdürü", "otvetstvennyy_ru": "Руководитель снабжения", "srok": "2026-09-28"}, {"id": "S-7", "uroven": "krasny", "ploshchadka": "C", "ssylka": "C-ZAK-KONSTRUKCIYA", "tr": "Talep 17 gündür onay bekliyor: yetki sınırının üzerinde", "ru": "Заявка 17 дней ждёт утверждения: сумма выше полномочий снабжения", "otvetstvennyy_tr": "Genel müdür", "otvetstvennyy_ru": "Генеральный директор", "srok": "2026-09-23"}, {"id": "S-8", "uroven": "krasny", "ploshchadka": "C", "ssylka": "C-ZAK-PANEL", "tr": "Ekim ortasında panel avansı için nakit yetmiyor", "ru": "В середине октября не хватает денег на аванс по панелям", "otvetstvennyy_tr": "Finans müdürü", "otvetstvennyy_ru": "Финансовый директор", "srok": "2026-10-05"}], "voprosy_ii": [{"id": "Q-1", "ssylka": "A-FND-01", "vopros_tr": "Hangi iş kaleminde para hakedişin dışında kalıyor?", "vopros_ru": "На какой работе деньги уходят мимо акта?", "otvet_tr": "A-FND-01: donatı 13.9 ton çıkmış, norm 12.0 ton. Fark 1.9 ton, 2755.0 AZN. Kalemin kârı 14985.0 AZN yerine 11502.0 AZN.", "otvet_ru": "A-FND-01: арматуры выдано 13.9 т при норме 12.0 т. Разница 1.9 т, это 2755.0 AZN. Маржа строки 11502.0 AZN вместо 14985.0 AZN."}, {"id": "Q-2", "ssylka": "A-ZAK-TRAFO", "vopros_tr": "Hangi siparişler iş takvimini tehdit ediyor?", "vopros_ru": "Какие заказы угрожают графику?", "otvet_tr": "5 adet sipariş geç kalmış veya 30 gün içinde verilmeli. En kritiği trafo: son sipariş tarihi 2026-03-24, sipariş 2026-06-10 tarihinde verilmiş, teslim 2026-12-09.", "otvet_ru": "Заказов в зоне риска: 5. Главный — трансформатор: заказать надо было 2026-03-24, размещён 2026-06-10, поставка ожидается 2026-12-09."}, {"id": "Q-3", "ssylka": "D-KBL-01", "vopros_tr": "Depo ile hakediş nerede uyuşmuyor?", "vopros_ru": "Где склад не сходится с актом?", "otvet_tr": "D-KBL-01: hakedişte 18400.0 m, depodan 17580.0 m çıkmış, norm 19320.0 m. Ya miktar fazla yazılmış ya da çıkış kaydı eksik.", "otvet_ru": "D-KBL-01: в акте 18400.0 м, со склада выдано 17580.0 м при норме 19320.0 м. Либо объём завышен, либо выдача не записана."}, {"id": "Q-4", "ssylka": "D-KBL-01", "vopros_tr": "Fazla mesai nerede birikiyor?", "vopros_ru": "Где копятся переработки?", "otvet_tr": "Şantiye D: 1240.0 saat fazla mesai, toplam saatlerin %15.52'i, maliyeti 16740.0 AZN.", "otvet_ru": "Площадка D: 1240.0 часов переработок, это 15.52 % всех часов, стоимость 16740.0 AZN."}, {"id": "Q-5", "ssylka": "B-DRK-01", "vopros_tr": "Hangi depo hareketi belgesiz?", "vopros_ru": "Какое движение склада прошло без документа?", "otvet_tr": "09.08.2026: B deposundan A deposuna 2 ton donatı, belge numarası yok. Bu transfer A'daki fazla sarfiyatın bir kısmını gizliyor.", "otvet_ru": "09.08.2026: со склада B на склад A 2 т арматуры без номера документа. Этот перевод частично скрывает перерасход на площадке A."}, {"id": "Q-6", "ssylka": "C-ZAK-KONSTRUKCIYA", "vopros_tr": "Yeni şantiyede neyi ne zaman sipariş etmeliyiz?", "vopros_ru": "Что и когда заказывать на стартующей площадке?", "otvet_tr": "Şantiye C: 4 kalem, toplam 32624000.0 AZN. Son sipariş tarihleri: Taşıyıcı konstrüksiyon (2026-09-14), İnvertör (2026-09-28), Güneş paneli (2026-10-12), OG kablo (2026-10-19). Tarihler iş takviminden ve tedarik sürelerinden çıkıyor.", "otvet_ru": "Площадка C: 4 позиции, всего 32624000.0 AZN. Крайние даты заказа: Несущая конструкция (2026-09-14), Инвертор (2026-09-28), Солнечная панель (2026-10-12), Кабель СН (2026-10-19). Даты получены из графика работ и сроков поставки."}]};
+const SLOVAR = {"zagolovok": {"tr": "Entegre kontrol paneli", "ru": "Единый пульт управления"}, "podzagolovok": {"tr": "Dört şantiye, tek veri zinciri", "ru": "Четыре площадки, одна цепочка данных"}, "demo": {"tr": "Örnek veriler", "ru": "Примерные данные"}, "demo_poyasnenie": {"tr": "Gerçek Avensol verisi değildir; sistemi göstermek için hazırlanmıştır", "ru": "Это не данные Avensol: числа вымышленные, стенд показывает устройство системы"}, "yazyk": {"tr": "Dil", "ru": "Язык"}, "vkladka_svodka": {"tr": "Yönetim özeti", "ru": "Сводка"}, "vkladka_sklad": {"tr": "Depo", "ru": "Склад"}, "vkladka_akt": {"tr": "Hakediş ↔ Maliyet", "ru": "Акт и затраты"}, "vkladka_zakupki": {"tr": "Satın alma planı", "ru": "План закупок"}, "vkladka_tender": {"tr": "Tender", "ru": "Тендер"}, "vkladka_personal": {"tr": "İK ve işçilik", "ru": "Персонал"}, "vkladka_ii": {"tr": "Yapay zekâ asistanı", "ru": "ИИ-помощник"}, "byudzhet": {"tr": "Bütçe", "ru": "Бюджет"}, "fakt": {"tr": "Gerçekleşen", "ru": "Факт"}, "obyazatelstva": {"tr": "Açık taahhüt", "ru": "Обязательства"}, "predstoit_zakazat": {"tr": "Sipariş edilecek", "ru": "Предстоит заказать"}, "ostatok_byudzheta": {"tr": "Kalan bütçe", "ru": "Остаток бюджета"}, "vypolneno": {"tr": "İlerleme", "ru": "Выполнено"}, "lyudey": {"tr": "Personel", "ru": "Людей"}, "zhdet_resheniya": {"tr": "Karar bekleyenler", "ru": "Ждёт решения"}, "signal": {"tr": "Durum", "ru": "Сигнал"}, "otvetstvennyy": {"tr": "Sorumlu", "ru": "Ответственный"}, "srok": {"tr": "Son tarih", "ru": "Срок"}, "pereyti": {"tr": "Satıra git", "ru": "К строке"}, "ploshchadka": {"tr": "Şantiye", "ru": "Площадка"}, "vsego_po_chetyrem": {"tr": "Dört şantiye toplamı", "ru": "Итого по четырём площадкам"}, "marzha_sobrana": {"tr": "Hakediş ile maliyet farkı", "ru": "Разница между актом и себестоимостью"}, "poteryano_vsego": {"tr": "Norma göre kaybedilen", "ru": "Потеряно против нормы"}, "rashozhdeniya": {"tr": "Depo ile hakediş uyuşmazlığı", "ru": "Расхождение склада и акта"}, "sklad_ostatki": {"tr": "Depo mevcudu", "ru": "Остатки на складе"}, "sklad_dvizheniya": {"tr": "Depo hareketleri", "ru": "Движения склада"}, "resurs": {"tr": "Malzeme", "ru": "Ресурс"}, "kolichestvo": {"tr": "Miktar", "ru": "Количество"}, "stoimost": {"tr": "Değer", "ru": "Стоимость"}, "data": {"tr": "Tarih", "ru": "Дата"}, "tip_dvizheniya": {"tr": "Hareket", "ru": "Движение"}, "prihod": {"tr": "Giriş", "ru": "Приход"}, "vydacha": {"tr": "Çıkış", "ru": "Выдача"}, "peremeshchenie": {"tr": "Transfer", "ru": "Перемещение"}, "kto": {"tr": "Kim", "ru": "Кто"}, "dokument": {"tr": "Belge", "ru": "Документ"}, "bez_dokumenta": {"tr": "belge yok", "ru": "без документа"}, "rabota": {"tr": "İş kalemi", "ru": "Работа"}, "kuda": {"tr": "Hedef depo", "ru": "Куда"}, "akt_stroki": {"tr": "Hakediş kalemleri", "ru": "Строки акта"}, "akt_podskazka": {"tr": "Satıra tıklayın: kalemin içindeki kaynaklar açılır", "ru": "Нажмите на строку: раскроются ресурсы внутри работы"}, "obem": {"tr": "Miktar", "ru": "Объём"}, "cena_akt": {"tr": "Birim fiyat", "ru": "Цена за единицу"}, "summa_akt": {"tr": "Hakediş tutarı", "ru": "Сумма по акту"}, "summa_zatrat": {"tr": "Gerçek maliyet", "ru": "Себестоимость"}, "marzha": {"tr": "Kâr", "ru": "Маржа"}, "marzha_po_norme": {"tr": "Norma göre olması gereken kâr", "ru": "Должно быть по норме"}, "norma": {"tr": "Norm", "ru": "Норма"}, "teoreticheskiy": {"tr": "Norma göre", "ru": "По норме"}, "vydano_fakt": {"tr": "Fiili", "ru": "Факт"}, "otklonenie": {"tr": "Sapma", "ru": "Отклонение"}, "cena_otkloneniya": {"tr": "Farkın bedeli", "ru": "Цена отклонения"}, "iz_sklada": {"tr": "depodan", "ru": "со склада"}, "iz_tabelya": {"tr": "puantajdan", "ru": "из табеля"}, "odna_stroka_mnogo_resursov": {"tr": "İşveren için tek kalem, maliyette birden çok kaynak", "ru": "Для заказчика одна строка, в себестоимости несколько ресурсов"}, "zakupki_zagolovok": {"tr": "Sipariş takvimi", "ru": "Календарь заказов"}, "zakupki_pravilo": {"tr": "Son sipariş tarihi = ihtiyaç tarihi − tedarik süresi", "ru": "Дата заказа = дата потребности − срок поставки"}, "srok_postavki": {"tr": "Tedarik süresi", "ru": "Срок поставки"}, "nedel": {"tr": "hafta", "ru": "нед."}, "data_zakaza": {"tr": "Son sipariş tarihi", "ru": "Заказать не позже"}, "data_potrebnosti": {"tr": "İhtiyaç tarihi", "ru": "Нужен на площадке"}, "razmeshchen": {"tr": "Sipariş verildi", "ru": "Заказ размещён"}, "ne_razmeshchen": {"tr": "Sipariş verilmedi", "ru": "Не размещён"}, "postavka_ozhidaetsya": {"tr": "Beklenen teslim", "ru": "Поставка ожидается"}, "prosrochen": {"tr": "Gecikti", "ru": "Просрочен"}, "srochnyy": {"tr": "30 gün içinde", "ru": "В ближайшие 30 дней"}, "v_grafike": {"tr": "Takvimde", "ru": "В графике"}, "dney_ostalos": {"tr": "gün kaldı", "ru": "дней осталось"}, "opozdanie": {"tr": "gecikme", "ru": "опоздание"}, "vse_ploshchadki": {"tr": "Tüm şantiyeler", "ru": "Все площадки"}, "tender_reestr": {"tr": "Tender listesi", "ru": "Реестр тендеров"}, "obekt": {"tr": "İş", "ru": "Объект"}, "srok_podachi": {"tr": "Teklif tarihi", "ru": "Срок подачи"}, "summa": {"tr": "Tutar", "ru": "Сумма"}, "status": {"tr": "Durum", "ru": "Статус"}, "razbor_paketa": {"tr": "Tender dosyası çözümlemesi", "ru": "Разбор тендерного пакета"}, "trebovaniya": {"tr": "Şartlar", "ru": "Требования"}, "riski": {"tr": "Riskler", "ru": "Риски"}, "nehvatka": {"tr": "Eksik belgeler", "ru": "Не хватает документов"}, "sravnenie_zagolovok": {"tr": "Teklif varsayımı ile saha sonucu", "ru": "Тендерное допущение против факта"}, "v_tendere": {"tr": "Teklifte", "ru": "В тендере"}, "fakt_na_edinicu": {"tr": "Sahada", "ru": "На площадке"}, "raznica": {"tr": "Fark", "ru": "Разница"}, "cena_oshibki": {"tr": "Yüz birimde bedeli", "ru": "Цена ошибки на объёме"}, "vyvod_tendera": {"tr": "Sonraki teklif bu sayılarla hesaplanır", "ru": "Следующее предложение считается по этим числам"}, "personal_zagolovok": {"tr": "Personel ve işçilik", "ru": "Персонал и трудозатраты"}, "chasov": {"tr": "Saat", "ru": "Часов"}, "pererabotki": {"tr": "Fazla mesai", "ru": "Переработки"}, "dolya_pererabotok": {"tr": "Fazla mesai payı", "ru": "Доля переработок"}, "stoimost_truda": {"tr": "İşçilik maliyeti", "ru": "Стоимость труда"}, "stoimost_pererabotok": {"tr": "Fazla mesai maliyeti", "ru": "Стоимость переработок"}, "kvalifikaciya": {"tr": "Ekip", "ru": "Состав"}, "trud_po_rabotam": {"tr": "İş kalemlerine dağılım", "ru": "Распределение по работам"}, "ii_zagolovok": {"tr": "Sorularınız, verinin üzerinden", "ru": "Вопросы поверх данных"}, "ii_podskazka": {"tr": "Bir soru seçin", "ru": "Выберите вопрос"}, "ii_snoska": {"tr": "Cevap dış bir aboneliğe değil, bu panelin verisine dayanır. Veri bağlı değilse asistanın cevaplayacağı bir şey yoktur.", "ru": "Ответ опирается на данные стенда, а не на внешнюю подписку. Если данные не связаны, помощнику нечего отвечать."}, "vkladka_dengi": {"tr": "Nakit akışı", "ru": "Денежный поток"}, "soglasovanie": {"tr": "Talep ve onay zinciri", "ru": "Заявка и утверждение"}, "zayavka": {"tr": "Talep", "ru": "Заявка"}, "onay": {"tr": "Onay", "ru": "Утверждение"}, "onay_zhdet": {"tr": "Onay bekliyor", "ru": "Ждёт утверждения"}, "onay_utverzhden": {"tr": "Onaylandı", "ru": "Утверждено"}, "onay_ne_trebuetsya": {"tr": "Yetki dahilinde", "ru": "В пределах полномочий"}, "polnomochie": {"tr": "Satın alma yetki sınırı", "ru": "Полномочие снабжения"}, "vyshe_polnomochiy": {"tr": "yetki sınırının üzerinde", "ru": "выше полномочий"}, "dney_na_onay": {"tr": "onayda geçen gün", "ru": "дней на утверждении"}, "zhdut_onaya": {"tr": "Onay bekleyen talepler", "ru": "Ждут утверждения"}, "pochemu_opozdal": {"tr": "Gecikmenin nedeni zincirde görünür", "ru": "Причина опоздания видна в цепочке"}, "nedelya": {"tr": "Hafta", "ru": "Неделя"}, "postupleniya": {"tr": "Tahsilat", "ru": "Поступления"}, "vyplaty": {"tr": "Ödeme", "ru": "Выплаты"}, "saldo": {"tr": "Haftalık fark", "ru": "Сальдо недели"}, "nakoplennoe": {"tr": "Dönem sonu nakit", "ru": "Остаток на конец недели"}, "ostatok_na_starte": {"tr": "Başlangıç nakiti", "ru": "Деньги на старте"}, "fot_v_nedelyu": {"tr": "Haftalık işçilik", "ru": "Фонд оплаты труда в неделю"}, "razryv": {"tr": "En düşük nakit noktası", "ru": "Низшая точка"}, "razryv_poyasnenie": {"tr": "Bu bir tahmindir: siparişler zamanında verilirse ortaya çıkan ihtiyaç. Karar bugün alınır — avans, vade, kredi ya da tarih değişikliği.", "ru": "Это прогноз: столько нужно, если разместить заказы вовремя. Решение принимается сегодня — аванс, отсрочка, кредит или сдвиг даты."}, "krupnye_platezhi": {"tr": "Büyük ödemeler", "ru": "Крупные выплаты"}, "prihody_po_aktam": {"tr": "Hakediş tahsilatları", "ru": "Поступления по актам"}, "vid_platezha": {"tr": "Tür", "ru": "Вид"}, "akt": {"tr": "Hakediş", "ru": "Акт"}, "svoi": {"tr": "Kendi personelimiz", "ru": "Свои"}, "subpodryad": {"tr": "Taşeron", "ru": "Субподряд"}, "dolya_subpodryada": {"tr": "Taşeron payı", "ru": "Доля субподряда"}, "vsego_lyudey": {"tr": "Toplam personel", "ru": "Людей всего"}, "stoimost_vsego": {"tr": "Toplam işçilik maliyeti", "ru": "Стоимость труда всего"}, "kod_zatrat": {"tr": "Maliyet kodu: tender, bütçe, depo ve hakediş aynı kodu kullanır", "ru": "Код затрат: тендер, бюджет, склад и акт пользуются одним кодом"}, "vkladka_otdely": {"tr": "Bölümler", "ru": "Подразделения"}, "vkladka_sunum": {"tr": "Sunum", "ru": "Презентация"}, "otdely_zagolovok": {"tr": "Her bölüm kendi ekranını açar", "ru": "Каждое подразделение открывает свой экран"}, "otdely_podzagolovok": {"tr": "Aynı veri, altı farklı karar", "ru": "Одни данные — шесть разных решений"}, "otkryt": {"tr": "Aç", "ru": "Открыть"}, "materialy": {"tr": "Materyaller", "ru": "Материалы"}, "sayt_kompanii": {"tr": "Avensol web sitesi", "ru": "Сайт компании"}, "sayt_poyasnenie": {"tr": "avensol.az — şirketin kendi sitesi, yeni sekmede açılır", "ru": "avensol.az — сайт компании, откроется в новой вкладке"}, "prezentaciya_kartochka": {"tr": "Ön görüşme sunumu", "ru": "Презентация к встрече"}, "prezentaciya_poyasnenie": {"tr": "11 sayfa, panelin içinde açılır", "ru": "11 страниц, открывается прямо в пульте"}, "skachat_pdf": {"tr": "PDF olarak kaydet", "ru": "Сохранить в PDF"}, "pdf_poyasnenie": {"tr": "Tarayıcının yazdırma penceresi açılır, hedef olarak PDF seçin", "ru": "Откроется окно печати браузера, выберите «Сохранить как PDF»"}, "slayd": {"tr": "Sayfa", "ru": "Страница"}, "dalshe": {"tr": "İleri", "ru": "Дальше"}, "nazad": {"tr": "Geri", "ru": "Назад"}, "vse_slaydy": {"tr": "Tümünü göster", "ru": "Показать все"}, "po_odnomu": {"tr": "Tek tek", "ru": "По одной"}};
+const SLAYDY = [{"id": "S1", "tip": "oblozhka", "nadzagolovok_tr": "AVENSOL · Ön görüşme · Eylül 2026", "nadzagolovok_ru": "AVENSOL · Предварительная встреча · сентябрь 2026", "zagolovok_tr": "Entegre EPC yönetim ve kontrol sistemi", "zagolovok_ru": "Единая система управления и контроля EPC", "podzagolovok_tr": "Dört şantiyeden tek yönetim görünümüne", "podzagolovok_ru": "От четырёх площадок к единому виду управления", "metki_tr": ["Depo", "Maliyet", "Planlama", "Tender", "Yapay zekâ"], "metki_ru": ["Склад", "Себестоимость", "Планирование", "Тендер", "ИИ-помощник"]}, {"id": "S2", "tip": "punkty", "nomer": "02", "zagolovok_tr": "Avensol'u nasıl anlıyoruz", "zagolovok_ru": "Как мы понимаем Avensol", "punkty": [{"tr": "EPC ve saha uygulaması", "ru": "EPC и строительно-монтажные работы", "text_tr": "Mühendislik, tedarik, inşaat, montaj ve devreye alma", "text_ru": "Проектирование, поставка, строительство, монтаж и ввод"}, {"tr": "Enerji altyapısı", "ru": "Энергетическая инфраструктура", "text_tr": "Trafo merkezleri, iletim hatları, yenilenebilir enerji ve MEP", "text_ru": "Подстанции, линии передачи, возобновляемая энергетика и инженерные системы"}, {"tr": "Aktif büyüme", "ru": "Активный рост", "text_tr": "Yeni sahalar, planlama ve teknik ofis kadroları", "text_ru": "Новые площадки, планирование и технический офис"}, {"tr": "Proje bazlı rol", "ru": "Роль зависит от контракта", "text_tr": "Her sözleşmede rol ayrı teyit edilir: EPC, paket yüklenicisi veya MEP", "text_ru": "В каждом договоре роль своя: EPC, пакетный подрядчик или инженерные системы"}], "snoska_tr": "Dört şantiyenin kapsamı ve rolü toplantıda birlikte netleştirilecek", "snoska_ru": "Состав и роль по четырём площадкам уточняем вместе на встрече"}, {"id": "S3", "tip": "punkty", "nomer": "03", "zagolovok_tr": "Para ve zaman nerede kayboluyor", "zagolovok_ru": "Где теряются деньги и время", "punkty": [{"tr": "Depo", "ru": "Склад", "text_tr": "Giriş, çıkış, transfer ve sayım aynı zincirde görünmüyor", "text_ru": "Приход, выдача, перемещение и инвентаризация не в одной цепочке"}, {"tr": "Maliyet", "ru": "Себестоимость", "text_tr": "Hakediş pozu ile gerçek maliyet bileşenleri ayrışmıyor", "text_ru": "Строка акта и реальные составляющие затрат не разделяются"}, {"tr": "Planlama", "ru": "Планирование", "text_tr": "İş takvimi malzeme ihtiyacını ve sipariş tarihini üretmiyor", "text_ru": "График работ не даёт потребности в материалах и дат заказа"}, {"tr": "Yönetim", "ru": "Управление", "text_tr": "Sorun rapora düştüğünde aksiyon için geç kalınıyor", "text_ru": "Когда проблема попала в отчёт, действовать уже поздно"}], "snoska_tr": "Veri var; eksik olan bağlantı ve sorumluya giden sinyal", "snoska_ru": "Данные есть. Нет связи между ними и сигнала ответственному"}, {"id": "S4", "tip": "razlozhenie", "nomer": "04", "zagolovok_tr": "Hakediş pozu ile maliyet yapısı farklıdır", "zagolovok_ru": "Строка акта и структура затрат — разные вещи", "levo_zagolovok_tr": "İşveren hakedişi", "levo_zagolovok_ru": "Акт заказчику", "levo_poz_tr": "BETONARME İMALATI", "levo_poz_ru": "ЖЕЛЕЗОБЕТОН", "levo_kol_tr": "tek poz · 100 m³", "levo_kol_ru": "одна строка · 100 м³", "pravo_zagolovok_tr": "Gerçek maliyet kırılımı", "pravo_zagolovok_ru": "Реальная структура затрат", "resursy": [{"tr": "Hazır beton", "ru": "Бетон", "ed_tr": "m³", "ed_ru": "м³"}, {"tr": "Donatı demiri", "ru": "Арматура", "ed_tr": "ton", "ed_ru": "т"}, {"tr": "Kalıp", "ru": "Опалубка", "ed_tr": "m²", "ed_ru": "м²"}, {"tr": "İşçilik", "ru": "Труд", "ed_tr": "saat", "ed_ru": "час"}, {"tr": "Pompa ve ekipman", "ru": "Насос и техника", "ed_tr": "saat", "ed_ru": "час"}, {"tr": "Test, fire ve sarf", "ru": "Испытания, потери, расходники", "ed_tr": "AZN", "ed_ru": "AZN"}], "snoska_tr": "Gelirde tek kalem, maliyette altı kaynak. Fark burada doğar", "snoska_ru": "В выручке одна позиция, в затратах шесть ресурсов. Разница рождается здесь"}, {"id": "S5", "tip": "cepochka", "nomer": "05", "zagolovok_tr": "Tekliften tahsilata tek veri zinciri", "zagolovok_ru": "От предложения до оплаты — одна цепочка данных", "zvenya": [{"tr": "Tender", "ru": "Тендер", "text_tr": "BOQ ve varsayımlar", "text_ru": "Объёмы и допущения"}, {"tr": "Bütçe", "ru": "Бюджет", "text_tr": "WBS ve maliyet kodu", "text_ru": "Структура работ и код затрат"}, {"tr": "Satın alma", "ru": "Закупка", "text_tr": "Talep, onay, sipariş", "text_ru": "Заявка, утверждение, заказ"}, {"tr": "Depo", "ru": "Склад", "text_tr": "Giriş, transfer, çıkış", "text_ru": "Приход, перемещение, выдача"}, {"tr": "Saha", "ru": "Площадка", "text_tr": "Miktar ve tüketim", "text_ru": "Объёмы и расход"}, {"tr": "Finans", "ru": "Финансы", "text_tr": "Hakediş ve nakit", "text_ru": "Акт и деньги"}], "snoska_tr": "Her hareket aynı proje, sözleşme, maliyet kodu, lokasyon ve sorumluyla kaydedilir", "snoska_ru": "Каждое движение записывается с тем же проектом, договором, кодом затрат, местом и ответственным"}, {"id": "S6", "tip": "sloi", "nomer": "06", "zagolovok_tr": "Sistemin dört katmanı", "zagolovok_ru": "Четыре слоя системы", "sloi": [{"nomer": "1", "tr": "Merkezi veri", "ru": "Единые данные", "text_tr": "Proje, malzeme, personel, belge ve işlem kayıtlarının tek kaynağı", "text_ru": "Один источник по проектам, материалам, людям, документам и операциям"}, {"nomer": "2", "tr": "İş akışı ve onay", "ru": "Процессы и утверждение", "text_tr": "Talep, teslim, transfer, hakediş, yetki ve eskalasyon", "text_ru": "Заявка, приёмка, перемещение, акт, полномочия и эскалация"}, {"nomer": "3", "tr": "Kontrol ve gösterge", "ru": "Контроль и показатели", "text_tr": "Bütçe sapması, stok farkı, gecikme, nakit ve risk", "text_ru": "Отклонение бюджета, разница склада, задержки, деньги и риски"}, {"nomer": "4", "tr": "Yapay zekâ asistanı", "ru": "ИИ-помощник", "text_tr": "Rapor yorumlama, tender analizi, erken uyarı, doğal dilde soru", "text_ru": "Разбор отчётов, анализ тендеров, раннее предупреждение, вопрос обычными словами"}], "snoska_tr": "Tutarlılığı asistan değil; veri modeli, yetki kuralları ve işlem geçmişi sağlar", "snoska_ru": "Порядок держит не помощник, а модель данных, права и история операций"}, {"id": "S7", "tip": "zony", "nomer": "07", "zagolovok_tr": "Sekiz bağlantılı kontrol alanı", "zagolovok_ru": "Восемь связанных зон контроля", "zony": [{"tr": "Depo ve stok", "ru": "Склад и запасы"}, {"tr": "Satın alma", "ru": "Снабжение"}, {"tr": "Maliyet kontrolü", "ru": "Контроль себестоимости"}, {"tr": "Planlama", "ru": "Планирование"}, {"tr": "Hakediş", "ru": "Акты"}, {"tr": "Tender", "ru": "Тендер"}, {"tr": "İK ve işçilik", "ru": "Персонал и труд"}, {"tr": "Doküman ve risk", "ru": "Документы и риски"}], "snoska_tr": "Pilot hepsini birden almaz: iki üç alanla başlar, aynı kodlar üzerinden büyür", "snoska_ru": "Пилот не берёт всё сразу: начинает с двух-трёх зон и растёт на тех же кодах"}, {"id": "S8", "tip": "roli", "nomer": "08", "zagolovok_tr": "Aynı veriden farklı kararlar", "zagolovok_ru": "Одни данные — разные решения", "roli": [{"tr": "Koordinatör", "ru": "Координатор", "text_tr": "Dört şantiyenin ilerlemesi, gecikmeler ve kritik aksiyonlar", "text_ru": "Ход четырёх площадок, задержки и первоочередные действия"}, {"tr": "Finans müdürü", "ru": "Финансовый директор", "text_tr": "Gerçek maliyet, açık taahhüt, stok değeri ve nakit ihtiyacı", "text_ru": "Реальная себестоимость, обязательства, стоимость склада и потребность в деньгах"}, {"tr": "Tender müdürü", "ru": "Руководитель тендеров", "text_tr": "Teklif varsayımları ile sahadaki fiili sonuçların karşılaştırılması", "text_ru": "Сравнение тендерных допущений с фактом на площадке"}, {"tr": "İK müdürü", "ru": "Директор по персоналу", "text_tr": "Personel, taşeron, puantaj, fazla mesai ve işçiliğin projelere dağılımı", "text_ru": "Люди, субподряд, табель, переработки и разнесение труда по проектам"}, {"tr": "Patron", "ru": "Владелец", "text_tr": "Kârlılık, nakit, risk ve karar bekleyen konular tek ekranda", "text_ru": "Прибыль, деньги, риски и то, что ждёт решения, — на одном экране"}], "snoska_tr": "Her yönetici kendi ekranını görür, sayılar ortak kalır", "snoska_ru": "Каждый руководитель видит свой экран, числа при этом общие"}, {"id": "S9", "tip": "cepochka", "nomer": "09", "zagolovok_tr": "Önerilen pilot: bir şantiye, uçtan uca bir zincir", "zagolovok_ru": "Пилот: одна площадка, одна сквозная цепочка", "zvenya": [{"tr": "Talep", "ru": "Заявка", "text_tr": "Kim istedi, kim onayladı", "text_ru": "Кто запросил, кто утвердил"}, {"tr": "Sipariş", "ru": "Заказ", "text_tr": "Tedarik süresi ve teslim", "text_ru": "Срок поставки и приёмка"}, {"tr": "Depo", "ru": "Склад", "text_tr": "Giriş ve çıkış", "text_ru": "Приход и выдача"}, {"tr": "Tüketim", "ru": "Расход", "text_tr": "İş kalemine göre", "text_ru": "По строке работ"}, {"tr": "Maliyet", "ru": "Себестоимость", "text_tr": "Norm ve fiili", "text_ru": "Норма и факт"}, {"tr": "Sinyal", "ru": "Сигнал", "text_tr": "Sorumlu ve son tarih", "text_ru": "Ответственный и срок"}], "snoska_tr": "Şantiyeyi Avensol seçer. Başlayan bir saha, bir iki malzeme grubu yeterlidir", "snoska_ru": "Площадку выбирает Avensol. Достаточно стройки, которая начинается, и одной-двух групп материалов"}, {"id": "S10", "tip": "etapy", "nomer": "10", "zagolovok_tr": "İlk 90 gün", "zagolovok_ru": "Первые 90 дней", "etapy": [{"srok_tr": "10 iş günü", "srok_ru": "10 рабочих дней", "tr": "Teşhis", "ru": "Диагностика", "text_tr": "Mevcut sistemler, dosyalar, kodlar ve onay akışları; ölçüm tabanı", "text_ru": "Системы, файлы, коды и согласования; замер базы отклонений"}, {"srok_tr": "Gün 11–35", "srok_ru": "Дни 11–35", "tr": "Tasarım", "ru": "Проектирование", "text_tr": "Ortak veri modeli, süreçler, yetki matrisi ve raporlar", "text_ru": "Модель данных, процессы, матрица полномочий и отчёты"}, {"srok_tr": "Gün 36–70", "srok_ru": "Дни 36–70", "tr": "Pilot", "ru": "Пилот", "text_tr": "Seçilen şantiyede depo, maliyet ve planlama bağlantısı", "text_ru": "На выбранной площадке связь склада, себестоимости и планирования"}, {"srok_tr": "Gün 71–90", "srok_ru": "Дни 71–90", "tr": "Yaygınlaştırma", "ru": "Распространение", "text_tr": "Eğitim, yönetim ekranı ve diğer şantiyelere geçiş planı", "text_ru": "Обучение, экран руководителя и план перехода на другие площадки"}], "snoska_tr": "İlk sonuç: yazılım seçiminden önce çalışan süreç, temiz veri ve ölçülebilir kontrol", "snoska_ru": "Первый результат — рабочий процесс, чистые данные и измеримый контроль ещё до выбора софта"}, {"id": "S11", "tip": "resheniya", "nomer": "11", "zagolovok_tr": "Bu görüşmede netleşecek kararlar", "zagolovok_ru": "Что решаем на этой встрече", "punkty": [{"tr": "Dört şantiyenin kapsamı ve Avensol'un sözleşmesel rolü", "ru": "Состав четырёх площадок и договорная роль Avensol"}, {"tr": "Bugün kullanılan muhasebe, depo, planlama ve doküman araçları", "ru": "Чем сегодня ведутся бухгалтерия, склад, планирование и документы"}, {"tr": "İlk üç ayda çözülecek üç öncelikli problem", "ru": "Три первоочередные проблемы на ближайшие три месяца"}, {"tr": "Pilot şantiye ve ölçülecek başarı göstergeleri", "ru": "Площадка пилота и показатели, по которым считаем результат"}, {"tr": "Kararı kim onaylar ve patron sistemi ne zaman görür", "ru": "Кто утверждает решение и когда систему увидит владелец"}, {"tr": "Teşhis çalışmasının başlangıç tarihi ve koşulları", "ru": "Дата старта диагностики и её условия"}], "snoska_tr": "Amaç: ölçülebilir bir teşhisle başlamak ve pilot kapsamını birlikte belirlemek", "snoska_ru": "Цель — начать с измеримой диагностики и вместе определить границы пилота"}];
+
+let YAZYK = "tr";
+let VKLADKA = "otdely";
+let SLAYD = 0;
+let SLAYDY_PODRYAD = false;
+let SKLAD = "A";
+let ZAKUPKI = "C";
+let PODSVETKA = null;
+const RASKRYTO = new Set(["A-FND-01"]);
+let VOPROS = DANNYE.voprosy_ii[0].id;
+
+const EKRANY = [
+  {kod: "otdely", klyuch: "vkladka_otdely"},
+  {kod: "svodka", klyuch: "vkladka_svodka"},
+  {kod: "sklad", klyuch: "vkladka_sklad"},
+  {kod: "akt", klyuch: "vkladka_akt"},
+  {kod: "zakupki", klyuch: "vkladka_zakupki"},
+  {kod: "dengi", klyuch: "vkladka_dengi"},
+  {kod: "tender", klyuch: "vkladka_tender"},
+  {kod: "personal", klyuch: "vkladka_personal"},
+  {kod: "ii", klyuch: "vkladka_ii"},
+  {kod: "sunum", klyuch: "vkladka_sunum"}
+];
+
+/* --- мелкие помощники --- */
+const t = (k) => (SLOVAR[k] || {})[YAZYK] || k;
+const nz = (o, osnova) => (osnova ? o[osnova + "_" + YAZYK] : o[YAZYK]);
+const lokal = () => (YAZYK === "tr" ? "tr-TR" : "ru-RU");
+const ekran = (kod) => document.getElementById("ekran-" + kod);
+
+function chislo(x, znakov) {
+  const z = znakov === undefined ? 0 : znakov;
+  return new Intl.NumberFormat(lokal(), {minimumFractionDigits: z, maximumFractionDigits: z}).format(x);
+}
+function dengi(x, znakov) {
+  return chislo(x, znakov) + " " + DANNYE.meta.valyuta;
+}
+function data(s) {
+  if (!s) return "—";
+  const [g, a, d] = s.split("-");
+  return d + "." + a + "." + g;
+}
+function ekranirovat(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function tablica(zagolovki, stroki, klass) {
+  const shapka = zagolovki.map(z => '<th' + (z.ch ? ' class="ch"' : '') + '>' + ekranirovat(z.tekst) + '</th>').join("");
+  return '<div class="tabl"><table' + (klass ? ' class="' + klass + '"' : '') + '>' +
+         '<thead><tr>' + shapka + '</tr></thead><tbody>' + stroki.join("") + '</tbody></table></div>';
+}
+function plashka_demo() {
+  return '<span class="znachok seryy">' + ekranirovat(t("demo")) + '</span>';
+}
+function zagolovok_ekrana(tekst, sprava) {
+  return '<div class="zagolovok-ekrana"><h2>' + ekranirovat(tekst) + '</h2>' +
+         '<div class="knopki">' + (sprava || "") + plashka_demo() + '</div></div>';
+}
+function rabota_po_id(id) { return DANNYE.raboty.find(r => r.id === id); }
+function zakaz_po_id(id) { return DANNYE.zakazy.find(z => z.id === id); }
+
+/* --- переход по сигналу --- */
+function pereyti(ssylka) {
+  PODSVETKA = ssylka;
+  const rabota = rabota_po_id(ssylka);
+  if (rabota) {
+    RASKRYTO.add(ssylka);
+    VKLADKA = "akt";
+  } else {
+    const zakaz = zakaz_po_id(ssylka);
+    if (zakaz) { ZAKUPKI = zakaz.ploshchadka; VKLADKA = "zakupki"; }
+  }
+  narisovat();
+  const stroka = document.querySelector("tr.podsvechena, .zakaz.podsvechena");
+  if (stroka && stroka.scrollIntoView) stroka.scrollIntoView({block: "center", behavior: "smooth"});
+}
+
+/* --- экран: подразделения --- */
+function znachenie_vida(v, vid) {
+  if (vid === "dengi") return dengi(v);
+  if (vid === "data") return data(v);
+  if (vid === "chasy") return chislo(v) + " " + (YAZYK === "tr" ? "saat" : "ч");
+  return chislo(v);
+}
+
+function narisovat_otdely() {
+  const plitki = DANNYE.podrazdeleniya.map(o => {
+    const stroki = o.stroki.map(s =>
+      '<div class="para"><span class="tihiy">' + ekranirovat(nz(s)) + '</span>' +
+      '<span>' + ekranirovat(znachenie_vida(s.znachenie, s.vid)) + '</span></div>').join("");
+    const knopki = o.knopki.map(k => {
+      const argumenty = k.ssylka ? [k.ekran, k.ssylka] : [k.ekran];
+      const vyzov = "otkryt(" + argumenty.map(x => JSON.stringify(x)).join(",") + ")";
+      return '<button type="button" class="knopka" onclick=' + JSON.stringify(vyzov) + '>' +
+        ekranirovat(nz(k)) + '</button>';
+    }).join("");
+    return '<article class="plitka ' + o.cvet + '">' +
+      '<header>' +
+      '<h3>' + ekranirovat(nz(o)) + '</h3></header>' +
+      '<div class="plitka-telo">' +
+      '<div class="krupno">' + ekranirovat(znachenie_vida(o.znachenie, o.vid)) + '</div>' +
+      '<div class="tihiy melko">' + ekranirovat(nz(o, "podpis")) + '</div>' +
+      '<div class="pary">' + stroki + '</div>' +
+      '<div class="knopki">' + knopki + '</div>' +
+      '</div></article>';
+  }).join("");
+
+  const materialy =
+    '<div class="karty materialy">' +
+    '<a class="material" href="https://avensol.az/" target="_blank" rel="noopener">' +
+    '<span class="material-znak">AZ</span>' +
+    '<span class="material-imya">' + ekranirovat(t("sayt_kompanii")) + '</span>' +
+    '<span class="tihiy melko">' + ekranirovat(t("sayt_poyasnenie")) + '</span></a>' +
+    '<button type="button" class="material" onclick=' + JSON.stringify('otkryt("sunum")') + '>' +
+    '<span class="material-znak">11</span>' +
+    '<span class="material-imya">' + ekranirovat(t("prezentaciya_kartochka")) + '</span>' +
+    '<span class="tihiy melko">' + ekranirovat(t("prezentaciya_poyasnenie")) + '</span></button>' +
+    '<button type="button" class="material" onclick="pechat_sunum()">' +
+    '<span class="material-znak">PDF</span>' +
+    '<span class="material-imya">' + ekranirovat(t("skachat_pdf")) + '</span>' +
+    '<span class="tihiy melko">' + ekranirovat(t("pdf_poyasnenie")) + '</span></button>' +
+    '</div>';
+
+  ekran("otdely").innerHTML =
+    zagolovok_ekrana(t("otdely_zagolovok")) +
+    '<p class="snoska">' + ekranirovat(t("otdely_podzagolovok")) + '</p>' +
+    '<div class="plitki">' + plitki + '</div>' +
+    '<h3>' + ekranirovat(t("materialy")) + '</h3>' + materialy;
+}
+
+function otkryt(kod, ssylka) {
+  if (ssylka) { pereyti(ssylka); return; }
+  VKLADKA = kod; PODSVETKA = null; zapisat_adres(); narisovat();
+  window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+/* --- экран 1: сводка --- */
+function narisovat_svodku() {
+  const karty = DANNYE.ploshchadki.map(p => {
+    return '<article class="karta ' + p.signal + '">' +
+      '<div class="karta-verh"><div><div class="karta-imya">' + ekranirovat(nz(p, "kod")) + '</div>' +
+      '<div class="tihiy melko">' + ekranirovat(nz(p, "tip")) + '</div></div>' +
+      '<span class="tochka ' + p.signal + '" aria-hidden="true"></span></div>' +
+      '<div class="polosa"><i style="width:' + p.vypolneno_pct + '%"></i></div>' +
+      '<div class="pary">' +
+      '<div class="para"><span class="tihiy">' + ekranirovat(t("vypolneno")) + '</span><span>' + p.vypolneno_pct + ' %</span></div>' +
+      '<div class="para"><span class="tihiy">' + ekranirovat(t("byudzhet")) + '</span><span>' + dengi(p.byudzhet) + '</span></div>' +
+      '<div class="para"><span class="tihiy">' + ekranirovat(t("fakt")) + '</span><span>' + dengi(p.fakt) + '</span></div>' +
+      '<div class="para"><span class="tihiy">' + ekranirovat(t("obyazatelstva")) + '</span><span>' + dengi(p.obyazatelstva) + '</span></div>' +
+      (p.zakazat_predstoit > 0 ? '<div class="para"><span class="tihiy">' + ekranirovat(t("predstoit_zakazat")) + '</span><span>' + dengi(p.zakazat_predstoit) + '</span></div>' : '') +
+      '<div class="para"><span class="tihiy">' + ekranirovat(t("lyudey")) + '</span><span>' + chislo(p.lyudey) + '</span></div>' +
+      '</div></article>';
+  }).join("");
+
+  const stroki = DANNYE.signaly.map(s => {
+    return '<tr>' +
+      '<td><span class="znachok ' + s.uroven + '">' + ekranirovat(nz(DANNYE.ploshchadki.find(p => p.id === s.ploshchadka), "kod")) + '</span></td>' +
+      '<td>' + ekranirovat(nz(s)) + '</td>' +
+      '<td>' + ekranirovat(nz(s, "otvetstvennyy")) + '</td>' +
+      '<td class="ch">' + data(s.srok) + '</td>' +
+      '<td class="ch"><button type="button" class="knopka" onclick="pereyti(\'' + s.ssylka + '\')">' +
+      ekranirovat(t("pereyti")) + ' ' + s.ssylka + '</button></td></tr>';
+  });
+
+  const itogo_akt = DANNYE.raboty.reduce((s, r) => s + r.summa_akt, 0);
+  const itogo_zatrat = DANNYE.raboty.reduce((s, r) => s + r.summa_zatrat, 0);
+  const itogo_poteryano = DANNYE.raboty.reduce((s, r) => s + Math.max(0, r.poteryano), 0);
+  const itogo_rashozhdeniy = DANNYE.raboty.reduce((s, r) => s + Math.max(0, -r.poteryano), 0);
+
+  ekran("svodka").innerHTML =
+    zagolovok_ekrana(t("vkladka_svodka")) +
+    '<div class="karty">' + karty + '</div>' +
+    '<div class="dvoyka"><div class="blok"><h3>' + ekranirovat(t("vsego_po_chetyrem")) + '</h3>' +
+    '<div class="pary">' +
+    '<div class="para"><span class="tihiy">' + ekranirovat(t("summa_akt")) + '</span><span>' + dengi(itogo_akt) + '</span></div>' +
+    '<div class="para"><span class="tihiy">' + ekranirovat(t("summa_zatrat")) + '</span><span>' + dengi(itogo_zatrat) + '</span></div>' +
+    '<div class="para"><span class="tihiy">' + ekranirovat(t("marzha_sobrana")) + '</span><span>' + dengi(itogo_akt - itogo_zatrat) + '</span></div>' +
+    '<div class="para"><span class="tihiy">' + ekranirovat(t("poteryano_vsego")) + '</span><span class="krasnoe">' + dengi(itogo_poteryano) + '</span></div>' +
+    '<div class="para"><span class="tihiy">' + ekranirovat(t("rashozhdeniya")) + '</span><span class="zheltoe">' + dengi(itogo_rashozhdeniy) + '</span></div>' +
+    '</div></div>' +
+    '<div class="blok"><h3>' + ekranirovat(t("demo")) + '</h3><p class="snoska">' + ekranirovat(t("demo_poyasnenie")) + '</p></div></div>' +
+    '<h3>' + ekranirovat(t("zhdet_resheniya")) + '</h3>' +
+    tablica([{tekst: t("ploshchadka")}, {tekst: t("signal")}, {tekst: t("otvetstvennyy")},
+             {tekst: t("srok"), ch: true}, {tekst: "", ch: true}], stroki);
+}
+
+/* --- экран 2: склад --- */
+function narisovat_sklad() {
+  const knopki = DANNYE.ploshchadki.map(p =>
+    '<button type="button" class="knopka" aria-pressed="' + (SKLAD === p.id) + '" onclick="vybrat_sklad(\'' + p.id + '\')">' +
+    ekranirovat(nz(p, "kod")) + '</button>').join("");
+
+  const ostatki = DANNYE.ostatki.filter(o => o.ploshchadka === SKLAD).map(o =>
+    '<tr><td>' + ekranirovat(nz(o)) + '</td><td class="ch">' + chislo(o.kol, 1) + '</td>' +
+    '<td>' + ekranirovat(nz(o, "ed")) + '</td><td class="ch">' + dengi(o.stoimost) + '</td></tr>');
+
+  const dvizheniya = DANNYE.sklad_dvizheniya
+    .filter(d => d.ploshchadka === SKLAD || d.kuda === SKLAD)
+    .sort((a, b) => a.data < b.data ? 1 : -1)
+    .map(d => {
+      const tip = d.tip === "prihod" ? t("prihod") : (d.tip === "vydacha" ? t("vydacha") : t("peremeshchenie"));
+      const cvet = d.tip === "prihod" ? "zelenyy" : (d.tip === "vydacha" ? "seryy" : "zheltyy");
+      const dokument = d.bez_dokumenta
+        ? '<span class="znachok zheltyy">' + ekranirovat(t("bez_dokumenta")) + '</span>'
+        : ekranirovat(d.dokument);
+      const kuda = d.kuda ? " → " + ekranirovat(d.kuda) : "";
+      return '<tr' + (d.bez_dokumenta ? ' class="podsvechena"' : '') + '>' +
+        '<td class="ch">' + data(d.data) + '</td>' +
+        '<td><span class="znachok ' + cvet + '">' + ekranirovat(tip) + kuda + '</span></td>' +
+        '<td>' + ekranirovat(nz(d)) + '</td>' +
+        '<td class="ch">' + chislo(d.kol, 1) + ' ' + ekranirovat(nz(d, "ed")) + '</td>' +
+        '<td>' + (d.rabota ? ekranirovat(d.rabota) : "—") + '</td>' +
+        '<td>' + ekranirovat(nz(d, "kto")) + '</td>' +
+        '<td>' + dokument + '</td></tr>';
+    });
+
+  ekran("sklad").innerHTML =
+    zagolovok_ekrana(t("vkladka_sklad"), knopki) +
+    '<div class="dvoyka">' +
+    '<div><h3>' + ekranirovat(t("sklad_ostatki")) + '</h3>' +
+    tablica([{tekst: t("resurs")}, {tekst: t("kolichestvo"), ch: true}, {tekst: ""},
+             {tekst: t("stoimost"), ch: true}], ostatki) + '</div>' +
+    '<div class="blok"><h3>' + ekranirovat(t("marzha_sobrana")) + '</h3>' +
+    '<p class="snoska">' + ekranirovat(t("odna_stroka_mnogo_resursov")) + '</p></div></div>' +
+    '<h3>' + ekranirovat(t("sklad_dvizheniya")) + '</h3>' +
+    tablica([{tekst: t("data"), ch: true}, {tekst: t("tip_dvizheniya")}, {tekst: t("resurs")},
+             {tekst: t("kolichestvo"), ch: true}, {tekst: t("rabota")}, {tekst: t("kto")},
+             {tekst: t("dokument")}], dvizheniya);
+}
+function vybrat_sklad(id) { SKLAD = id; narisovat(); }
+
+/* --- экран 3: акт и затраты --- */
+function narisovat_akt() {
+  const stroki = [];
+  DANNYE.raboty.forEach(r => {
+    const otkryta = RASKRYTO.has(r.id);
+    stroki.push('<tr class="klikabelnaya' + (PODSVETKA === r.id ? ' podsvechena' : '') + '" tabindex="0"' +
+      ' onclick="perevernut(\'' + r.id + '\')" onkeydown="if(event.key===\'Enter\'){perevernut(\'' + r.id + '\')}">' +
+      '<td class="kod">' + (otkryta ? "▾ " : "▸ ") + ekranirovat(r.id) + '</td>' +
+      '<td>' + ekranirovat(nz(r)) + '</td>' +
+      '<td class="ch">' + chislo(r.obem_fakt, 1) + ' ' + ekranirovat(nz(r, "ed")) + '</td>' +
+      '<td class="ch">' + dengi(r.cena_akt, 2) + '</td>' +
+      '<td class="ch">' + dengi(r.summa_akt) + '</td>' +
+      '<td class="ch">' + dengi(r.summa_zatrat) + '</td>' +
+      '<td class="ch">' + dengi(r.marzha) + ' <span class="tihiy">(' + chislo(r.marzha_pct, 1) + ' %)</span></td>' +
+      '<td class="ch">' + (r.poteryano > 0
+        ? '<span class="krasnoe">−' + dengi(r.poteryano) + '</span>'
+        : (r.poteryano < 0 ? '<span class="zheltoe">± ' + dengi(-r.poteryano) + '</span>' : '—')) + '</td></tr>');
+
+    if (!otkryta) return;
+    const vnutri = r.resursy.map(x =>
+      '<tr><td>' + ekranirovat(nz(x)) + ' <span class="tihiy melko">(' +
+      ekranirovat(x.skladskoy ? t("iz_sklada") : t("iz_tabelya")) + ')</span></td>' +
+      '<td class="ch">' + chislo(x.norma, 3) + '</td>' +
+      '<td class="ch">' + chislo(x.teoreticheskiy, 1) + ' ' + ekranirovat(nz(x, "ed")) + '</td>' +
+      '<td class="ch">' + chislo(x.vydano, 1) + ' ' + ekranirovat(nz(x, "ed")) + '</td>' +
+      '<td class="ch">' + (x.otklonenie > 0 ? '<span class="krasnoe">+' + chislo(x.otklonenie, 1) + '</span>'
+        : (x.otklonenie < 0 ? '<span class="zelenoe">' + chislo(x.otklonenie, 1) + '</span>' : "0")) + '</td>' +
+      '<td class="ch">' + dengi(x.summa_fakt) + '</td>' +
+      '<td class="ch">' + (x.summa_otkloneniya > 0 ? '<span class="krasnoe">−' + dengi(x.summa_otkloneniya) + '</span>'
+        : (x.summa_otkloneniya < 0 ? '<span class="zelenoe">+' + dengi(-x.summa_otkloneniya) + '</span>' : "—")) + '</td></tr>').join("");
+
+    stroki.push('<tr class="raskrytie"><td colspan="8"><div class="vnutri">' +
+      '<p class="melko tihiy">' + ekranirovat(t("odna_stroka_mnogo_resursov")) + '</p>' +
+      '<table><thead><tr><th>' + ekranirovat(t("resurs")) + '</th><th class="ch">' + ekranirovat(t("norma")) + '</th>' +
+      '<th class="ch">' + ekranirovat(t("teoreticheskiy")) + '</th><th class="ch">' + ekranirovat(t("vydano_fakt")) + '</th>' +
+      '<th class="ch">' + ekranirovat(t("otklonenie")) + '</th><th class="ch">' + ekranirovat(t("summa_zatrat")) + '</th>' +
+      '<th class="ch">' + ekranirovat(t("cena_otkloneniya")) + '</th></tr></thead><tbody>' + vnutri + '</tbody></table>' +
+      '<div class="pary"><div class="para"><span class="tihiy">' + ekranirovat(t("marzha_po_norme")) + '</span>' +
+      '<span>' + dengi(r.marzha_po_norme) + '</span></div>' +
+      '<div class="para"><span class="tihiy">' + ekranirovat(t("marzha")) + '</span><span>' + dengi(r.marzha) + '</span></div></div>' +
+      '</div></td></tr>');
+  });
+
+  ekran("akt").innerHTML =
+    zagolovok_ekrana(t("akt_stroki")) +
+    '<p class="snoska">' + ekranirovat(t("akt_podskazka")) + '</p>' +
+    '<p class="snoska">' + ekranirovat(t("kod_zatrat")) + '</p>' +
+    tablica([{tekst: t("rabota")}, {tekst: ""}, {tekst: t("obem"), ch: true}, {tekst: t("cena_akt"), ch: true},
+             {tekst: t("summa_akt"), ch: true}, {tekst: t("summa_zatrat"), ch: true},
+             {tekst: t("marzha"), ch: true}, {tekst: t("otklonenie"), ch: true}], stroki);
+}
+function perevernut(id) {
+  if (RASKRYTO.has(id)) RASKRYTO.delete(id); else RASKRYTO.add(id);
+  narisovat();
+}
+
+/* --- экран 4: план закупок --- */
+function narisovat_zakupki() {
+  const knopki = ['<button type="button" class="knopka" aria-pressed="' + (ZAKUPKI === "*") +
+    '" onclick="vybrat_zakupki(\'*\')">' + ekranirovat(t("vse_ploshchadki")) + '</button>'].concat(
+    DANNYE.ploshchadki.map(p => '<button type="button" class="knopka" aria-pressed="' + (ZAKUPKI === p.id) +
+      '" onclick="vybrat_zakupki(\'' + p.id + '\')">' + ekranirovat(nz(p, "kod")) + '</button>')).join("");
+
+  const spisok = DANNYE.zakazy.filter(z => ZAKUPKI === "*" || z.ploshchadka === ZAKUPKI);
+  const vse_daty = DANNYE.zakazy.flatMap(z => [z.data_zakaza, z.data_potrebnosti, z.razmeshchen, z.postavka_ozhidaetsya])
+    .filter(Boolean).map(s => new Date(s).getTime());
+  const nachalo = Math.min.apply(null, vse_daty), konec = Math.max.apply(null, vse_daty);
+  const dolya = (s) => 100 * (new Date(s).getTime() - nachalo) / (konec - nachalo);
+
+  const karty = spisok.map(z => {
+    const sostoyanie = z.prosrochen ? "krasny" : (z.srochnyy ? "zheltyy" : "zelenyy");
+    const podpis = z.prosrochen
+      ? t("prosrochen") + (z.opozdanie_nedel ? " · " + z.opozdanie_nedel + " " + t("nedel") + " " + t("opozdanie") : "")
+      : (z.srochnyy ? t("srochnyy") + " · " + z.dney_do_zakaza + " " + t("dney_ostalos") : t("v_grafike"));
+    const ot = Math.min(dolya(z.data_zakaza), dolya(z.data_potrebnosti));
+    const shirina = Math.max(2, Math.abs(dolya(z.data_potrebnosti) - dolya(z.data_zakaza)));
+    return '<article class="zakaz' + (PODSVETKA === z.id ? ' podsvechena' : '') + '">' +
+      '<div class="zakaz-verh"><div><strong>' + ekranirovat(nz(z)) + '</strong> ' +
+      '<span class="tihiy melko">' + chislo(z.kol) + ' ' + ekranirovat(nz(z, "ed")) + ' · ' + ekranirovat(z.id) + '</span></div>' +
+      '<div class="knopki"><span class="znachok ' + sostoyanie + '">' + ekranirovat(podpis) + '</span>' +
+      '<span class="znachok seryy">' + dengi(z.summa) + '</span></div></div>' +
+      '<div class="shkala"><i style="left:' + ot + '%;width:' + shirina + '%"></i>' +
+      '<span class="metka ' + sostoyanie + '" style="left:' + dolya(z.data_zakaza) + '%"></span>' +
+      '<span class="metka" style="left:' + dolya(z.data_potrebnosti) + '%"></span></div>' +
+      '<div class="shkala-podpisi"><span>' + ekranirovat(t("data_zakaza")) + ': <strong>' + data(z.data_zakaza) + '</strong>' +
+      ' · ' + ekranirovat(t("srok_postavki")) + ' ' + z.srok_nedel + ' ' + ekranirovat(t("nedel")) + '</span>' +
+      '<span>' + ekranirovat(t("data_potrebnosti")) + ': <strong>' + data(z.data_potrebnosti) + '</strong></span></div>' +
+      '<div class="shkala-podpisi"><span>' + (z.razmeshchen
+        ? ekranirovat(t("razmeshchen")) + ": " + data(z.razmeshchen) + " · " + ekranirovat(t("postavka_ozhidaetsya")) + ": " + data(z.postavka_ozhidaetsya)
+        : ekranirovat(t("ne_razmeshchen"))) + '</span></div>' +
+      cepochka_soglasovaniya(z) +
+      '</article>';
+  }).join("");
+
+  ekran("zakupki").innerHTML =
+    zagolovok_ekrana(t("zakupki_zagolovok"), knopki) +
+    '<p class="snoska">' + ekranirovat(t("zakupki_pravilo")) + '</p>' +
+    '<div class="lenta">' + karty + '</div>';
+}
+function vybrat_zakupki(id) { ZAKUPKI = id; narisovat(); }
+
+function cepochka_soglasovaniya(z) {
+  const sostoyanie = z.onay.status === "zhdet" ? "krasny"
+    : (z.onay.status === "utverzhden" ? "zelenyy" : "seryy");
+  const podpis = z.onay.status === "zhdet" ? t("onay_zhdet")
+    : (z.onay.status === "utverzhden" ? t("onay_utverzhden") : t("onay_ne_trebuetsya"));
+  const dni = z.trebuet_onaya
+    ? ' <span class="' + (z.dney_na_onay > 14 ? "krasnoe" : "tihiy") + '">' +
+      z.dney_na_onay + " " + ekranirovat(t("dney_na_onay")) + "</span>"
+    : "";
+  return '<div class="zvenya">' +
+    '<span class="zveno"><b>' + ekranirovat(t("zayavka")) + '</b> ' + data(z.zayavka.data) +
+    ' · ' + ekranirovat(nz(z.zayavka, "kto")) + '</span>' +
+    '<span class="zveno"><b>' + ekranirovat(t("onay")) + '</b> ' +
+    '<span class="znachok ' + sostoyanie + '">' + ekranirovat(podpis) + '</span>' + dni +
+    (z.trebuet_onaya && nz(z.onay, "kto") ? ' · ' + ekranirovat(nz(z.onay, "kto")) : "") +
+    (z.trebuet_onaya ? ' <span class="tihiy melko">(' + ekranirovat(t("polnomochie")) + ' ' + dengi(z.polnomochie) + ')</span>' : "") +
+    '</span>' +
+    '<span class="zveno"><b>' + ekranirovat(t("razmeshchen")) + '</b> ' +
+    (z.razmeshchen ? data(z.razmeshchen) : "—") + '</span>' +
+    '</div>';
+}
+
+/* --- экран: денежный поток --- */
+function narisovat_dengi() {
+  const p = DANNYE.denezhnyy_potok;
+  const predel = Math.max.apply(null, p.nedeli.map(n => Math.max(n.postupleniya, n.vyplaty)));
+  const stroki = p.nedeli.map(n => {
+    const minus = n.nakoplennoe < 0;
+    return '<tr>' +
+      '<td class="kod">' + data(n.nachalo) + ' — ' + data(n.konec) + '</td>' +
+      '<td class="ch">' + (n.postupleniya ? dengi(n.postupleniya) : "—") + '</td>' +
+      '<td class="ch">' + dengi(n.vyplaty) + '</td>' +
+      '<td><div class="stolbiki">' +
+        '<i class="prihod" style="width:' + (100 * n.postupleniya / predel) + '%"></i>' +
+        '<i class="rashod" style="width:' + (100 * n.vyplaty / predel) + '%"></i>' +
+      '</div></td>' +
+      '<td class="ch">' + (n.saldo < 0 ? '<span class="krasnoe">' + dengi(n.saldo) + '</span>' : '<span class="zelenoe">+' + dengi(n.saldo) + '</span>') + '</td>' +
+      '<td class="ch">' + (minus ? '<span class="krasnoe">' + dengi(n.nakoplennoe) + '</span>' : dengi(n.nakoplennoe)) + '</td>' +
+      '</tr>';
+  });
+
+  const platezhi = p.platezhi.filter(x => x.zakaz).sort((a, b) => b.summa - a.summa).slice(0, 6).map(x =>
+    '<tr><td class="ch">' + data(x.data) + '</td><td>' + ekranirovat(nz(x)) + '</td>' +
+    '<td class="kod">' + ekranirovat(x.zakaz) + '</td>' +
+    '<td>' + ekranirovat(nz(x, "vid")) + '</td>' +
+    '<td class="ch">' + dengi(x.summa) + '</td></tr>');
+
+  const prihody = p.prihody.map(x =>
+    '<tr><td class="ch">' + data(x.data) + '</td><td class="kod">' + ekranirovat(x.akt) + '</td>' +
+    '<td>' + ekranirovat(nz(DANNYE.ploshchadki.find(pl => pl.id === x.ploshchadka), "kod")) + '</td>' +
+    '<td class="ch">' + dengi(x.summa) + '</td></tr>');
+
+  ekran("dengi").innerHTML =
+    zagolovok_ekrana(t("vkladka_dengi")) +
+    '<div class="karty">' +
+    '<article class="karta"><div class="karta-imya">' + ekranirovat(t("ostatok_na_starte")) + '</div>' +
+    '<div class="krupno">' + dengi(p.ostatok_na_starte) + '</div></article>' +
+    '<article class="karta ' + (p.razryv < 0 ? "krasny" : "zelenyy") + '"><div class="karta-imya">' + ekranirovat(t("razryv")) + '</div>' +
+    '<div class="krupno ' + (p.razryv < 0 ? "krasnoe" : "") + '">' + dengi(p.razryv) + '</div></article>' +
+    '<article class="karta"><div class="karta-imya">' + ekranirovat(t("fot_v_nedelyu")) + '</div>' +
+    '<div class="krupno">' + dengi(p.fot_v_nedelyu) + '</div></article>' +
+    '</div>' +
+    '<p class="snoska">' + ekranirovat(t("razryv_poyasnenie")) + '</p>' +
+    tablica([{tekst: t("nedelya")}, {tekst: t("postupleniya"), ch: true}, {tekst: t("vyplaty"), ch: true},
+             {tekst: ""}, {tekst: t("saldo"), ch: true}, {tekst: t("nakoplennoe"), ch: true}], stroki) +
+    '<div class="dvoyka">' +
+    '<div><h3>' + ekranirovat(t("krupnye_platezhi")) + '</h3>' +
+    tablica([{tekst: t("data"), ch: true}, {tekst: t("resurs")}, {tekst: ""},
+             {tekst: t("vid_platezha")}, {tekst: t("summa"), ch: true}], platezhi) + '</div>' +
+    '<div><h3>' + ekranirovat(t("prihody_po_aktam")) + '</h3>' +
+    tablica([{tekst: t("data"), ch: true}, {tekst: t("akt")}, {tekst: t("ploshchadka")},
+             {tekst: t("summa"), ch: true}], prihody) + '</div>' +
+    '</div>';
+}
+
+/* --- экран 5: тендер --- */
+function narisovat_tender() {
+  const stroki = DANNYE.tendery.map(z =>
+    '<tr><td>' + ekranirovat(z.id) + '</td><td>' + ekranirovat(nz(z, "obekt")) + '</td>' +
+    '<td class="ch">' + data(z.srok) + '</td><td class="ch">' + dengi(z.summa) + '</td>' +
+    '<td><span class="znachok seryy">' + ekranirovat(nz(z, "status")) + '</span></td></tr>');
+
+  const r = DANNYE.razbor_tendera;
+  const spisok = (elementy, klass) => '<ul class="spisok ' + klass + '">' +
+    elementy.map(e => '<li>' + ekranirovat(nz(e)) + '</li>').join("") + '</ul>';
+
+  const sravnenie = DANNYE.sravnenie_tendera.map(s =>
+    '<tr><td>' + ekranirovat(nz(s)) + '</td>' +
+    '<td class="ch">' + chislo(s.v_tendere, 3) + '</td>' +
+    '<td class="ch">' + chislo(s.norma, 3) + '</td>' +
+    '<td class="ch">' + chislo(s.fakt, 3) + '</td>' +
+    '<td class="ch"><span class="' + (s.raznica_pct > 0 ? "krasnoe" : "zelenoe") + '">' +
+    (s.raznica_pct > 0 ? "+" : "") + chislo(s.raznica_pct, 1) + ' %</span></td>' +
+    '<td class="ch">' + dengi(s.cena_oshibki) + '</td></tr>');
+
+  ekran("tender").innerHTML =
+    zagolovok_ekrana(t("tender_reestr")) +
+    tablica([{tekst: ""}, {tekst: t("obekt")}, {tekst: t("srok_podachi"), ch: true},
+             {tekst: t("summa"), ch: true}, {tekst: t("status")}], stroki) +
+    '<h3>' + ekranirovat(t("razbor_paketa")) + ' · ' + ekranirovat(r.tender) + '</h3>' +
+    '<div class="dvoyka">' +
+    '<div class="blok"><h3>' + ekranirovat(t("trebovaniya")) + '</h3>' + spisok(r.trebovaniya, "") + '</div>' +
+    '<div class="blok"><h3>' + ekranirovat(t("riski")) + '</h3>' + spisok(r.riski, "riski") + '</div>' +
+    '<div class="blok"><h3>' + ekranirovat(t("nehvatka")) + '</h3>' + spisok(r.nehvatka, "nehvatka") + '</div>' +
+    '</div>' +
+    '<h3>' + ekranirovat(t("sravnenie_zagolovok")) + '</h3>' +
+    tablica([{tekst: t("resurs")}, {tekst: t("v_tendere"), ch: true}, {tekst: t("norma"), ch: true},
+             {tekst: t("fakt_na_edinicu"), ch: true}, {tekst: t("raznica"), ch: true},
+             {tekst: t("cena_oshibki"), ch: true}], sravnenie) +
+    '<p class="snoska">' + ekranirovat(t("vyvod_tendera")) + '</p>';
+}
+
+/* --- экран 6: персонал --- */
+function narisovat_personal() {
+  const stroki = DANNYE.tabel.map(x => {
+    const p = DANNYE.ploshchadki.find(p => p.id === x.ploshchadka);
+    const mnogo = x.dolya_pererabotok_pct >= 15;
+    const mnogo_sub = x.dolya_subpodryada_pct >= 50;
+    return '<tr><td>' + ekranirovat(nz(p, "kod")) + ' <span class="tihiy melko">' + ekranirovat(nz(p, "tip")) + '</span></td>' +
+      '<td class="ch">' + chislo(x.lyudey) + '</td>' +
+      '<td class="ch">' + chislo(x.subpodryad_lyudey) + '</td>' +
+      '<td class="ch">' + (mnogo_sub ? '<span class="krasnoe">' + chislo(x.dolya_subpodryada_pct, 1) + ' %</span>'
+                                     : chislo(x.dolya_subpodryada_pct, 1) + ' %') + '</td>' +
+      '<td class="ch">' + chislo(x.vsego_chasov) + '</td>' +
+      '<td class="ch">' + chislo(x.pererabotki) + '</td>' +
+      '<td class="ch">' + (mnogo ? '<span class="krasnoe">' + chislo(x.dolya_pererabotok_pct, 1) + ' %</span>'
+                                 : chislo(x.dolya_pererabotok_pct, 1) + ' %') + '</td>' +
+      '<td class="ch">' + dengi(x.stoimost_vsego) + '</td>' +
+      '<td class="ch">' + dengi(x.stoimost_pererabotok) + '</td>' +
+      '<td>' + ekranirovat(nz(x, "kvalifikaciya")) + '<br><span class="tihiy melko">' + ekranirovat(nz(x, "subpodryad")) + '</span></td></tr>';
+  });
+
+  const trud = [];
+  DANNYE.raboty.forEach(r => {
+    r.resursy.filter(x => x.resurs === "trud").forEach(x => {
+      trud.push('<tr><td>' + ekranirovat(r.id) + '</td><td>' + ekranirovat(nz(r)) + '</td>' +
+        '<td class="ch">' + chislo(x.teoreticheskiy) + '</td>' +
+        '<td class="ch">' + chislo(x.vydano) + '</td>' +
+        '<td class="ch">' + (x.otklonenie > 0 ? '<span class="krasnoe">+' + chislo(x.otklonenie) + '</span>' : chislo(x.otklonenie)) + '</td>' +
+        '<td class="ch">' + dengi(x.summa_fakt) + '</td></tr>');
+    });
+  });
+
+  ekran("personal").innerHTML =
+    zagolovok_ekrana(t("personal_zagolovok")) +
+    tablica([{tekst: t("ploshchadka")}, {tekst: t("svoi"), ch: true}, {tekst: t("subpodryad"), ch: true},
+             {tekst: t("dolya_subpodryada"), ch: true}, {tekst: t("chasov"), ch: true},
+             {tekst: t("pererabotki"), ch: true}, {tekst: t("dolya_pererabotok"), ch: true},
+             {tekst: t("stoimost_vsego"), ch: true}, {tekst: t("stoimost_pererabotok"), ch: true},
+             {tekst: t("kvalifikaciya")}], stroki) +
+    '<h3>' + ekranirovat(t("trud_po_rabotam")) + '</h3>' +
+    tablica([{tekst: t("rabota")}, {tekst: ""}, {tekst: t("teoreticheskiy"), ch: true},
+             {tekst: t("vydano_fakt"), ch: true}, {tekst: t("otklonenie"), ch: true},
+             {tekst: t("stoimost_truda"), ch: true}], trud);
+}
+
+/* --- экран 7: помощник --- */
+function narisovat_ii() {
+  const knopki = DANNYE.voprosy_ii.map(v =>
+    '<button type="button" class="knopka" aria-pressed="' + (VOPROS === v.id) + '" onclick="vybrat_vopros(\'' + v.id + '\')">' +
+    ekranirovat(nz(v, "vopros")) + '</button>').join("");
+  const v = DANNYE.voprosy_ii.find(x => x.id === VOPROS);
+  ekran("ii").innerHTML =
+    zagolovok_ekrana(t("ii_zagolovok")) +
+    '<div class="vopros"><p class="snoska">' + ekranirovat(t("ii_podskazka")) + '</p>' +
+    '<div class="knopki">' + knopki + '</div>' +
+    '<div class="otvet"><strong>' + ekranirovat(nz(v, "vopros")) + '</strong>' +
+    '<p>' + ekranirovat(nz(v, "otvet")) + '</p>' +
+    '<div class="knopki"><button type="button" class="knopka" onclick="pereyti(\'' + v.ssylka + '\')">' +
+    ekranirovat(t("pereyti")) + ' ' + v.ssylka + '</button></div></div>' +
+    '<p class="snoska">' + ekranirovat(t("ii_snoska")) + '</p></div>';
+}
+function vybrat_vopros(id) { VOPROS = id; narisovat(); }
+
+/* --- экран: презентация --- */
+function slayd_telo(s) {
+  const obertka = (elementy, klass) => '<div class="' + klass + '">' + elementy + '</div>';
+  if (s.tip === "oblozhka") {
+    const metki = nz(s, "metki").map(m => '<span class="znachok seryy">' + ekranirovat(m) + '</span>').join("");
+    return '<div class="slayd-oblozhka">' +
+      '<div class="eyebrow">' + ekranirovat(nz(s, "nadzagolovok")) + '</div>' +
+      '<h2 class="slayd-titul">' + ekranirovat(nz(s, "zagolovok")) + '</h2>' +
+      '<p class="slayd-lid">' + ekranirovat(nz(s, "podzagolovok")) + '</p>' +
+      '<div class="knopki">' + metki + '</div></div>';
+  }
+  if (s.tip === "punkty" || s.tip === "roli") {
+    const el = (s.punkty || s.roli).map((x, i) =>
+      '<article class="slayd-karta"><span class="slayd-nomer">' + String(i + 1).padStart(2, "0") + '</span>' +
+      '<h4>' + ekranirovat(nz(x)) + '</h4>' +
+      '<p class="tihiy">' + ekranirovat(nz(x, "text")) + '</p></article>').join("");
+    return obertka(el, "slayd-setka");
+  }
+  if (s.tip === "sloi") {
+    const el = s.sloi.map(x =>
+      '<article class="slayd-sloy"><span class="sloy-nomer">' + ekranirovat(x.nomer) + '</span>' +
+      '<div><h4>' + ekranirovat(nz(x)) + '</h4>' +
+      '<p class="tihiy">' + ekranirovat(nz(x, "text")) + '</p></div></article>').join("");
+    return obertka(el, "slayd-sloi");
+  }
+  if (s.tip === "cepochka") {
+    const el = s.zvenya.map((x, i) =>
+      '<article class="slayd-zveno"><span class="zveno-nomer">' + (i + 1) + '</span>' +
+      '<h4>' + ekranirovat(nz(x)) + '</h4>' +
+      '<p class="tihiy melko">' + ekranirovat(nz(x, "text")) + '</p></article>').join("");
+    return obertka(el, "slayd-cepochka");
+  }
+  if (s.tip === "razlozhenie") {
+    const resursy = s.resursy.map(x =>
+      '<div class="resurs-stroka"><span>' + ekranirovat(nz(x)) + '</span>' +
+      '<span class="tihiy">' + ekranirovat(nz(x, "ed")) + '</span></div>').join("");
+    return '<div class="slayd-razlozhenie">' +
+      '<article class="storona levo"><div class="eyebrow">' + ekranirovat(nz(s, "levo_zagolovok")) + '</div>' +
+      '<div class="poz">' + ekranirovat(nz(s, "levo_poz")) + '</div>' +
+      '<div class="tihiy">' + ekranirovat(nz(s, "levo_kol")) + '</div></article>' +
+      '<div class="strelka" aria-hidden="true">&#8594;</div>' +
+      '<article class="storona pravo"><div class="eyebrow">' + ekranirovat(nz(s, "pravo_zagolovok")) + '</div>' +
+      resursy + '</article></div>';
+  }
+  if (s.tip === "zony") {
+    const el = s.zony.map((x, i) =>
+      '<article class="slayd-zona"><span class="zona-nomer">' + String(i + 1).padStart(2, "0") + '</span>' +
+      ekranirovat(nz(x)) + '</article>').join("");
+    return obertka(el, "slayd-zony");
+  }
+  if (s.tip === "etapy") {
+    const el = s.etapy.map(x =>
+      '<article class="slayd-etap"><div class="eyebrow">' + ekranirovat(nz(x, "srok")) + '</div>' +
+      '<h4>' + ekranirovat(nz(x)) + '</h4>' +
+      '<p class="tihiy">' + ekranirovat(nz(x, "text")) + '</p></article>').join("");
+    return obertka(el, "slayd-etapy");
+  }
+  if (s.tip === "resheniya") {
+    const el = s.punkty.map((x, i) =>
+      '<article class="slayd-reshenie"><span class="slayd-nomer">' + String(i + 1).padStart(2, "0") + '</span>' +
+      ekranirovat(nz(x)) + '</article>').join("");
+    return obertka(el, "slayd-resheniya");
+  }
+  return "";
+}
+
+function odin_slayd(s, vidim) {
+  return '<section class="slayd" data-id="' + s.id + '"' + (vidim ? "" : " hidden") + '>' +
+    (s.tip === "oblozhka" ? "" :
+      '<header class="slayd-shapka"><span class="eyebrow">AVENSOL</span>' +
+      '<h3>' + ekranirovat(nz(s, "zagolovok")) + '</h3>' +
+      '<span class="slayd-schet">' + ekranirovat(s.nomer || "") + '</span></header>') +
+    slayd_telo(s) +
+    (s.snoska_tr ? '<p class="slayd-snoska">' + ekranirovat(nz(s, "snoska")) + '</p>' : "") +
+    '</section>';
+}
+
+function narisovat_sunum() {
+  const vsego = SLAYDY.length;
+  const tochki = SLAYDY.map((s, i) =>
+    '<button type="button" class="tochka' + (i === SLAYD ? " tekushchaya" : "") + '"' +
+    ' aria-label="' + ekranirovat(t("slayd")) + ' ' + (i + 1) + '" onclick="pokazat_slayd(' + i + ')"></button>').join("");
+  const slaydy = SLAYDY.map((s, i) => odin_slayd(s, SLAYDY_PODRYAD || i === SLAYD)).join("");
+  ekran("sunum").innerHTML =
+    '<div class="zagolovok-ekrana"><h2>' + ekranirovat(t("prezentaciya_kartochka")) + '</h2>' +
+    '<div class="knopki">' +
+    '<button type="button" class="knopka" onclick="listat(-1)">&#8592; ' + ekranirovat(t("nazad")) + '</button>' +
+    '<span class="znachok seryy">' + (SLAYD + 1) + ' / ' + vsego + '</span>' +
+    '<button type="button" class="knopka" onclick="listat(1)">' + ekranirovat(t("dalshe")) + ' &#8594;</button>' +
+    '<button type="button" class="knopka" aria-pressed="' + SLAYDY_PODRYAD + '" onclick="vse_slaydy()">' +
+    ekranirovat(SLAYDY_PODRYAD ? t("po_odnomu") : t("vse_slaydy")) + '</button>' +
+    '<button type="button" class="knopka" onclick="pechat_sunum()">' + ekranirovat(t("skachat_pdf")) + '</button>' +
+    plashka_demo() + '</div></div>' +
+    (SLAYDY_PODRYAD ? "" : '<div class="tochki">' + tochki + '</div>') +
+    '<div class="slaydy">' + slaydy + '</div>';
+}
+function pokazat_slayd(i) { SLAYD = i; SLAYDY_PODRYAD = false; zapisat_adres(); narisovat(); }
+function listat(shag) { SLAYD = (SLAYD + shag + SLAYDY.length) % SLAYDY.length; zapisat_adres(); narisovat(); }
+function vse_slaydy() { SLAYDY_PODRYAD = !SLAYDY_PODRYAD; narisovat(); }
+function pechat_sunum() {
+  VKLADKA = "sunum"; SLAYDY_PODRYAD = true; narisovat();
+  setTimeout(() => window.print(), 120);
+}
+
+/* --- общая отрисовка --- */
+function narisovat() {
+  document.documentElement.lang = YAZYK;
+  document.getElementById("zagolovok").textContent = t("zagolovok");
+  document.getElementById("podzagolovok").textContent = t("podzagolovok");
+  document.getElementById("plashka").textContent = t("demo");
+  document.getElementById("yaz-tr").setAttribute("aria-pressed", YAZYK === "tr");
+  document.getElementById("yaz-ru").setAttribute("aria-pressed", YAZYK === "ru");
+  document.title = t("zagolovok");
+
+  document.getElementById("vkladki").innerHTML = EKRANY.map(e =>
+    '<button type="button" role="tab" aria-selected="' + (VKLADKA === e.kod) + '" onclick="vybrat_vkladku(\'' + e.kod + '\')">' +
+    ekranirovat(t(e.klyuch)) + '</button>').join("");
+
+  narisovat_otdely(); narisovat_sunum(); narisovat_svodku(); narisovat_sklad(); narisovat_akt(); narisovat_zakupki();
+  narisovat_dengi(); narisovat_tender(); narisovat_personal(); narisovat_ii();
+  EKRANY.forEach(e => { ekran(e.kod).hidden = (e.kod !== VKLADKA); });
+
+  document.getElementById("podval").textContent =
+    t("demo") + " · " + t("demo_poyasnenie") + " · " + data(DANNYE.meta.data);
+}
+function vybrat_vkladku(kod) { VKLADKA = kod; PODSVETKA = null; zapisat_adres(); narisovat(); }
+
+// Экран виден в адресе: ссылку можно отправить на конкретную вкладку.
+function zapisat_adres() {
+  const novyy = "#" + VKLADKA + (VKLADKA === "sunum" ? "/" + (SLAYD + 1) : "");
+  // При открытии с флешки или из архива запись адреса может быть запрещена —
+  // это не повод ронять страницу.
+  try {
+    if (location.hash !== novyy) history.replaceState(null, "", novyy);
+  } catch (e) { /* адрес просто не меняется */ }
+}
+function prochitat_adres() {
+  const chasti = (location.hash || "").replace("#", "").split("/");
+  if (EKRANY.some(e => e.kod === chasti[0])) VKLADKA = chasti[0];
+  const nomer = parseInt(chasti[1], 10);
+  if (!isNaN(nomer) && nomer >= 1 && nomer <= SLAYDY.length) SLAYD = nomer - 1;
+}
+function smenit_yazyk(kod) { YAZYK = kod; narisovat(); }
+
+document.addEventListener("keydown", (e) => {
+  if (VKLADKA !== "sunum" || SLAYDY_PODRYAD) return;
+  if (e.key === "ArrowRight") listat(1);
+  if (e.key === "ArrowLeft") listat(-1);
+});
+document.getElementById("yaz-tr").addEventListener("click", () => smenit_yazyk("tr"));
+document.getElementById("yaz-ru").addEventListener("click", () => smenit_yazyk("ru"));
+prochitat_adres();
+narisovat();
+window.addEventListener("hashchange", () => { prochitat_adres(); narisovat(); });
+</script>
+</body>
+</html>
