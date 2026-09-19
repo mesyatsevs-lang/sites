@@ -349,6 +349,34 @@
       flex-wrap: wrap;
     }
 
+    .lang-switch {
+      display: flex;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.76);
+    }
+
+    .lang-switch button {
+      min-width: 42px;
+      padding: 10px 11px;
+      color: var(--muted);
+      background: transparent;
+      border-left: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .lang-switch button:first-child {
+      border-left: 0;
+    }
+
+    .lang-switch button.active {
+      color: #fff;
+      background: var(--grid);
+    }
+
     .client-lockup {
       display: inline-flex;
       align-items: center;
@@ -1785,11 +1813,11 @@
     <div class="auth-card">
       <div class="brand-mark">AV</div>
       <h2 id="authTitle">AVENSOL Control Room</h2>
-      <p>Закрытый демонстрационный прототип. Введите пароль доступа для просмотра стратегического пульта.</p>
+      <p data-i18n="authLead">Закрытый демонстрационный прототип. Введите пароль доступа для просмотра стратегического пульта.</p>
       <form class="auth-form" id="authForm">
-        <label for="authPassword">Пароль</label>
+        <label for="authPassword" data-i18n="passwordLabel">Пароль</label>
         <input id="authPassword" name="password" type="password" autocomplete="current-password" required>
-        <button class="btn primary" type="submit">Открыть демо</button>
+        <button class="btn primary" type="submit" data-i18n="authButton">Открыть демо</button>
         <div class="auth-error" id="authError" role="alert"></div>
       </form>
     </div>
@@ -2476,7 +2504,7 @@
   </template>
 
   <script>
-    const AUTH_HASH = "c854e5673d58a9c30acd0cf8e2d480637993e483b17df88cbd92e405036d0904";
+    const AUTH_HASH = "3dc1f1a3c1aa7be2ec284979b617e192e58cba9bd3ba7947f99c74e9750c2539";
     const AUTH_KEY = "avensol-control-room-unlocked";
     const authForm = document.getElementById("authForm");
     const authPassword = document.getElementById("authPassword");
