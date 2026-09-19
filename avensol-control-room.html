@@ -326,6 +326,63 @@
       backdrop-filter: blur(10px);
     }
 
+    .sector-tape {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+
+    .sector-card {
+      min-height: 168px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid rgba(18,57,71,.18);
+      background: var(--deep);
+      box-shadow: 0 12px 28px rgba(23,32,38,.10);
+    }
+
+    .sector-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 168px;
+      object-fit: cover;
+      filter: saturate(.96) contrast(1.02);
+      transform: scale(1.01);
+    }
+
+    .sector-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(23,32,38,.08), rgba(23,32,38,.72));
+    }
+
+    .sector-label {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 11px;
+      z-index: 1;
+      color: #fff;
+    }
+
+    .sector-label strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.15;
+    }
+
+    .sector-label span {
+      display: block;
+      margin-top: 4px;
+      color: rgba(255,255,255,.70);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
     .entry-strip {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1006,6 +1063,130 @@
       line-height: 1.35;
     }
 
+    .standards-rail {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, .7fr);
+      gap: 14px;
+      margin: 14px 0;
+    }
+
+    .standard-board {
+      padding: 15px;
+      color: #fff;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(18,57,71,.98), rgba(13,110,136,.92)),
+        var(--deep);
+      box-shadow: var(--shadow);
+    }
+
+    .standard-board h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.15;
+    }
+
+    .standard-board p {
+      margin: 0;
+      color: rgba(255,255,255,.74);
+      line-height: 1.45;
+    }
+
+    .standard-matrix {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .standard-tile {
+      min-height: 138px;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 8px;
+      background: rgba(255,255,255,.09);
+    }
+
+    .standard-tile b {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+    }
+
+    .standard-tile span {
+      display: block;
+      color: rgba(255,255,255,.66);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .gate-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .gate-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 9px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .gate-mark {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      color: #fff;
+      background: var(--field);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .gate-item strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .gate-item small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .maturity-card {
+      display: grid;
+      gap: 12px;
+      padding: 15px;
+    }
+
+    .maturity-line {
+      display: grid;
+      gap: 6px;
+    }
+
+    .maturity-line header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .standard-gates {
+      margin-top: 14px;
+    }
+
     .story-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1357,9 +1538,11 @@
       .topbar,
       .toolbar,
       .meeting-route,
+      .sector-tape,
       .entry-strip,
       .two-col,
       .diagnostic-grid,
+      .standards-rail,
       .comparison,
       .owner-board {
         grid-template-columns: 1fr;
@@ -1371,6 +1554,8 @@
 
       .kpi-grid,
       .pain-matrix,
+      .standard-matrix,
+      .sector-tape,
       .story-grid,
       .pilot-map,
       .usecase-grid,
@@ -1383,6 +1568,8 @@
     @media (max-width: 660px) {
       .kpi-grid,
       .pain-matrix,
+      .standard-matrix,
+      .sector-tape,
       .story-grid,
       .pilot-map,
       .usecase-grid,
@@ -1393,6 +1580,7 @@
 
       .project-row,
       .action,
+      .gate-item,
       .node,
       .rail-head {
         grid-template-columns: 1fr;
@@ -1448,17 +1636,18 @@
         <button data-view="owner"><span class="nav-icon">OW</span><span>Вид собственника</span><span class="nav-code">04</span></button>
         <button data-view="pilot"><span class="nav-icon">NP</span><span>Пилот Нефтчала</span><span class="nav-code">05</span></button>
         <button data-view="aiuse"><span class="nav-icon">UC</span><span>ИИ-сценарии</span><span class="nav-code">06</span></button>
-        <button data-view="startpack"><span class="nav-icon">ST</span><span>Данные для старта</span><span class="nav-code">07</span></button>
-        <button data-view="project"><span class="nav-icon">PR</span><span>Управление проектом</span><span class="nav-code">08</span></button>
-        <button data-view="tender"><span class="nav-icon">TN</span><span>Тендер → бюджет</span><span class="nav-code">09</span></button>
-        <button data-view="procurement"><span class="nav-icon">PO</span><span>Закупки</span><span class="nav-code">10</span></button>
-        <button data-view="warehouse"><span class="nav-icon">WH</span><span>Склад</span><span class="nav-code">11</span></button>
-        <button data-view="site"><span class="nav-icon">SA</span><span>Площадка</span><span class="nav-code">12</span></button>
-        <button data-view="hakedis"><span class="nav-icon">HK</span><span>Акты</span><span class="nav-code">13</span></button>
-        <button data-view="finance"><span class="nav-icon">FN</span><span>Финансы</span><span class="nav-code">14</span></button>
-        <button data-view="hr"><span class="nav-icon">КД</span><span>Персонал</span><span class="nav-code">15</span></button>
-        <button data-view="planning"><span class="nav-icon">PL</span><span>Планирование</span><span class="nav-code">16</span></button>
-        <button data-view="ai"><span class="nav-icon">ИИ</span><span>ИИ-слой управления</span><span class="nav-code">17</span></button>
+        <button data-view="standards"><span class="nav-icon">SM</span><span>SMK / HSE / EDMS</span><span class="nav-code">07</span></button>
+        <button data-view="startpack"><span class="nav-icon">ST</span><span>Данные для старта</span><span class="nav-code">08</span></button>
+        <button data-view="project"><span class="nav-icon">PR</span><span>Управление проектом</span><span class="nav-code">09</span></button>
+        <button data-view="tender"><span class="nav-icon">TN</span><span>Тендер → бюджет</span><span class="nav-code">10</span></button>
+        <button data-view="procurement"><span class="nav-icon">PO</span><span>Закупки</span><span class="nav-code">11</span></button>
+        <button data-view="warehouse"><span class="nav-icon">WH</span><span>Склад</span><span class="nav-code">12</span></button>
+        <button data-view="site"><span class="nav-icon">SA</span><span>Площадка</span><span class="nav-code">13</span></button>
+        <button data-view="hakedis"><span class="nav-icon">HK</span><span>Акты</span><span class="nav-code">14</span></button>
+        <button data-view="finance"><span class="nav-icon">FN</span><span>Финансы</span><span class="nav-code">15</span></button>
+        <button data-view="hr"><span class="nav-icon">КД</span><span>Персонал</span><span class="nav-code">16</span></button>
+        <button data-view="planning"><span class="nav-icon">PL</span><span>Планирование</span><span class="nav-code">17</span></button>
+        <button data-view="ai"><span class="nav-icon">ИИ</span><span>ИИ-слой управления</span><span class="nav-code">18</span></button>
       </nav>
 
       <div class="sidebar-note">
@@ -1494,6 +1683,25 @@
           <button class="btn signal" data-action="critical-actions">Решения на сегодня</button>
           <button class="btn" id="openAI">Спросить ИИ</button>
         </div>
+      </section>
+
+      <section class="sector-tape" aria-label="Направления AVENSOL">
+        <article class="sector-card">
+          <img src="assets/avensol_gallery/sector-solar.jpg" alt="Solar EPC">
+          <div class="sector-label"><strong>Solar EPC</strong><span>генерация и площадка</span></div>
+        </article>
+        <article class="sector-card">
+          <img src="assets/avensol_gallery/sector-substation.jpg" alt="Transmission networks">
+          <div class="sector-label"><strong>Transmission Networks</strong><span>подстанции и сети</span></div>
+        </article>
+        <article class="sector-card">
+          <img src="assets/avensol_gallery/sector-datacenter.jpg" alt="Data centers">
+          <div class="sector-label"><strong>Data Centers</strong><span>инженерная инфраструктура</span></div>
+        </article>
+        <article class="sector-card">
+          <img src="assets/avensol_gallery/sector-transmission.jpg" alt="Grid construction">
+          <div class="sector-label"><strong>Grid Construction</strong><span>ЛЭП и EPC-монтаж</span></div>
+        </article>
       </section>
 
       <section class="toolbar">
@@ -1551,6 +1759,7 @@
         <button data-view="owner">Собственник</button>
         <button data-view="pilot">Пилот</button>
         <button data-view="aiuse">ИИ-сценарии</button>
+        <button data-view="standards">Стандарты</button>
         <button data-view="startpack">Старт</button>
         <button data-view="tender">Тендер</button>
         <button data-view="procurement">Закупки</button>
@@ -1574,7 +1783,7 @@
           <button class="route-step" data-view="warehouse"><b>05</b><span>Склад и материалы</span></button>
           <button class="route-step" data-view="finance"><b>06</b><span>Финансы</span></button>
           <button class="route-step" data-view="aiuse"><b>07</b><span>ИИ-сценарии</span></button>
-          <button class="route-step" data-view="pilot"><b>08</b><span>Пилот</span></button>
+          <button class="route-step" data-view="standards"><b>08</b><span>SMK как gatekeeper</span></button>
         </div>
       </section>
 
@@ -1620,6 +1829,34 @@
             <div class="flow-step"><span>07</span><strong>Финансы</strong><small>Обязательства, оплаты, деньги</small></div>
             <div class="flow-step"><span>08</span><strong>ИИ</strong><small>Отклонения, риски, решения</small></div>
           </div>
+        </section>
+
+        <section class="standards-rail">
+          <article class="standard-board">
+            <h3>Digital SMK как контур допуска к операциям</h3>
+            <p>Идея для AVENSOL: качество, безопасность, версия документа и договорное соответствие не живут отдельной папкой. Они становятся проверкой перед закупкой, выдачей материала, закрытием объёма, актом и оплатой.</p>
+            <div class="standard-matrix">
+              <div class="standard-tile"><b>SMK / ISO 9001</b><span>Чек-листы, входной контроль, прослеживаемость партий, корректирующие действия.</span></div>
+              <div class="standard-tile"><b>HSE</b><span>Допуск людей и работ, наряды, нарушения, фотофиксация и стоп-сигналы площадки.</span></div>
+              <div class="standard-tile"><b>EDMS</b><span>Только актуальная версия чертежа, реестр писем, актов, RFI и исполнительной документации.</span></div>
+              <div class="standard-tile"><b>Compliance</b><span>Проверка договора, лимитов, полномочий, согласований и основания для оплаты.</span></div>
+            </div>
+          </article>
+          <article class="panel maturity-card">
+            <div class="maturity-line">
+              <header><span>Сейчас</span><span>38%</span></header>
+              <div class="progress"><i style="--w: 38%"></i></div>
+            </div>
+            <div class="maturity-line">
+              <header><span>Пилот 30 дней</span><span>64%</span></header>
+              <div class="progress"><i style="--w: 64%"></i></div>
+            </div>
+            <div class="maturity-line">
+              <header><span>Цель 90 дней</span><span>82%</span></header>
+              <div class="progress"><i style="--w: 82%"></i></div>
+            </div>
+            <button class="btn primary" data-view="standards">Открыть центр стандартов</button>
+          </article>
         </section>
 
         <div class="grid two-col">
@@ -1813,6 +2050,58 @@
         </div>
       </section>
 
+      <section class="view" id="standards">
+        <div class="standards-rail">
+          <article class="standard-board">
+            <h3>Центр управленческих стандартов</h3>
+            <p>Это слой, который отличает лидера EPC от обычного подрядчика: система не просто показывает отчёт, а не даёт закрыть действие без качества, безопасности, актуального документа и договорного основания.</p>
+            <div class="standard-matrix">
+              <div class="standard-tile"><b>SMK / Quality</b><span>Входной контроль, ITP, NCR, лаборатория, партия материала, приёмка скрытых работ.</span></div>
+              <div class="standard-tile"><b>HSE / Safety</b><span>Допуск работ, PPE, наряд, toolbox talk, инциденты, запрет работ при красном статусе.</span></div>
+              <div class="standard-tile"><b>EDMS / Document Control</b><span>Версии чертежей, RFI, transmittal, исполнительная документация, протоколы согласований.</span></div>
+              <div class="standard-tile"><b>Contract Compliance</b><span>Лимит договора, полномочия, основание для платежа, change order, связка с hakediş.</span></div>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><h3 class="panel-title">Что показывать собственнику</h3><p class="panel-sub">Не “мы внедрим регламенты”, а “каждая операция получает цифровой допуск”.</p></div></div>
+            <div class="panel-body gate-list">
+              <div class="gate-item"><span class="gate-mark">Q</span><div><strong>Нет сертификата или ITP</strong><small>Заказ создаётся как черновик, но не уходит в согласование.</small></div><span class="status red">stop</span></div>
+              <div class="gate-item"><span class="gate-mark">D</span><div><strong>Устаревший чертёж</strong><small>Площадка получает предупреждение и ссылку на актуальную версию.</small></div><span class="status amber">risk</span></div>
+              <div class="gate-item"><span class="gate-mark">H</span><div><strong>Нет допуска к работам</strong><small>Работа не попадает в daily report как разрешённая операция.</small></div><span class="status red">stop</span></div>
+              <div class="gate-item"><span class="gate-mark">C</span><div><strong>Нет договорного основания</strong><small>Оплата или акт требуют change order / подтверждения лимита.</small></div><span class="status amber">hold</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid two-col">
+          <article class="panel">
+            <div class="panel-head"><div><h3 class="panel-title">Как это зашивается в 8 рабочих блоков</h3><p class="panel-sub">Стандарты проходят через всю цепочку: тендер, закупки, склад, площадка, акты, финансы, персонал и планирование.</p></div></div>
+            <div class="panel-body">
+              <table class="data-table">
+                <tr><th>Блок</th><th>Gatekeeper</th><th>Управленческий эффект</th></tr>
+                <tr><td>Тендер</td><td>Квалификация, ITP, требования заказчика, риски</td><td>Смета учитывает не только цену, но и обязательства качества.</td></tr>
+                <tr><td>Закупки</td><td>Сертификаты, approved vendor list, дата потребности</td><td>Материал нельзя купить без связи с работой и контролем качества.</td></tr>
+                <tr><td>Склад</td><td>Партия, сертификат, входной контроль, локация</td><td>Появляется прослеживаемость материала до акта.</td></tr>
+                <tr><td>Площадка</td><td>Наряд, чек-лист, фото, актуальный чертёж</td><td>Daily report становится доказательством, а не пересказом.</td></tr>
+                <tr><td>Акты</td><td>ITP, исполнительная документация, NCR/CAR</td><td>Hakediş закрывается только по подтверждённому объёму.</td></tr>
+                <tr><td>Финансы</td><td>Заказ, поставка, входной контроль, лимит договора</td><td>Оплата не проходит без фактического и юридического основания.</td></tr>
+                <tr><td>Персонал</td><td>Допуск, квалификация, табель, HSE-инструктаж</td><td>Стоимость труда связана с безопасным и разрешённым объёмом.</td></tr>
+                <tr><td>Планирование</td><td>Контрольные точки качества и безопасности</td><td>График видит не только сроки, но и условия готовности работ.</td></tr>
+              </table>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><h3 class="panel-title">Лидерский профиль EPC-подрядчика</h3><p class="panel-sub">Что нужно добавить в компанию, чтобы претендовать на первое место.</p></div></div>
+            <div class="panel-body roadmap">
+              <div class="phase"><div><strong>Process owner по каждому контуру</strong><span>Не “кто-то ведёт Excel”, а владелец процесса: качество, HSE, документы, договоры, деньги.</span></div></div>
+              <div class="phase"><div><strong>Единый классификатор работ и затрат</strong><span>Один язык для тендера, склада, площадки, актов и финансов.</span></div></div>
+              <div class="phase"><div><strong>Digital evidence</strong><span>Фото, сертификат, чек-лист, версия чертежа и согласование привязаны к операции.</span></div></div>
+              <div class="phase"><div><strong>ИИ только поверх дисциплины данных</strong><span>Сначала gatekeeper и структура, затем предиктивные сигналы по срокам, марже и оплатам.</span></div></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section class="view" id="startpack">
         <div class="grid two-col">
           <article class="panel">
@@ -1978,6 +2267,10 @@
         </div>
       </article>
     </div>
+    <article class="panel standard-gates">
+      <div class="panel-head"><div><h3 class="panel-title">SMK / HSE / EDMS / Compliance в этом блоке</h3><p class="panel-sub">Цифровые условия допуска к операции: без них действие остаётся риском, а не управляемым процессом.</p></div></div>
+      <div class="panel-body gate-list moduleGates"></div>
+    </article>
   </template>
 
   <script>
@@ -1989,7 +2282,8 @@
           ["Обратная связь", "Фактическая себестоимость возвращается в нормы тендера и будущие предложения."]
         ],
         actions: ["Импортировать ведомость объёмов", "Привязать к структуре работ", "Зафиксировать допущения", "ИИ-проверка тендера", "Показать ценовые аномалии"],
-        rows: [["Вход", "Ведомость объёмов, тендерные допущения, цены поставщиков"], ["Контроль", "Финальный бюджет, структура работ, код затрат, рабочая позиция"], ["Выход", "Живой бюджет проекта и обратная связь в тендер"]]
+        rows: [["Вход", "Ведомость объёмов, тендерные допущения, цены поставщиков"], ["Контроль", "Финальный бюджет, структура работ, код затрат, рабочая позиция"], ["Выход", "Живой бюджет проекта и обратная связь в тендер"]],
+        gates: [["SMK", "Требования качества заказчика и ITP учтены в цене."], ["EDMS", "Все версии BOQ, чертежей и clarifications зафиксированы."], ["Compliance", "Допущения, исключения и риски вынесены в контрактную позицию."]]
       },
       procurement: {
         steps: [
@@ -1998,7 +2292,8 @@
           ["Заказ", "Заказ согласуется только с проверкой бюджета и влияния на график."]
         ],
         actions: ["Создать заявку", "Сравнить предложения", "Согласовать заказ", "Проверить лимит бюджета", "Отметить критичным"],
-        rows: [["Вход", "Заявка на материал, дата потребности, структура работ"], ["Контроль", "Матрица согласований и лимит бюджета"], ["Выход", "Заказ, дата поставки и принятые обязательства"]]
+        rows: [["Вход", "Заявка на материал, дата потребности, структура работ"], ["Контроль", "Матрица согласований и лимит бюджета"], ["Выход", "Заказ, дата поставки и принятые обязательства"]],
+        gates: [["SMK", "Approved vendor, сертификат и входной контроль обязательны."], ["Planning", "Дата потребности сверена с lookahead-планом."], ["Compliance", "Заказ не превышает бюджетный лимит и полномочия согласования."]]
       },
       warehouse: {
         steps: [
@@ -2007,7 +2302,8 @@
           ["Списание", "Материал списывается на рабочую позицию и код затрат."]
         ],
         actions: ["Принять материал", "Выдать на площадку", "Переместить остаток", "Инвентаризация", "Показать дефицит"],
-        rows: [["Вход", "Заказ, накладная, материал"], ["Контроль", "Остаток, локация, рабочая позиция, ответственный"], ["Выход", "Реальный расход и доверие к складу"]]
+        rows: [["Вход", "Заказ, накладная, материал"], ["Контроль", "Остаток, локация, рабочая позиция, ответственный"], ["Выход", "Реальный расход и доверие к складу"]],
+        gates: [["SMK", "Партия материала связана с сертификатом и входным контролем."], ["EDMS", "Накладная, фото и акт приёмки лежат в карточке движения."], ["Compliance", "Выдача разрешена только на проект и рабочую позицию."]]
       },
       site: {
         steps: [
@@ -2016,7 +2312,8 @@
           ["Доказательства", "Фото, документы и след согласования прикрепляются к записи."]
         ],
         actions: ["Ежедневный отчёт", "Ввести объём", "Подтвердить расход", "Создать проблему", "ИИ-сводка дня"],
-        rows: [["Вход", "Ежедневные объёмы и отчёты площадки"], ["Контроль", "Структура работ, локация, доказательства, реестр проблем"], ["Выход", "Прогресс, реальная себестоимость и риски"]]
+        rows: [["Вход", "Ежедневные объёмы и отчёты площадки"], ["Контроль", "Структура работ, локация, доказательства, реестр проблем"], ["Выход", "Прогресс, реальная себестоимость и риски"]],
+        gates: [["HSE", "Допуск к работам и toolbox talk подтверждены."], ["EDMS", "Площадка работает по актуальной версии чертежа."], ["SMK", "Фото, чек-лист и скрытые работы привязаны к объёму."]]
       },
       hakedis: {
         steps: [
@@ -2025,7 +2322,8 @@
           ["Отклонение", "Маржа и требования субподрядчиков сравниваются между собой."]
         ],
         actions: ["Создать акт", "Разложить себестоимость", "Сравнить выручку и себестоимость", "Утвердить объём", "ИИ-проверка акта"],
-        rows: [["Вход", "Акт item и утверждённый объём"], ["Контроль", "Бетон, арматура, опалубка, труд, техника"], ["Выход", "Маржа выручки и реальной себестоимости"]]
+        rows: [["Вход", "Акт item и утверждённый объём"], ["Контроль", "Бетон, арматура, опалубка, труд, техника"], ["Выход", "Маржа выручки и реальной себестоимости"]],
+        gates: [["SMK", "ITP, лаборатория, NCR/CAR и чек-листы закрыты."], ["EDMS", "Исполнительная документация и версия чертежа приложены."], ["Compliance", "Объём не выходит за договор или change order."]]
       },
       finance: {
         steps: [
@@ -2034,7 +2332,8 @@
           ["Cash", "Прогноз показывает недельную потребность проекта в деньгах."]
         ],
         actions: ["Согласовать оплату", "Проверить заказ", "Показать обязательства", "Денежный поток 4 недели", "Удержать оплату"],
-        rows: [["Вход", "Счёт, заказ, поставка и след согласования"], ["Контроль", "Принятые обязательства, бюджет, платёжный календарь"], ["Выход", "Решение по оплате и прогноз денежного потока"]]
+        rows: [["Вход", "Счёт, заказ, поставка и след согласования"], ["Контроль", "Принятые обязательства, бюджет, платёжный календарь"], ["Выход", "Решение по оплате и прогноз денежного потока"]],
+        gates: [["Compliance", "Платёж имеет заказ, поставку, лимит и полномочия."], ["SMK", "Материал или работа прошли входной / исполнительный контроль."], ["Finance", "Платёж виден в cash flow до факта оплаты."]]
       },
       hr: {
         steps: [
@@ -2043,7 +2342,8 @@
           ["Стоимость", "Стоимость труда назначается на проект и рабочую позицию."]
         ],
         actions: ["Импортировать табель", "Согласовать табель", "Назначить на рабочую позицию", "Показать переработки", "ИИ-риск персонала"],
-        rows: [["Вход", "Сотрудник, роль, табель"], ["Контроль", "Проект, рабочая позиция, код затрат"], ["Выход", "Стоимость труда и план / факт"]]
+        rows: [["Вход", "Сотрудник, роль, табель"], ["Контроль", "Проект, рабочая позиция, код затрат"], ["Выход", "Стоимость труда и план / факт"]],
+        gates: [["HSE", "У человека есть допуск, инструктаж и разрешённая роль."], ["HR", "Табель согласован и связан с рабочей позицией."], ["Compliance", "Субподрядный персонал соответствует договору и лимиту."]]
       },
       planning: {
         steps: [
@@ -2052,7 +2352,8 @@
           ["Риск", "Причины задержек и критические ограничения эскалируются."]
         ],
         actions: ["План ближайших недель", "Сформировать потребность в материалах", "Сформировать потребность в деньгах", "Показать задержки", "ИИ-риск графика"],
-        rows: [["Вход", "График работ и прогресс"], ["Контроль", "Дата потребности, срок закупки, труд"], ["Выход", "Потребности в материалах, людях и деньгах"]]
+        rows: [["Вход", "График работ и прогресс"], ["Контроль", "Дата потребности, срок закупки, труд"], ["Выход", "Потребности в материалах, людях и деньгах"]],
+        gates: [["SMK", "Контрольные точки качества встроены в график."], ["HSE", "Опасные работы требуют отдельного допуска и подготовки."], ["EDMS", "Перед стартом этапа проверяется актуальность проектной документации."]]
       }
     };
 
@@ -2092,6 +2393,8 @@
         });
         const table = template.querySelector(".moduleTable");
         table.innerHTML = "<tr><th>Слой</th><th>Содержание контроля</th></tr>" + data.rows.map(row => `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`).join("");
+        const gates = template.querySelector(".moduleGates");
+        gates.innerHTML = data.gates.map(gate => `<div class="gate-item"><span class="gate-mark">${gate[0].slice(0, 1)}</span><div><strong>${gate[0]}</strong><small>${gate[1]}</small></div><span class="status amber">gate</span></div>`).join("");
         this.replaceWith(template);
       }
     });
