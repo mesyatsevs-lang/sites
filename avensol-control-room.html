@@ -204,8 +204,8 @@
     .topbar h2 {
       margin: 6px 0 7px;
       font-family: var(--display);
-      font-size: clamp(28px, 4vw, 48px);
-      line-height: .96;
+      font-size: clamp(28px, 3.35vw, 42px);
+      line-height: 1;
       font-weight: 850;
       max-width: 900px;
     }
@@ -215,6 +215,36 @@
       margin: 0;
       color: var(--muted);
       line-height: 1.55;
+    }
+
+    .signal-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .signal-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 30px;
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--deep);
+      background: rgba(255,255,255,.72);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .signal-chip::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--energy);
+      box-shadow: 0 0 0 4px rgba(216,145,43,.14);
     }
 
     .top-actions {
@@ -310,6 +340,80 @@
       color: #fff;
       border-color: var(--grid);
       background: var(--grid);
+    }
+
+    .meeting-route {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: stretch;
+      margin: 6px 0 18px;
+      padding: 12px;
+      border: 1px solid rgba(18,57,71,.16);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(18,57,71,.96), rgba(23,32,38,.94));
+      box-shadow: var(--shadow);
+    }
+
+    .route-title {
+      min-width: 172px;
+      display: grid;
+      align-content: center;
+      gap: 3px;
+      color: #fff;
+      padding: 0 8px;
+    }
+
+    .route-title strong {
+      font-size: 14px;
+      line-height: 1.12;
+    }
+
+    .route-title span {
+      color: rgba(255,255,255,.62);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .route-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(110px, 1fr));
+      gap: 8px;
+    }
+
+    .route-step {
+      min-width: 110px;
+      min-height: 64px;
+      padding: 9px;
+      text-align: left;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px;
+      color: rgba(255,255,255,.86);
+      background: rgba(255,255,255,.08);
+    }
+
+    .route-step:hover,
+    .route-step.active {
+      color: var(--ink);
+      background: #fff;
+      border-color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .route-step b {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--energy);
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .route-step span {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.18;
     }
 
     .view {
@@ -1164,6 +1268,7 @@
 
       .topbar,
       .toolbar,
+      .meeting-route,
       .two-col,
       .diagnostic-grid,
       .comparison,
@@ -1206,6 +1311,14 @@
 
       .rail-head {
         display: grid;
+      }
+
+      .route-title {
+        min-width: 0;
+      }
+
+      .route-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .topbar h2 {
@@ -1254,7 +1367,7 @@
         <button data-view="site"><span class="nav-icon">SA</span><span>Площадка</span><span class="nav-code">12</span></button>
         <button data-view="hakedis"><span class="nav-icon">HK</span><span>Акты</span><span class="nav-code">13</span></button>
         <button data-view="finance"><span class="nav-icon">FN</span><span>Финансы</span><span class="nav-code">14</span></button>
-        <button data-view="hr"><span class="nav-icon">Кадры</span><span>Персонал</span><span class="nav-code">15</span></button>
+        <button data-view="hr"><span class="nav-icon">КД</span><span>Персонал</span><span class="nav-code">15</span></button>
         <button data-view="planning"><span class="nav-icon">PL</span><span>Планирование</span><span class="nav-code">16</span></button>
         <button data-view="ai"><span class="nav-icon">ИИ</span><span>ИИ-слой управления</span><span class="nav-code">17</span></button>
       </nav>
@@ -1276,6 +1389,12 @@
           <div class="title-kicker">Прототип стратегического дашборда</div>
           <h2>Единая цепочка управления: от тендерных допущений до решений по деньгам.</h2>
           <p>AVENSOL Control Room связывает тендер, бюджет, закупки, склад, площадку, акты, финансы и персонал в один управленческий пульт. ИИ работает верхним аналитическим слоем: объясняет отклонения, находит риски и готовит брифы для руководства.</p>
+          <div class="signal-strip" aria-label="Ключевые параметры прототипа">
+            <span class="signal-chip">4 площадки</span>
+            <span class="signal-chip">17 экранов</span>
+            <span class="signal-chip">Пилот 30 дней</span>
+            <span class="signal-chip">ИИ после структуры данных</span>
+          </div>
         </div>
         <div class="top-actions">
           <button class="btn primary" data-action="owner-brief">Сформировать бриф</button>
@@ -1332,6 +1451,23 @@
         <button data-view="hakedis">Акты</button>
         <button data-view="finance">Финансы</button>
         <button data-view="hr">Кадры</button>
+      </section>
+
+      <section class="meeting-route" aria-label="Маршрут показа на встрече">
+        <div class="route-title">
+          <span>Маршрут встречи</span>
+          <strong>Показывать не всё подряд, а как историю</strong>
+        </div>
+        <div class="route-steps">
+          <button class="route-step active" data-view="cockpit"><b>01</b><span>Пульт руководства</span></button>
+          <button class="route-step" data-view="losses"><b>02</b><span>Где теряется управление</span></button>
+          <button class="route-step" data-view="beforeafter"><b>03</b><span>До / после</span></button>
+          <button class="route-step" data-view="tender"><b>04</b><span>Тендер → бюджет</span></button>
+          <button class="route-step" data-view="warehouse"><b>05</b><span>Склад и материалы</span></button>
+          <button class="route-step" data-view="finance"><b>06</b><span>Финансы</span></button>
+          <button class="route-step" data-view="aiuse"><b>07</b><span>ИИ-сценарии</span></button>
+          <button class="route-step" data-view="pilot"><b>08</b><span>Пилот</span></button>
+        </div>
       </section>
 
       <section class="view active" id="cockpit">
