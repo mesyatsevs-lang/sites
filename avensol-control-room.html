@@ -1,0 +1,1331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AVENSOL Control Room — стратегический пульт</title>
+  <style>
+    :root {
+      --ink: #172026;
+      --muted: #60707c;
+      --paper: #f7f8f4;
+      --panel: #ffffff;
+      --line: #d7dedb;
+      --grid: #0d6e88;
+      --deep: #123947;
+      --energy: #d8912b;
+      --copper: #9b5130;
+      --field: #2f765f;
+      --risk: #b63737;
+      --soft: #e9efed;
+      --shadow: 0 18px 40px rgba(23, 32, 38, .10);
+      --radius: 8px;
+      --mono: "SFMono-Regular", "Roboto Mono", "Cascadia Mono", Consolas, monospace;
+      --body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --display: "Aptos Display", "Arial Narrow", var(--body);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(13, 110, 136, .06) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(13, 110, 136, .05) 1px, transparent 1px),
+        var(--paper);
+      background-size: 28px 28px;
+      font-family: var(--body);
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 22px 18px;
+      color: #f5faf9;
+      background: linear-gradient(180deg, #123947 0%, #172026 100%);
+      border-right: 1px solid rgba(255,255,255,.12);
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 8px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(216,145,43,.95), rgba(47,118,95,.95)),
+        var(--deep);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: 21px;
+      line-height: 1.05;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .brand p {
+      margin: 6px 0 0;
+      color: rgba(245,250,249,.72);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .nav-group-label {
+      margin: 18px 8px 8px;
+      color: rgba(245,250,249,.56);
+      font-size: 11px;
+      font-family: var(--mono);
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav button {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 10px;
+      color: rgba(245,250,249,.82);
+      background: transparent;
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      color: #fff;
+      background: rgba(255,255,255,.10);
+    }
+
+    .nav .nav-icon {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      color: #fff;
+      background: rgba(255,255,255,.12);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .nav .nav-code {
+      color: rgba(245,250,249,.55);
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .sidebar-note {
+      margin-top: 22px;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px;
+      background: rgba(255,255,255,.07);
+    }
+
+    .sidebar-note strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .sidebar-note p {
+      margin: 0;
+      color: rgba(245,250,249,.72);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    main {
+      min-width: 0;
+      padding: 22px 26px 34px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .title-kicker {
+      color: var(--grid);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .topbar h2 {
+      margin: 6px 0 7px;
+      font-family: var(--display);
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: .96;
+      font-weight: 850;
+      max-width: 900px;
+    }
+
+    .topbar p {
+      max-width: 880px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 38px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      color: var(--ink);
+      background: var(--soft);
+      border: 1px solid var(--line);
+      font-weight: 700;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(23,32,38,.08);
+    }
+
+    .btn.primary {
+      color: #fff;
+      background: var(--deep);
+      border-color: var(--deep);
+    }
+
+    .btn.signal {
+      color: #fff;
+      background: var(--energy);
+      border-color: var(--energy);
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1.4fr .9fr .9fr auto;
+      gap: 10px;
+      align-items: end;
+      margin: 18px 0;
+      padding: 14px;
+      background: rgba(255,255,255,.70);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-family: var(--mono);
+      text-transform: uppercase;
+    }
+
+    .field select,
+    .field input {
+      width: 100%;
+      min-height: 39px;
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .chain {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(8, minmax(96px, 1fr));
+      gap: 8px;
+      margin: 18px 0;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .chain button {
+      min-width: 96px;
+      padding: 10px 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 750;
+      box-shadow: 0 6px 14px rgba(23,32,38,.05);
+    }
+
+    .chain button.active {
+      color: #fff;
+      border-color: var(--grid);
+      background: var(--grid);
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+      animation: enter .22s ease-out;
+    }
+
+    @keyframes enter {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .kpi-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .two-col {
+      grid-template-columns: minmax(0, 1.25fr) minmax(320px, .75fr);
+      margin-top: 14px;
+    }
+
+    .three-col {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .panel {
+      background: rgba(255,255,255,.92);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+      padding: 15px 15px 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .panel-sub {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .panel-body {
+      padding: 15px;
+    }
+
+    .kpi {
+      min-height: 138px;
+      padding: 15px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi::after {
+      content: "";
+      position: absolute;
+      inset: auto -28px -40px auto;
+      width: 110px;
+      height: 110px;
+      border: 18px solid rgba(13,110,136,.09);
+      transform: rotate(18deg);
+    }
+
+    .kpi .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-family: var(--mono);
+      text-transform: uppercase;
+    }
+
+    .kpi .value {
+      margin: 10px 0 4px;
+      font-family: var(--display);
+      font-size: 34px;
+      font-weight: 850;
+      line-height: 1;
+    }
+
+    .kpi .desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 24px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-family: var(--mono);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .status::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .status.green {
+      color: var(--field);
+      background: rgba(47,118,95,.10);
+    }
+
+    .status.amber {
+      color: #9c6617;
+      background: rgba(216,145,43,.16);
+    }
+
+    .status.red {
+      color: var(--risk);
+      background: rgba(182,55,55,.12);
+    }
+
+    .project-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .project-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .project-row strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .project-row small {
+      color: var(--muted);
+    }
+
+    .action-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .action {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: start;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .action-number {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      color: #fff;
+      background: var(--deep);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .action h4 {
+      margin: 0 0 3px;
+      font-size: 14px;
+    }
+
+    .action p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .mini-btn {
+      min-height: 30px;
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--soft);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .map {
+      display: grid;
+      gap: 8px;
+    }
+
+    .node {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .node-id {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      color: #fff;
+      background: var(--grid);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .node strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .node span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .module-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .module-actions .btn,
+    .module-actions .mini-btn {
+      flex: 0 1 auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .data-table th {
+      color: var(--muted);
+      font-size: 11px;
+      font-family: var(--mono);
+      text-transform: uppercase;
+    }
+
+    .progress {
+      height: 9px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--soft);
+    }
+
+    .progress i {
+      display: block;
+      height: 100%;
+      width: var(--w, 50%);
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--field), var(--energy));
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 20;
+      width: min(560px, 100vw);
+      height: 100vh;
+      transform: translateX(105%);
+      transition: transform .22s ease;
+      background: var(--panel);
+      border-left: 1px solid var(--line);
+      box-shadow: -22px 0 45px rgba(23,32,38,.22);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-head {
+      padding: 18px;
+      color: #fff;
+      background: var(--deep);
+    }
+
+    .drawer-head h3 {
+      margin: 7px 0 4px;
+      font-size: 24px;
+    }
+
+    .drawer-head p {
+      margin: 0;
+      color: rgba(255,255,255,.76);
+      line-height: 1.45;
+    }
+
+    .drawer-body {
+      padding: 18px;
+      overflow-y: auto;
+    }
+
+    .drawer-foot {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      padding: 14px 18px;
+      border-top: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .ai-panel {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      z-index: 18;
+      width: min(820px, calc(100vw - 32px));
+      transform: translateX(-50%);
+      border: 1px solid rgba(18,57,71,.24);
+      border-radius: 8px;
+      background: rgba(255,255,255,.96);
+      box-shadow: var(--shadow);
+      display: none;
+    }
+
+    .ai-panel.open {
+      display: block;
+      animation: enter .18s ease-out;
+    }
+
+    .ai-panel header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .ai-panel header strong {
+      font-family: var(--mono);
+      color: var(--deep);
+    }
+
+    .ai-panel .ai-body {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .prompt-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    .prompt-row input {
+      min-height: 40px;
+      padding: 9px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+
+    .ai-answer {
+      min-height: 88px;
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--soft);
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    .toast {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 30;
+      max-width: 360px;
+      padding: 12px 14px;
+      color: #fff;
+      background: var(--deep);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      transform: translateY(-20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: .2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-bar {
+      display: none;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .sidebar.open {
+        display: block;
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 25;
+        width: min(320px, 90vw);
+      }
+
+      .mobile-bar {
+        display: flex;
+      }
+
+      main {
+        padding: 16px;
+      }
+
+      .topbar,
+      .toolbar,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .top-actions {
+        justify-content: flex-start;
+      }
+
+      .kpi-grid,
+      .three-col {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 660px) {
+      .kpi-grid,
+      .three-col {
+        grid-template-columns: 1fr;
+      }
+
+      .project-row,
+      .action,
+      .node {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar h2 {
+        font-size: 32px;
+      }
+
+      .prompt-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">AC</div>
+        <div>
+          <h1>AVENSOL<br>Control Room</h1>
+          <p>Единая EPC-цепочка от тендера до денежного потока.</p>
+        </div>
+      </div>
+
+      <div class="nav-group-label">Управленческие слои</div>
+      <nav class="nav" id="sideNav">
+        <button class="active" data-view="cockpit"><span class="nav-icon">EX</span><span>Пульт руководства</span><span class="nav-code">01</span></button>
+        <button data-view="project"><span class="nav-icon">PR</span><span>Управление проектом</span><span class="nav-code">02</span></button>
+        <button data-view="tender"><span class="nav-icon">TN</span><span>Тендер → бюджет</span><span class="nav-code">03</span></button>
+        <button data-view="procurement"><span class="nav-icon">PO</span><span>Закупки</span><span class="nav-code">04</span></button>
+        <button data-view="warehouse"><span class="nav-icon">WH</span><span>Склад</span><span class="nav-code">05</span></button>
+        <button data-view="site"><span class="nav-icon">ST</span><span>Площадка</span><span class="nav-code">06</span></button>
+        <button data-view="hakedis"><span class="nav-icon">HK</span><span>Hakediş</span><span class="nav-code">07</span></button>
+        <button data-view="finance"><span class="nav-icon">FN</span><span>Финансы</span><span class="nav-code">08</span></button>
+        <button data-view="hr"><span class="nav-icon">HR</span><span>Персонал</span><span class="nav-code">09</span></button>
+        <button data-view="planning"><span class="nav-icon">PL</span><span>Планирование</span><span class="nav-code">10</span></button>
+        <button data-view="ai"><span class="nav-icon">AI</span><span>AI-слой управления</span><span class="nav-code">11</span></button>
+      </nav>
+
+      <div class="sidebar-note">
+        <strong>Главное правило</strong>
+        <p>Каждое движение должно иметь проект, WBS, cost code, локацию, ответственного, дату и статус.</p>
+      </div>
+    </aside>
+
+    <main>
+      <div class="mobile-bar">
+        <button class="btn primary" id="openMenu">Меню</button>
+        <button class="btn" data-action="owner-brief">Бриф для собственника</button>
+      </div>
+
+      <section class="topbar">
+        <div>
+          <div class="title-kicker">Прототип стратегического дашборда</div>
+          <h2>Единая EPC-цепочка: от тендерных допущений до решений по деньгам.</h2>
+          <p>AVENSOL Control Room связывает тендер, бюджет, закупки, склад, площадку, hakediş, финансы и персонал в один управленческий пульт. AI работает верхним аналитическим слоем: объясняет отклонения, находит риски и готовит брифы для руководства.</p>
+        </div>
+        <div class="top-actions">
+          <button class="btn primary" data-action="owner-brief">Сформировать бриф</button>
+          <button class="btn signal" data-action="critical-actions">Решения на сегодня</button>
+          <button class="btn" id="openAI">Спросить AI</button>
+        </div>
+      </section>
+
+      <section class="toolbar">
+        <div class="field">
+          <label for="projectSelect">Активный проект</label>
+          <select id="projectSelect">
+            <option value="neftcala">Neftçala — солнечная станция</option>
+            <option value="substation">Пакет подстанций</option>
+            <option value="school">Школьный объект / civil</option>
+            <option value="plaza">Hatay plaza / MEP</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="roleSelect">Роль пользователя</label>
+          <select id="roleSelect">
+            <option>Собственник / патрон</option>
+            <option>Генеральный директор</option>
+            <option>Координатор</option>
+            <option>Финансовый директор</option>
+            <option>Руководитель тендерного отдела</option>
+            <option>HR-директор</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="periodSelect">Окно решений</label>
+          <select id="periodSelect">
+            <option>Эта неделя</option>
+            <option>Следующие 2 недели</option>
+            <option>Следующие 4 недели</option>
+            <option>Весь пилот</option>
+          </select>
+        </div>
+        <button class="btn primary" data-action="refresh">Обновить пульт</button>
+      </section>
+
+      <section class="chain" id="chainNav" aria-label="Process chain navigation">
+        <button class="active" data-view="cockpit">Пульт</button>
+        <button data-view="tender">Тендер</button>
+        <button data-view="procurement">Закупки</button>
+        <button data-view="warehouse">Склад</button>
+        <button data-view="site">Площадка</button>
+        <button data-view="hakedis">Hakediş</button>
+        <button data-view="finance">Финансы</button>
+        <button data-view="hr">HR</button>
+      </section>
+
+      <section class="view active" id="cockpit">
+        <div class="grid kpi-grid">
+          <article class="panel kpi">
+            <div class="label">Здоровье проектов</div>
+            <div class="value">2 / 4</div>
+            <p class="desc">По двум площадкам нужно решение координатора до встречи во вторник.</p>
+          </article>
+          <article class="panel kpi">
+            <div class="label">Обязательства</div>
+            <div class="value">68%</div>
+            <p class="desc">Открытые PO и долги требуют прозрачной цепочки финсогласования.</p>
+          </article>
+          <article class="panel kpi">
+            <div class="label">Достоверность склада</div>
+            <div class="value">Низкая</div>
+            <p class="desc">Движение склада пока не связано с work items.</p>
+          </article>
+          <article class="panel kpi">
+            <div class="label">AI-сигналы</div>
+            <div class="value">11</div>
+            <p class="desc">Обнаружены в тендере, складе, hakediş и денежном потоке.</p>
+          </article>
+        </div>
+
+        <div class="grid two-col">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <h3 class="panel-title">Пульт по 4 площадкам</h3>
+                <p class="panel-sub">Единый управленческий вид: роль проекта, риски, график и ежедневные действия.</p>
+              </div>
+              <button class="mini-btn" data-action="project-summary">Сводка</button>
+            </div>
+            <div class="panel-body project-list">
+              <div class="project-row">
+                <div><strong>Neftçala — солнечная станция</strong><small>EPC / планирование, техофис, документооборот</small></div>
+                <span class="status amber">риск cash</span>
+              </div>
+              <div class="project-row">
+                <div><strong>Пакет подстанций</strong><small>Энергетическая инфраструктура, материалы и цепочка пусконаладки</small></div>
+                <span class="status green">стабильно</span>
+              </div>
+              <div class="project-row">
+                <div><strong>Школьный объект / civil</strong><small>Общестроительный объём, вопросы к ценам консультанта, разрыв структуры себестоимости</small></div>
+                <span class="status red">риск маржи</span>
+              </div>
+              <div class="project-row">
+                <div><strong>Hatay plaza / MEP</strong><small>Сейчас MEP, возможное расширение в civil</small></div>
+                <span class="status amber">рост объёма</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <h3 class="panel-title">Стек решений на сегодня</h3>
+                <p class="panel-sub">Пульт превращает разрывы в конкретные управленческие решения.</p>
+              </div>
+              <button class="mini-btn" data-action="critical-actions">Открыть</button>
+            </div>
+            <div class="panel-body action-list">
+              <div class="action">
+                <span class="action-number">1</span>
+                <div><h4>Зафиксировать роли по проектам</h4><p>Подтвердить, где AVENSOL выступает как EPC, пакетный подрядчик, MEP или PM.</p></div>
+                <button class="mini-btn" data-detail="Матрица ролей проекта">Смотреть</button>
+              </div>
+              <div class="action">
+                <span class="action-number">2</span>
+                <div><h4>Зафиксировать WBS и cost codes</h4><p>Связать тендерные допущения с площадкой, закупками, складом и финансами.</p></div>
+                <button class="mini-btn" data-detail="Контроль WBS">Смотреть</button>
+              </div>
+              <div class="action">
+                <span class="action-number">3</span>
+                <div><h4>Выбрать пилотную площадку</h4><p>Neftçala выглядит сильным кандидатом для первой контролируемой цепочки.</p></div>
+                <button class="mini-btn" data-detail="Решение по пилоту">Смотреть</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="project">
+        <div class="grid three-col">
+          <article class="panel kpi"><div class="label">Роль по контракту</div><div class="value">EPC</div><p class="desc">Нужно подтвердить по каждому проекту до проектирования системы.</p></article>
+          <article class="panel kpi"><div class="label">Прогноз маржи</div><div class="value">12.4%</div><p class="desc">Под риском, пока не разложена структура себестоимости.</p></article>
+          <article class="panel kpi"><div class="label">Открытые действия</div><div class="value">17</div><p class="desc">Пять требуют решения собственника или гендиректора.</p></article>
+        </div>
+        <div class="grid two-col">
+          <article class="panel">
+            <div class="panel-head"><div><h3 class="panel-title">Паспорт контроля проекта</h3><p class="panel-sub">Один проект, одна роль, один бюджет и единый след рисков.</p></div></div>
+            <div class="panel-body">
+              <table class="data-table">
+                <tr><th>Поле контроля</th><th>Сейчас</th><th>Цель</th></tr>
+                <tr><td>Роль</td><td>Определена частично</td><td>Подтверждено: EPC / MEP / пакет</td></tr>
+                <tr><td>Бюджет</td><td>Excel и тендерные файлы</td><td>Зафиксированный final budget по WBS</td></tr>
+                <tr><td>Отчёты</td><td>Ручные обновления с площадки</td><td>Ежедневный отчёт по рабочей позиции</td></tr>
+                <tr><td>Решения</td><td>Поздняя эскалация</td><td>Ответственный и срок действия</td></tr>
+              </table>
+              <div class="module-actions">
+                <button class="btn primary" data-action="project-brief">Создать бриф проекта</button>
+                <button class="btn" data-detail="Отчёты проекта">Показать отчёты</button>
+                <button class="btn" data-detail="Журнал решений">Журнал решений</button>
+              </div>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><h3 class="panel-title">Профиль рисков</h3><p class="panel-sub">Где проект первым теряет управляемость.</p></div></div>
+            <div class="panel-body map">
+              <div class="node"><span class="node-id">A</span><div><strong>Разрыв бюджетного маппинга</strong><span>Тендерный код не всегда переходит в исполнение.</span></div><span class="status red">высокий</span></div>
+              <div class="node"><span class="node-id">B</span><div><strong>Неопределённость склада</strong><span>Выдача, transfer и инвентаризация ещё не единая цепочка.</span></div><span class="status amber">средний</span></div>
+              <div class="node"><span class="node-id">C</span><div><strong>Видимость cash</strong><span>Открытые заказы и долги видны недостаточно рано.</span></div><span class="status amber">средний</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="tender">
+        <module-view title="Тендер → бюджет" subtitle="Тендер должен становиться живым бюджетом проекта, а не архивным коммерческим предложением."></module-view>
+      </section>
+      <section class="view" id="procurement">
+        <module-view title="Контроль закупок" subtitle="Ни одной закупки без проекта, WBS, cost code, даты потребности и следа согласования."></module-view>
+      </section>
+      <section class="view" id="warehouse">
+        <module-view title="Склад и остатки" subtitle="Каждое движение материала связано с work item, локацией, ответственным и себестоимостью."></module-view>
+      </section>
+      <section class="view" id="site">
+        <module-view title="Исполнение на площадке" subtitle="Daily progress, объёмы, расход материалов, труд и проблемы становятся единой записью проекта."></module-view>
+      </section>
+      <section class="view" id="hakedis">
+        <module-view title="Hakediş и реальная себестоимость" subtitle="Выручка может быть одной строкой. Управленческая себестоимость должна быть многоресурсной."></module-view>
+      </section>
+      <section class="view" id="finance">
+        <module-view title="Финансы и cash flow" subtitle="Финансы видят committed cost, открытые заказы, счета, обязательства и будущую потребность в деньгах."></module-view>
+      </section>
+      <section class="view" id="hr">
+        <module-view title="Контроль персонала" subtitle="Собственный и субподрядный персонал связан со временем, work item и стоимостью труда."></module-view>
+      </section>
+      <section class="view" id="planning">
+        <module-view title="Планирование и lookahead" subtitle="График автоматически создаёт потребности в материалах, людях, деньгах и решениях."></module-view>
+      </section>
+      <section class="view" id="ai">
+        <div class="grid two-col">
+          <article class="panel">
+            <div class="panel-head">
+              <div><h3 class="panel-title">AI-слой управления</h3><p class="panel-sub">AI работает полезно только после контроля цепочки данных.</p></div>
+              <button class="mini-btn" id="openAI2">Спросить AI</button>
+            </div>
+            <div class="panel-body map">
+              <div class="node"><span class="node-id">T</span><div><strong>Tender AI</strong><span>Проверка BOQ, допущений, пропусков и ценовых аномалий.</span></div><button class="mini-btn" data-action="ai-tender">Запустить</button></div>
+              <div class="node"><span class="node-id">C</span><div><strong>Cost AI</strong><span>Объясняет отклонения бюджета и разрывы hakediş vs real cost.</span></div><button class="mini-btn" data-action="ai-cost">Запустить</button></div>
+              <div class="node"><span class="node-id">F</span><div><strong>Finance AI</strong><span>Потребность в cash, риск оплат и сводка committed cost.</span></div><button class="mini-btn" data-action="ai-finance">Запустить</button></div>
+              <div class="node"><span class="node-id">M</span><div><strong>Management AI</strong><span>Ежедневный бриф собственника и решения на сегодня.</span></div><button class="mini-btn" data-action="owner-brief">Запустить</button></div>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><h3 class="panel-title">Примеры вопросов к AI</h3><p class="panel-sub">Вопросы, которые руководство должно задавать естественным языком.</p></div></div>
+            <div class="panel-body action-list">
+              <div class="action"><span class="action-number">?</span><div><h4>Что изменилось за неделю?</h4><p>Суммировать изменения по себестоимости, складу, графику, труду и оплатам.</p></div><button class="mini-btn" data-question="Что изменилось за неделю?">Спросить</button></div>
+              <div class="action"><span class="action-number">?</span><div><h4>Какая закупка может сорвать площадку?</h4><p>Найти открытые заказы, связанные с ближайшими работами.</p></div><button class="mini-btn" data-question="Какая закупка может сорвать площадку?">Спросить</button></div>
+              <div class="action"><span class="action-number">?</span><div><h4>Почему маржа по hakediş выглядит неверно?</h4><p>Объяснить revenue item через реальный cost breakdown.</p></div><button class="mini-btn" data-question="Почему маржа по hakediş выглядит неверно?">Спросить</button></div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head">
+      <span class="status amber">детали контроля</span>
+      <h3 id="drawerTitle">Детали контроля</h3>
+      <p id="drawerLead">Связанное правило контроля для управленческой цепочки AVENSOL.</p>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+    <div class="drawer-foot">
+      <button class="btn" id="closeDrawer">Закрыть</button>
+      <button class="btn primary" data-action="create-action">Создать действие</button>
+    </div>
+  </aside>
+
+  <section class="ai-panel" id="aiPanel" aria-label="AI assistant panel">
+    <header>
+      <strong>AVENSOL AI-аналитик</strong>
+      <button class="mini-btn" id="closeAI">Закрыть</button>
+    </header>
+    <div class="ai-body">
+      <div class="prompt-row">
+        <input id="aiPrompt" value="Что требует управленческого решения сегодня?">
+        <button class="btn primary" id="runAI">Спросить AI</button>
+      </div>
+      <div class="ai-answer" id="aiAnswer">AI-слой будет корректно суммировать риски только после связи проекта, WBS, cost code и данных согласований. Для пилота начинаем с закупок, движения склада, расхода по work item, реальной себестоимости и отклонений hakediş.</div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">Действие создано.</div>
+
+  <template id="moduleTemplate">
+    <div class="grid three-col">
+      <article class="panel kpi"><div class="label">Статус контроля</div><div class="value statusText">Дизайн</div><p class="desc">Готово к описанию пилотного процесса.</p></article>
+      <article class="panel kpi"><div class="label">Связь данных</div><div class="value">WBS</div><p class="desc">Нужны проект, cost code и ответственный.</p></article>
+      <article class="panel kpi"><div class="label">AI-действие</div><div class="value">Анализ</div><p class="desc">AI объясняет отклонения и готовит управленческие заметки.</p></article>
+    </div>
+    <div class="grid two-col">
+      <article class="panel">
+        <div class="panel-head"><div><h3 class="panel-title moduleTitle"></h3><p class="panel-sub moduleSubtitle"></p></div></div>
+        <div class="panel-body">
+          <div class="map moduleMap"></div>
+          <div class="module-actions"></div>
+        </div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><div><h3 class="panel-title">Логика внедрения</h3><p class="panel-sub">Что модуль должен контролировать до того, как AI станет полезен.</p></div></div>
+        <div class="panel-body">
+          <table class="data-table moduleTable"></table>
+        </div>
+      </article>
+    </div>
+  </template>
+
+  <script>
+    const moduleData = {
+      tender: {
+        steps: [
+          ["Импорт BOQ", "Загрузить BOQ, допущения, исключения и тендерные заметки."],
+          ["Фиксация бюджета", "Утвердить final budget и перевести его в WBS / cost code."],
+          ["Обратная связь", "Фактическая себестоимость возвращается в нормы тендера и будущие предложения."]
+        ],
+        actions: ["Импорт BOQ", "Привязать к WBS", "Зафиксировать допущения", "AI-проверка тендера", "Показать ценовые аномалии"],
+        rows: [["Вход", "BOQ, тендерные допущения, цены поставщиков"], ["Контроль", "Final budget, WBS, cost code, work item"], ["Выход", "Живой бюджет проекта и обратная связь в tender"]]
+      },
+      procurement: {
+        steps: [
+          ["Потребность", "Площадка создаёт заявку на материал или услугу с датой потребности."],
+          ["Предложение", "Коммерческие предложения сравниваются по цене, сроку и риску."],
+          ["Заказ", "PO согласуется только с проверкой бюджета и влияния на график."]
+        ],
+        actions: ["Создать заявку", "Сравнить предложения", "Согласовать PO", "Проверить лимит бюджета", "Отметить критичным"],
+        rows: [["Вход", "Заявка на материал, дата потребности, WBS"], ["Контроль", "Матрица согласований и лимит бюджета"], ["Выход", "PO, дата поставки и committed cost"]]
+      },
+      warehouse: {
+        steps: [
+          ["Приёмка", "Поставка сопоставляется с PO и проектом."],
+          ["Движение", "Transfer и выдача фиксируются по площадке и локации."],
+          ["Списание", "Материал списывается на work item и cost code."]
+        ],
+        actions: ["Принять материал", "Выдать на площадку", "Переместить остаток", "Инвентаризация", "Показать дефицит"],
+        rows: [["Вход", "PO, накладная, материал"], ["Контроль", "Остаток, локация, work item, ответственный"], ["Выход", "Реальный расход и доверие к складу"]]
+      },
+      site: {
+        steps: [
+          ["Daily report", "Площадка вводит объёмы, труд, технику и проблемы."],
+          ["Расход", "Материалы и труд назначаются на work items."],
+          ["Доказательства", "Фото, документы и след согласования прикрепляются к записи."]
+        ],
+        actions: ["Daily report", "Ввести объём", "Подтвердить расход", "Создать проблему", "AI-сводка дня"],
+        rows: [["Вход", "Ежедневные объёмы и отчёты площадки"], ["Контроль", "WBS, локация, доказательства, issue log"], ["Выход", "Прогресс, real cost и риски"]]
+      },
+      hakedis: {
+        steps: [
+          ["Revenue item", "Заказчик видит одну строку hakediş."],
+          ["Разложение затрат", "Руководство видит реальный ресурсный breakdown."],
+          ["Отклонение", "Маржа и требования субподрядчиков сравниваются между собой."]
+        ],
+        actions: ["Создать hakediş", "Разложить себестоимость", "Сравнить revenue / cost", "Утвердить объём", "AI-проверка hakediş"],
+        rows: [["Вход", "Hakediş item и утверждённый объём"], ["Контроль", "Бетон, арматура, опалубка, труд, техника"], ["Выход", "Маржа revenue vs real cost"]]
+      },
+      finance: {
+        steps: [
+          ["Обязательство", "Открытый PO и счёт формируют committed cost."],
+          ["Согласование", "Оплата проверяет PO, поставку, бюджет и согласования."],
+          ["Cash", "Прогноз показывает недельную потребность проекта в деньгах."]
+        ],
+        actions: ["Согласовать оплату", "Проверить PO", "Показать обязательства", "Cash flow 4 недели", "Удержать оплату"],
+        rows: [["Вход", "Счёт, PO, поставка и след согласования"], ["Контроль", "Committed cost, бюджет, платёжный календарь"], ["Выход", "Решение по оплате и прогноз cash flow"]]
+      },
+      hr: {
+        steps: [
+          ["Состав людей", "Свой персонал и субподрядчики видны по площадкам."],
+          ["Табель", "Puantaj, overtime, отпуска и смены проходят согласование."],
+          ["Стоимость", "Стоимость труда назначается на проект и work item."]
+        ],
+        actions: ["Импорт puantaj", "Согласовать табель", "Назначить на work item", "Показать overtime", "AI-риск персонала"],
+        rows: [["Вход", "Сотрудник, роль, табель"], ["Контроль", "Проект, work item, cost code"], ["Выход", "Стоимость труда и план / факт"]]
+      },
+      planning: {
+        steps: [
+          ["Lookahead", "План работ на следующие 2, 4 и 6 недель."],
+          ["Потребности", "График создаёт потребности в материалах, людях и cash."],
+          ["Риск", "Причины задержек и критические ограничения эскалируются."]
+        ],
+        actions: ["Lookahead plan", "Сформировать потребность в материалах", "Сформировать cash need", "Показать задержки", "AI-риск графика"],
+        rows: [["Вход", "График работ и прогресс"], ["Контроль", "Дата потребности, срок закупки, труд"], ["Выход", "Потребности в материалах, людях и деньгах"]]
+      }
+    };
+
+    const sidebar = document.getElementById("sidebar");
+    const views = [...document.querySelectorAll(".view")];
+    const navButtons = [...document.querySelectorAll("[data-view]")];
+    const toast = document.getElementById("toast");
+    const drawer = document.getElementById("drawer");
+    const drawerTitle = document.getElementById("drawerTitle");
+    const drawerLead = document.getElementById("drawerLead");
+    const drawerBody = document.getElementById("drawerBody");
+    const aiPanel = document.getElementById("aiPanel");
+    const aiPrompt = document.getElementById("aiPrompt");
+    const aiAnswer = document.getElementById("aiAnswer");
+
+    customElements.define("module-view", class extends HTMLElement {
+      connectedCallback() {
+        const view = this.closest(".view").id;
+        const data = moduleData[view];
+        const template = document.getElementById("moduleTemplate").content.cloneNode(true);
+        template.querySelector(".moduleTitle").textContent = this.getAttribute("title");
+        template.querySelector(".moduleSubtitle").textContent = this.getAttribute("subtitle");
+        const map = template.querySelector(".moduleMap");
+        data.steps.forEach((step, index) => {
+          const node = document.createElement("div");
+          node.className = "node";
+          node.innerHTML = `<span class="node-id">${index + 1}</span><div><strong>${step[0]}</strong><span>${step[1]}</span></div><button class="mini-btn" data-detail="${step[0]}">Открыть</button>`;
+          map.appendChild(node);
+        });
+        const actions = template.querySelector(".module-actions");
+        data.actions.forEach(action => {
+          const button = document.createElement("button");
+          button.className = action.toLowerCase().includes("ai") ? "btn primary" : "btn";
+          button.textContent = action;
+          button.dataset.action = action.toLowerCase().replaceAll(" ", "-").replaceAll("/", "");
+          actions.appendChild(button);
+        });
+        const table = template.querySelector(".moduleTable");
+        table.innerHTML = "<tr><th>Слой</th><th>Содержание контроля</th></tr>" + data.rows.map(row => `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`).join("");
+        this.replaceWith(template);
+      }
+    });
+
+    function setView(id) {
+      views.forEach(view => view.classList.toggle("active", view.id === id));
+      navButtons.forEach(button => button.classList.toggle("active", button.dataset.view === id));
+      sidebar.classList.remove("open");
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2100);
+    }
+
+    function openDrawer(title, lead) {
+      drawerTitle.textContent = title;
+      drawerLead.textContent = lead || "Правило контроля и дизайн действия для этой части EPC-цепочки.";
+      drawerBody.innerHTML = `
+        <div class="action-list">
+          <div class="action"><span class="action-number">1</span><div><h4>Нужные данные</h4><p>Проект, WBS, cost code, work item, ответственный, дата и статус согласования.</p></div><span class="status amber">нужно</span></div>
+          <div class="action"><span class="action-number">2</span><div><h4>Контрольный вопрос</h4><p>Видит ли руководство это до того, как проблема стала потерей маржи, cash или срока?</p></div><span class="status green">правило</span></div>
+          <div class="action"><span class="action-number">3</span><div><h4>Поддержка AI</h4><p>Объяснить отклонение, найти разрывы, подготовить action list и бриф собственника.</p></div><span class="status amber">AI</span></div>
+        </div>`;
+      drawer.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+    }
+
+    function openAI(question) {
+      aiPanel.classList.add("open");
+      if (question) aiPrompt.value = question;
+    }
+
+    function runAI() {
+      const question = aiPrompt.value.trim();
+      aiAnswer.textContent = `Черновой ответ на вопрос: "${question}" — проверьте цепочку проекта на отсутствующие связи WBS/cost code, открытые закупочные обязательства, дефициты склада, cost split в hakediş и потребность в cash на 4 недели. Эскалировать пункты, которым сегодня нужно решение собственника или финансов.`;
+    }
+
+    document.addEventListener("click", event => {
+      const viewButton = event.target.closest("[data-view]");
+      if (viewButton) setView(viewButton.dataset.view);
+
+      const detailButton = event.target.closest("[data-detail]");
+      if (detailButton) openDrawer(detailButton.dataset.detail);
+
+      const actionButton = event.target.closest("[data-action]");
+      if (actionButton) {
+        const action = actionButton.dataset.action;
+        if (action.includes("ai")) openAI(action.replaceAll("-", " "));
+        else if (action.includes("brief")) openAI("Подготовить бриф для собственника");
+        else if (action.includes("critical")) openDrawer("Решения на сегодня", "Критические решения по проектам, cash, складу и персоналу.");
+        else showToast(`${actionButton.textContent.trim()} поставлено в очередь.`);
+      }
+
+      const questionButton = event.target.closest("[data-question]");
+      if (questionButton) openAI(questionButton.dataset.question);
+    });
+
+    document.getElementById("openMenu").addEventListener("click", () => sidebar.classList.add("open"));
+    document.getElementById("openAI").addEventListener("click", () => openAI());
+    document.getElementById("openAI2").addEventListener("click", () => openAI());
+    document.getElementById("closeAI").addEventListener("click", () => aiPanel.classList.remove("open"));
+    document.getElementById("runAI").addEventListener("click", runAI);
+    document.getElementById("closeDrawer").addEventListener("click", () => {
+      drawer.classList.remove("open");
+      drawer.setAttribute("aria-hidden", "true");
+    });
+    document.getElementById("projectSelect").addEventListener("change", e => showToast(`Проект переключён на ${e.target.selectedOptions[0].text}.`));
+  </script>
+</body>
+</html>
