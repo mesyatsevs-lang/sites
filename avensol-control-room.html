@@ -1261,7 +1261,7 @@
 
       <div class="sidebar-note">
         <strong>Главное правило</strong>
-        <p>Каждое движение должно иметь проект, WBS, cost code, локацию, ответственного, дату и статус.</p>
+        <p>Каждое движение должно иметь проект, WBS, код затрат, локацию, ответственного, дату и статус.</p>
       </div>
     </aside>
 
@@ -1321,9 +1321,9 @@
         <button class="active" data-view="cockpit">Пульт</button>
         <button data-view="losses">Боль</button>
         <button data-view="beforeafter">До / после</button>
-        <button data-view="owner">Owner</button>
+        <button data-view="owner">Собственник</button>
         <button data-view="pilot">Пилот</button>
-        <button data-view="aiuse">AI use</button>
+        <button data-view="aiuse">AI-сценарии</button>
         <button data-view="startpack">Старт</button>
         <button data-view="tender">Тендер</button>
         <button data-view="procurement">Закупки</button>
@@ -1344,12 +1344,12 @@
           <article class="panel kpi">
             <div class="label">Обязательства</div>
             <div class="value">68%</div>
-            <p class="desc">Открытые PO и долги требуют прозрачной цепочки финсогласования.</p>
+            <p class="desc">Открытые заказы и долги требуют прозрачной цепочки финсогласования.</p>
           </article>
           <article class="panel kpi">
             <div class="label">Достоверность склада</div>
             <div class="value">Низкая</div>
-            <p class="desc">Движение склада пока не связано с work items.</p>
+            <p class="desc">Движение склада пока не связано с рабочими позициями.</p>
           </article>
           <article class="panel kpi">
             <div class="label">AI-сигналы</div>
@@ -1362,18 +1362,18 @@
           <div class="rail-head">
             <div>
               <h3>Управленческая цепочка AVENSOL</h3>
-              <p>Смысл пульта — не собрать ещё один отчёт, а связать каждый заказ, материал, табель, акт и платёж с проектом, WBS, cost code и ответственным.</p>
+              <p>Смысл пульта — не собрать ещё один отчёт, а связать каждый заказ, материал, табель, акт и платёж с проектом, WBS, кодом затрат и ответственным.</p>
             </div>
-            <div class="rail-badge">Tender → Cash</div>
+            <div class="rail-badge">Тендер → деньги</div>
           </div>
           <div class="flow-visual" aria-label="EPC management chain">
             <div class="flow-step"><span>01</span><strong>Тендер</strong><small>BOQ, допущения, цены, риски</small></div>
-            <div class="flow-step"><span>02</span><strong>Бюджет</strong><small>WBS, cost code, лимиты</small></div>
-            <div class="flow-step"><span>03</span><strong>Закупки</strong><small>Заявка, PO, согласования</small></div>
-            <div class="flow-step"><span>04</span><strong>Склад</strong><small>Приход, transfer, выдача</small></div>
-            <div class="flow-step"><span>05</span><strong>Площадка</strong><small>Объёмы, расход, daily report</small></div>
+            <div class="flow-step"><span>02</span><strong>Бюджет</strong><small>WBS, коды затрат, лимиты</small></div>
+            <div class="flow-step"><span>03</span><strong>Закупки</strong><small>Заявка, заказ, согласования</small></div>
+            <div class="flow-step"><span>04</span><strong>Склад</strong><small>Приход, перемещение, выдача</small></div>
+            <div class="flow-step"><span>05</span><strong>Площадка</strong><small>Объёмы, расход, ежедневный отчёт</small></div>
             <div class="flow-step"><span>06</span><strong>Hakediş</strong><small>Акт и реальная себестоимость</small></div>
-            <div class="flow-step"><span>07</span><strong>Финансы</strong><small>Обязательства, оплаты, cash</small></div>
+            <div class="flow-step"><span>07</span><strong>Финансы</strong><small>Обязательства, оплаты, деньги</small></div>
             <div class="flow-step"><span>08</span><strong>AI</strong><small>Отклонения, риски, решения</small></div>
           </div>
         </section>
@@ -1390,7 +1390,7 @@
             <div class="panel-body project-list">
               <div class="project-row">
                 <div><strong>Neftçala — солнечная станция</strong><small>EPC / планирование, техофис, документооборот</small></div>
-                <span class="status amber">риск cash</span>
+                <span class="status amber">риск денег</span>
               </div>
               <div class="project-row">
                 <div><strong>Пакет подстанций</strong><small>Энергетическая инфраструктура, материалы и цепочка пусконаладки</small></div>
@@ -1423,7 +1423,7 @@
               </div>
               <div class="action">
                 <span class="action-number">2</span>
-                <div><h4>Зафиксировать WBS и cost codes</h4><p>Связать тендерные допущения с площадкой, закупками, складом и финансами.</p></div>
+                <div><h4>Зафиксировать WBS и коды затрат</h4><p>Связать тендерные допущения с площадкой, закупками, складом и финансами.</p></div>
                 <button class="mini-btn" data-detail="Контроль WBS">Смотреть</button>
               </div>
               <div class="action">
@@ -1457,12 +1457,12 @@
               </div>
               <div class="pain-card">
                 <strong>Финансовый контроль</strong>
-                <p>Оплата должна видеть заказ, согласования, поставку, бюджетный лимит и будущий cash need.</p>
+                <p>Оплата должна видеть заказ, согласования, поставку, бюджетный лимит и будущую потребность в деньгах.</p>
                 <div class="pain-meter"><i style="--w: 78%"></i></div>
               </div>
               <div class="pain-card">
                 <strong>Люди и puantaj</strong>
-                <p>Свой персонал и субподрядчики должны попадать в стоимость проекта по work item.</p>
+                <p>Свой персонал и субподрядчики должны попадать в стоимость проекта по рабочей позиции.</p>
                 <div class="pain-meter"><i style="--w: 74%"></i></div>
               </div>
             </div>
@@ -1478,8 +1478,8 @@
             </div>
             <div class="panel-body roadmap">
               <div class="phase"><div><strong>Диагностика 5–7 дней</strong><span>Интервью, текущие файлы, карта 4 площадок и список разрывов данных.</span></div></div>
-              <div class="phase"><div><strong>Архитектура данных</strong><span>Единые WBS, cost codes, роли, approval matrix и структура отчётности.</span></div></div>
-              <div class="phase"><div><strong>Пилотная цепочка</strong><span>Закупка → склад → расход → себестоимость → hakediş → cash сигнал.</span></div></div>
+              <div class="phase"><div><strong>Архитектура данных</strong><span>Единые WBS, коды затрат, роли, матрица согласований и структура отчётности.</span></div></div>
+              <div class="phase"><div><strong>Пилотная цепочка</strong><span>Закупка → склад → расход → себестоимость → hakediş → денежный сигнал.</span></div></div>
               <div class="phase"><div><strong>Масштабирование</strong><span>Перенос на остальные площадки, обучение и weekly management report.</span></div></div>
             </div>
           </article>
@@ -1488,10 +1488,10 @@
 
       <section class="view" id="losses">
         <div class="grid three-col">
-          <article class="story-card" data-code="01"><h3>Tender считает одно</h3><p>BOQ, assumptions и final budget живут отдельно от площадки. После выигрыша тендер не всегда превращается в управляемые лимиты.</p></article>
-          <article class="story-card" data-code="02"><h3>Склад списывает по-своему</h3><p>Приход, transfer, выдача и фактический расход не всегда связаны с work item, cost code и hakediş.</p></article>
+          <article class="story-card" data-code="01"><h3>Тендер считает одно</h3><p>BOQ, допущения и финальный бюджет живут отдельно от площадки. После выигрыша тендер не всегда превращается в управляемые лимиты.</p></article>
+          <article class="story-card" data-code="02"><h3>Склад списывает по-своему</h3><p>Приход, перемещение, выдача и фактический расход не всегда связаны с рабочей позицией, кодом затрат и hakediş.</p></article>
           <article class="story-card" data-code="03"><h3>Финансы видят поздно</h3><p>Finance сталкивается с проблемой на этапе оплаты, когда обязательство уже создано и спорить поздно.</p></article>
-          <article class="story-card" data-code="04"><h3>HR не связан с себестоимостью</h3><p>Puantaj, overtime и субподрядный персонал должны попадать в проектную себестоимость, а не оставаться отдельной кадровой таблицей.</p></article>
+          <article class="story-card" data-code="04"><h3>HR не связан с себестоимостью</h3><p>Табели, переработки и субподрядный персонал должны попадать в проектную себестоимость, а не оставаться отдельной кадровой таблицей.</p></article>
           <article class="story-card" data-code="05"><h3>Hakediş скрывает структуру</h3><p>Одна строка betonarme может прятать бетон, арматуру, опалубку, труд, технику, потери и тесты.</p></article>
           <article class="story-card" data-code="06"><h3>Руководство принимает поздно</h3><p>Когда данные не соединены, решение появляется после потери маржи, а не до неё.</p></article>
         </div>
@@ -1512,11 +1512,11 @@
           <article class="compare-col after">
             <h3>После: единая EPC-цепочка принятия решений</h3>
             <ul>
-              <li>Каждое действие связано с проектом, WBS, cost code, ответственным и датой.</li>
+              <li>Каждое действие связано с проектом, WBS, кодом затрат, ответственным и датой.</li>
               <li>Закупка, склад, расход, hakediş и финансы видны в одном управленческом контуре.</li>
               <li>Finance контролирует обязательства до оплаты, а не после возникновения проблемы.</li>
-              <li>Руководитель видит маржу, cash need, критичные закупки и решения на сегодня.</li>
-              <li>AI объясняет отклонения, готовит вопросы и собирает owner brief на фактических данных.</li>
+              <li>Руководитель видит маржу, потребность в деньгах, критичные закупки и решения на сегодня.</li>
+              <li>AI объясняет отклонения, готовит вопросы и собирает бриф собственника на фактических данных.</li>
             </ul>
           </article>
         </div>
@@ -1529,14 +1529,14 @@
             <p>Не набор таблиц, а список решений: где деньги под риском, где срок сорвётся, какой объект требует вмешательства и какую оплату нельзя выпускать без проверки цепочки.</p>
           </article>
           <article class="panel">
-            <div class="panel-head"><div><h3 class="panel-title">Owner decision board</h3><p class="panel-sub">Пять сигналов, которые должны появляться первыми.</p></div></div>
+            <div class="panel-head"><div><h3 class="panel-title">Панель решений собственника</h3><p class="panel-sub">Пять сигналов, которые должны появляться первыми.</p></div></div>
             <div class="panel-body">
               <ul class="owner-list">
-                <li><strong>1. Остановить оплату</strong><br>Нет связи: PO → поставка → склад → work item → бюджет.</li>
-                <li><strong>2. Ускорить закупку</strong><br>Материал нужен через 10 дней, а PO ещё не согласован.</li>
+                <li><strong>1. Остановить оплату</strong><br>Нет связи: заказ → поставка → склад → рабочая позиция → бюджет.</li>
+                <li><strong>2. Ускорить закупку</strong><br>Материал нужен через 10 дней, а заказ ещё не согласован.</li>
                 <li><strong>3. Проверить маржу</strong><br>Hakediş показывает плюс, real cost breakdown уже уводит позицию в минус.</li>
                 <li><strong>4. Усилить площадку</strong><br>Puantaj показывает переработки и нехватку роли на критичном участке.</li>
-                <li><strong>5. Принять решение по scope</strong><br>MEP-проект начинает расширяться в civil, но бюджетные лимиты не обновлены.</li>
+                <li><strong>5. Принять решение по объёму работ</strong><br>MEP-проект начинает расширяться в civil, но бюджетные лимиты не обновлены.</li>
               </ul>
             </div>
           </article>
@@ -1546,26 +1546,26 @@
       <section class="view" id="pilot">
         <div class="panel">
           <div class="panel-head">
-            <div><h3 class="panel-title">Pilot Launch: Neftçala как тестовый контур</h3><p class="panel-sub">Пилот можно заменить другим объектом, но логика остаётся той же: один объект, одна цепочка, измеримый результат.</p></div>
+            <div><h3 class="panel-title">Запуск пилота: Neftçala как тестовый контур</h3><p class="panel-sub">Пилот можно заменить другим объектом, но логика остаётся той же: один объект, одна цепочка, измеримый результат.</p></div>
             <button class="mini-btn" data-detail="Пилот Neftçala">Открыть</button>
           </div>
           <div class="panel-body pilot-map">
-            <div class="pilot-step"><span>W1</span><strong>Диагностика</strong><p>Собрать BOQ, бюджет, складские движения, PO, puantaj и отчёты площадки.</p></div>
-            <div class="pilot-step"><span>W2</span><strong>Коды и роли</strong><p>Зафиксировать WBS, cost codes, ответственных и матрицу согласований.</p></div>
-            <div class="pilot-step"><span>W3</span><strong>Рабочая цепочка</strong><p>Провести процесс: заявка → PO → склад → расход → себестоимость.</p></div>
-            <div class="pilot-step"><span>W4</span><strong>Management signal</strong><p>Показать cash need, отклонения, решения и owner brief по пилоту.</p></div>
+            <div class="pilot-step"><span>W1</span><strong>Диагностика</strong><p>Собрать BOQ, бюджет, складские движения, заказы, табели и отчёты площадки.</p></div>
+            <div class="pilot-step"><span>W2</span><strong>Коды и роли</strong><p>Зафиксировать WBS, коды затрат, ответственных и матрицу согласований.</p></div>
+            <div class="pilot-step"><span>W3</span><strong>Рабочая цепочка</strong><p>Провести процесс: заявка → заказ → склад → расход → себестоимость.</p></div>
+            <div class="pilot-step"><span>W4</span><strong>Управленческий сигнал</strong><p>Показать потребность в деньгах, отклонения, решения и бриф собственника по пилоту.</p></div>
           </div>
         </div>
       </section>
 
       <section class="view" id="aiuse">
         <div class="usecase-grid">
-          <article class="usecase"><strong>AI Tender Review</strong><p>Проверить BOQ, пропуски, странные цены, слабые assumptions и вопросы к заказчику.</p></article>
-          <article class="usecase"><strong>Price Anomaly Finder</strong><p>Найти позиции, где цена выбивается из базы, рынка или прошлых проектов.</p></article>
-          <article class="usecase"><strong>Cost Variance Explainer</strong><p>Объяснить, почему actual cost ушёл от final budget и кто должен действовать.</p></article>
-          <article class="usecase"><strong>Stock Risk AI</strong><p>Показать дефицит, пересорт, подозрительный расход и закупки, которые сорвут график.</p></article>
-          <article class="usecase"><strong>Finance Brief</strong><p>Собрать open PO, долги, счета, cash need и оплаты, которые требуют стоп-контроля.</p></article>
-          <article class="usecase"><strong>Meeting / Owner Brief</strong><p>Подготовить короткий бриф: что изменилось, где риск, какие решения нужны сегодня.</p></article>
+          <article class="usecase"><strong>AI-проверка тендера</strong><p>Проверить BOQ, пропуски, странные цены, слабые допущения и вопросы к заказчику.</p></article>
+          <article class="usecase"><strong>Поиск ценовых аномалий</strong><p>Найти позиции, где цена выбивается из базы, рынка или прошлых проектов.</p></article>
+          <article class="usecase"><strong>Объяснение перерасхода</strong><p>Объяснить, почему фактическая себестоимость ушла от финального бюджета и кто должен действовать.</p></article>
+          <article class="usecase"><strong>AI-риск склада</strong><p>Показать дефицит, пересорт, подозрительный расход и закупки, которые сорвут график.</p></article>
+          <article class="usecase"><strong>Финансовый бриф</strong><p>Собрать открытые заказы, долги, счета, потребность в деньгах и оплаты, которые требуют стоп-контроля.</p></article>
+          <article class="usecase"><strong>Бриф встречи / собственника</strong><p>Подготовить короткий бриф: что изменилось, где риск, какие решения нужны сегодня.</p></article>
         </div>
       </section>
 
@@ -1576,12 +1576,12 @@
             <div class="panel-body">
               <ul class="start-list">
                 <li>Список 4 площадок: название, локация, роль AVENSOL, ответственные.</li>
-                <li>BOQ / tender file и зафиксированные assumptions.</li>
+                <li>BOQ / тендерный файл и зафиксированные допущения.</li>
                 <li>Final budget или текущий бюджет проекта.</li>
                 <li>Пример hakediş и breakdown по спорной позиции.</li>
-                <li>Warehouse movement: приход, выдача, transfer, остатки.</li>
+                <li>Движение склада: приход, выдача, перемещение, остатки.</li>
                 <li>Purchase order / sipariş и цепочка согласования.</li>
-                <li>Puantaj, overtime, свой и субподрядный персонал.</li>
+                <li>Табели, переработки, свой и субподрядный персонал.</li>
                 <li>Management report и список текущих программ / Excel / ERP.</li>
               </ul>
             </div>
@@ -1589,10 +1589,10 @@
           <article class="panel">
             <div class="panel-head"><div><h3 class="panel-title">Что обещаем на первом этапе</h3><p class="panel-sub">Не “сразу внедрить всё”, а дать управляемый диагностический результат.</p></div></div>
             <div class="panel-body roadmap">
-              <div class="phase"><div><strong>Current State Map</strong><span>Как реально идут данные между tender, saha, depo, finance и HR.</span></div></div>
-              <div class="phase"><div><strong>Data Gap Register</strong><span>Где теряются WBS, cost code, ответственный, дата, подтверждение и статус.</span></div></div>
-              <div class="phase"><div><strong>Pilot Blueprint</strong><span>Какой объект берём, какую цепочку запускаем и какой KPI доказывает пользу.</span></div></div>
-              <div class="phase"><div><strong>90-day Roadmap</strong><span>План внедрения: люди, данные, процессы, интерфейсы и AI-слой.</span></div></div>
+              <div class="phase"><div><strong>Карта текущего состояния</strong><span>Как реально идут данные между тендером, площадкой, складом, финансами и HR.</span></div></div>
+              <div class="phase"><div><strong>Реестр разрывов данных</strong><span>Где теряются WBS, код затрат, ответственный, дата, подтверждение и статус.</span></div></div>
+              <div class="phase"><div><strong>Схема пилота</strong><span>Какой объект берём, какую цепочку запускаем и какой KPI доказывает пользу.</span></div></div>
+              <div class="phase"><div><strong>Дорожная карта на 90 дней</strong><span>План внедрения: люди, данные, процессы, интерфейсы и AI-слой.</span></div></div>
             </div>
           </article>
         </div>
@@ -1611,7 +1611,7 @@
               <table class="data-table">
                 <tr><th>Поле контроля</th><th>Сейчас</th><th>Цель</th></tr>
                 <tr><td>Роль</td><td>Определена частично</td><td>Подтверждено: EPC / MEP / пакет</td></tr>
-                <tr><td>Бюджет</td><td>Excel и тендерные файлы</td><td>Зафиксированный final budget по WBS</td></tr>
+                <tr><td>Бюджет</td><td>Excel и тендерные файлы</td><td>Зафиксированный финальный бюджет по WBS</td></tr>
                 <tr><td>Отчёты</td><td>Ручные обновления с площадки</td><td>Ежедневный отчёт по рабочей позиции</td></tr>
                 <tr><td>Решения</td><td>Поздняя эскалация</td><td>Ответственный и срок действия</td></tr>
               </table>
@@ -1626,8 +1626,8 @@
             <div class="panel-head"><div><h3 class="panel-title">Профиль рисков</h3><p class="panel-sub">Где проект первым теряет управляемость.</p></div></div>
             <div class="panel-body map">
               <div class="node"><span class="node-id">A</span><div><strong>Разрыв бюджетного маппинга</strong><span>Тендерный код не всегда переходит в исполнение.</span></div><span class="status red">высокий</span></div>
-              <div class="node"><span class="node-id">B</span><div><strong>Неопределённость склада</strong><span>Выдача, transfer и инвентаризация ещё не единая цепочка.</span></div><span class="status amber">средний</span></div>
-              <div class="node"><span class="node-id">C</span><div><strong>Видимость cash</strong><span>Открытые заказы и долги видны недостаточно рано.</span></div><span class="status amber">средний</span></div>
+              <div class="node"><span class="node-id">B</span><div><strong>Неопределённость склада</strong><span>Выдача, перемещение и инвентаризация ещё не единая цепочка.</span></div><span class="status amber">средний</span></div>
+              <div class="node"><span class="node-id">C</span><div><strong>Видимость денег</strong><span>Открытые заказы и долги видны недостаточно рано.</span></div><span class="status amber">средний</span></div>
             </div>
           </article>
         </div>
@@ -1637,10 +1637,10 @@
         <module-view title="Тендер → бюджет" subtitle="Тендер должен становиться живым бюджетом проекта, а не архивным коммерческим предложением."></module-view>
       </section>
       <section class="view" id="procurement">
-        <module-view title="Контроль закупок" subtitle="Ни одной закупки без проекта, WBS, cost code, даты потребности и следа согласования."></module-view>
+        <module-view title="Контроль закупок" subtitle="Ни одной закупки без проекта, WBS, кода затрат, даты потребности и следа согласования."></module-view>
       </section>
       <section class="view" id="warehouse">
-        <module-view title="Склад и остатки" subtitle="Каждое движение материала связано с work item, локацией, ответственным и себестоимостью."></module-view>
+        <module-view title="Склад и остатки" subtitle="Каждое движение материала связано с рабочей позицией, локацией, ответственным и себестоимостью."></module-view>
       </section>
       <section class="view" id="site">
         <module-view title="Исполнение на площадке" subtitle="Daily progress, объёмы, расход материалов, труд и проблемы становятся единой записью проекта."></module-view>
@@ -1649,10 +1649,10 @@
         <module-view title="Hakediş и реальная себестоимость" subtitle="Выручка может быть одной строкой. Управленческая себестоимость должна быть многоресурсной."></module-view>
       </section>
       <section class="view" id="finance">
-        <module-view title="Финансы и cash flow" subtitle="Финансы видят committed cost, открытые заказы, счета, обязательства и будущую потребность в деньгах."></module-view>
+        <module-view title="Финансы и денежный поток" subtitle="Финансы видят принятые обязательства, открытые заказы, счета, обязательства и будущую потребность в деньгах."></module-view>
       </section>
       <section class="view" id="hr">
-        <module-view title="Контроль персонала" subtitle="Собственный и субподрядный персонал связан со временем, work item и стоимостью труда."></module-view>
+        <module-view title="Контроль персонала" subtitle="Собственный и субподрядный персонал связан со временем, рабочей позицией и стоимостью труда."></module-view>
       </section>
       <section class="view" id="planning">
         <module-view title="Планирование и lookahead" subtitle="График автоматически создаёт потребности в материалах, людях, деньгах и решениях."></module-view>
@@ -1665,10 +1665,10 @@
               <button class="mini-btn" id="openAI2">Спросить AI</button>
             </div>
             <div class="panel-body map">
-              <div class="node"><span class="node-id">T</span><div><strong>Tender AI</strong><span>Проверка BOQ, допущений, пропусков и ценовых аномалий.</span></div><button class="mini-btn" data-action="ai-tender">Запустить</button></div>
+              <div class="node"><span class="node-id">T</span><div><strong>Тендерный AI</strong><span>Проверка BOQ, допущений, пропусков и ценовых аномалий.</span></div><button class="mini-btn" data-action="ai-tender">Запустить</button></div>
               <div class="node"><span class="node-id">C</span><div><strong>Cost AI</strong><span>Объясняет отклонения бюджета и разрывы hakediş vs real cost.</span></div><button class="mini-btn" data-action="ai-cost">Запустить</button></div>
-              <div class="node"><span class="node-id">F</span><div><strong>Finance AI</strong><span>Потребность в cash, риск оплат и сводка committed cost.</span></div><button class="mini-btn" data-action="ai-finance">Запустить</button></div>
-              <div class="node"><span class="node-id">M</span><div><strong>Management AI</strong><span>Ежедневный бриф собственника и решения на сегодня.</span></div><button class="mini-btn" data-action="owner-brief">Запустить</button></div>
+              <div class="node"><span class="node-id">F</span><div><strong>Финансовый AI</strong><span>Потребность в деньгах, риск оплат и сводка принятых обязательств.</span></div><button class="mini-btn" data-action="ai-finance">Запустить</button></div>
+              <div class="node"><span class="node-id">M</span><div><strong>Управленческий AI</strong><span>Ежедневный бриф собственника и решения на сегодня.</span></div><button class="mini-btn" data-action="owner-brief">Запустить</button></div>
             </div>
           </article>
           <article class="panel">
@@ -1707,7 +1707,7 @@
         <input id="aiPrompt" value="Что требует управленческого решения сегодня?">
         <button class="btn primary" id="runAI">Спросить AI</button>
       </div>
-      <div class="ai-answer" id="aiAnswer">AI-слой будет корректно суммировать риски только после связи проекта, WBS, cost code и данных согласований. Для пилота начинаем с закупок, движения склада, расхода по work item, реальной себестоимости и отклонений hakediş.</div>
+      <div class="ai-answer" id="aiAnswer">AI-слой будет корректно суммировать риски только после связи проекта, WBS, кода затрат и данных согласований. Для пилота начинаем с закупок, движения склада, расхода по рабочей позиции, реальной себестоимости и отклонений hakediş.</div>
     </div>
   </section>
 
@@ -1716,7 +1716,7 @@
   <template id="moduleTemplate">
     <div class="grid three-col">
       <article class="panel kpi"><div class="label">Статус контроля</div><div class="value statusText">Дизайн</div><p class="desc">Готово к описанию пилотного процесса.</p></article>
-      <article class="panel kpi"><div class="label">Связь данных</div><div class="value">WBS</div><p class="desc">Нужны проект, cost code и ответственный.</p></article>
+      <article class="panel kpi"><div class="label">Связь данных</div><div class="value">WBS</div><p class="desc">Нужны проект, код затрат и ответственный.</p></article>
       <article class="panel kpi"><div class="label">AI-действие</div><div class="value">Анализ</div><p class="desc">AI объясняет отклонения и готовит управленческие заметки.</p></article>
     </div>
     <div class="grid two-col">
@@ -1741,34 +1741,34 @@
       tender: {
         steps: [
           ["Импорт BOQ", "Загрузить BOQ, допущения, исключения и тендерные заметки."],
-          ["Фиксация бюджета", "Утвердить final budget и перевести его в WBS / cost code."],
+          ["Фиксация бюджета", "Утвердить финальный бюджет и перевести его в WBS / код затрат."],
           ["Обратная связь", "Фактическая себестоимость возвращается в нормы тендера и будущие предложения."]
         ],
         actions: ["Импорт BOQ", "Привязать к WBS", "Зафиксировать допущения", "AI-проверка тендера", "Показать ценовые аномалии"],
-        rows: [["Вход", "BOQ, тендерные допущения, цены поставщиков"], ["Контроль", "Final budget, WBS, cost code, work item"], ["Выход", "Живой бюджет проекта и обратная связь в tender"]]
+        rows: [["Вход", "BOQ, тендерные допущения, цены поставщиков"], ["Контроль", "Финальный бюджет, WBS, код затрат, рабочая позиция"], ["Выход", "Живой бюджет проекта и обратная связь в тендер"]]
       },
       procurement: {
         steps: [
           ["Потребность", "Площадка создаёт заявку на материал или услугу с датой потребности."],
           ["Предложение", "Коммерческие предложения сравниваются по цене, сроку и риску."],
-          ["Заказ", "PO согласуется только с проверкой бюджета и влияния на график."]
+          ["Заказ", "Заказ согласуется только с проверкой бюджета и влияния на график."]
         ],
-        actions: ["Создать заявку", "Сравнить предложения", "Согласовать PO", "Проверить лимит бюджета", "Отметить критичным"],
-        rows: [["Вход", "Заявка на материал, дата потребности, WBS"], ["Контроль", "Матрица согласований и лимит бюджета"], ["Выход", "PO, дата поставки и committed cost"]]
+        actions: ["Создать заявку", "Сравнить предложения", "Согласовать заказ", "Проверить лимит бюджета", "Отметить критичным"],
+        rows: [["Вход", "Заявка на материал, дата потребности, WBS"], ["Контроль", "Матрица согласований и лимит бюджета"], ["Выход", "Заказ, дата поставки и принятые обязательства"]]
       },
       warehouse: {
         steps: [
-          ["Приёмка", "Поставка сопоставляется с PO и проектом."],
+          ["Приёмка", "Поставка сопоставляется с заказом и проектом."],
           ["Движение", "Transfer и выдача фиксируются по площадке и локации."],
-          ["Списание", "Материал списывается на work item и cost code."]
+          ["Списание", "Материал списывается на рабочую позицию и код затрат."]
         ],
         actions: ["Принять материал", "Выдать на площадку", "Переместить остаток", "Инвентаризация", "Показать дефицит"],
-        rows: [["Вход", "PO, накладная, материал"], ["Контроль", "Остаток, локация, work item, ответственный"], ["Выход", "Реальный расход и доверие к складу"]]
+        rows: [["Вход", "Заказ, накладная, материал"], ["Контроль", "Остаток, локация, рабочая позиция, ответственный"], ["Выход", "Реальный расход и доверие к складу"]]
       },
       site: {
         steps: [
           ["Daily report", "Площадка вводит объёмы, труд, технику и проблемы."],
-          ["Расход", "Материалы и труд назначаются на work items."],
+          ["Расход", "Материалы и труд назначаются на рабочие позиции."],
           ["Доказательства", "Фото, документы и след согласования прикрепляются к записи."]
         ],
         actions: ["Daily report", "Ввести объём", "Подтвердить расход", "Создать проблему", "AI-сводка дня"],
@@ -1785,29 +1785,29 @@
       },
       finance: {
         steps: [
-          ["Обязательство", "Открытый PO и счёт формируют committed cost."],
-          ["Согласование", "Оплата проверяет PO, поставку, бюджет и согласования."],
+          ["Обязательство", "Открытый заказ и счёт формируют принятые обязательства."],
+          ["Согласование", "Оплата проверяет заказ, поставку, бюджет и согласования."],
           ["Cash", "Прогноз показывает недельную потребность проекта в деньгах."]
         ],
-        actions: ["Согласовать оплату", "Проверить PO", "Показать обязательства", "Cash flow 4 недели", "Удержать оплату"],
-        rows: [["Вход", "Счёт, PO, поставка и след согласования"], ["Контроль", "Committed cost, бюджет, платёжный календарь"], ["Выход", "Решение по оплате и прогноз cash flow"]]
+        actions: ["Согласовать оплату", "Проверить заказ", "Показать обязательства", "Денежный поток 4 недели", "Удержать оплату"],
+        rows: [["Вход", "Счёт, заказ, поставка и след согласования"], ["Контроль", "Принятые обязательства, бюджет, платёжный календарь"], ["Выход", "Решение по оплате и прогноз денежного потока"]]
       },
       hr: {
         steps: [
           ["Состав людей", "Свой персонал и субподрядчики видны по площадкам."],
-          ["Табель", "Puantaj, overtime, отпуска и смены проходят согласование."],
-          ["Стоимость", "Стоимость труда назначается на проект и work item."]
+          ["Табель", "Табели, переработки, отпуска и смены проходят согласование."],
+          ["Стоимость", "Стоимость труда назначается на проект и рабочую позицию."]
         ],
-        actions: ["Импорт puantaj", "Согласовать табель", "Назначить на work item", "Показать overtime", "AI-риск персонала"],
-        rows: [["Вход", "Сотрудник, роль, табель"], ["Контроль", "Проект, work item, cost code"], ["Выход", "Стоимость труда и план / факт"]]
+        actions: ["Импорт puantaj", "Согласовать табель", "Назначить на рабочую позицию", "Показать переработки", "AI-риск персонала"],
+        rows: [["Вход", "Сотрудник, роль, табель"], ["Контроль", "Проект, рабочая позиция, код затрат"], ["Выход", "Стоимость труда и план / факт"]]
       },
       planning: {
         steps: [
-          ["Lookahead", "План работ на следующие 2, 4 и 6 недель."],
-          ["Потребности", "График создаёт потребности в материалах, людях и cash."],
+          ["Ближайший план", "План работ на следующие 2, 4 и 6 недель."],
+          ["Потребности", "График создаёт потребности в материалах, людях и деньгах."],
           ["Риск", "Причины задержек и критические ограничения эскалируются."]
         ],
-        actions: ["Lookahead plan", "Сформировать потребность в материалах", "Сформировать cash need", "Показать задержки", "AI-риск графика"],
+        actions: ["План ближайших недель", "Сформировать потребность в материалах", "Сформировать потребность в деньгах", "Показать задержки", "AI-риск графика"],
         rows: [["Вход", "График работ и прогресс"], ["Контроль", "Дата потребности, срок закупки, труд"], ["Выход", "Потребности в материалах, людях и деньгах"]]
       }
     };
@@ -1869,8 +1869,8 @@
       drawerLead.textContent = lead || "Правило контроля и дизайн действия для этой части EPC-цепочки.";
       drawerBody.innerHTML = `
         <div class="action-list">
-          <div class="action"><span class="action-number">1</span><div><h4>Нужные данные</h4><p>Проект, WBS, cost code, work item, ответственный, дата и статус согласования.</p></div><span class="status amber">нужно</span></div>
-          <div class="action"><span class="action-number">2</span><div><h4>Контрольный вопрос</h4><p>Видит ли руководство это до того, как проблема стала потерей маржи, cash или срока?</p></div><span class="status green">правило</span></div>
+          <div class="action"><span class="action-number">1</span><div><h4>Нужные данные</h4><p>Проект, WBS, код затрат, рабочая позиция, ответственный, дата и статус согласования.</p></div><span class="status amber">нужно</span></div>
+          <div class="action"><span class="action-number">2</span><div><h4>Контрольный вопрос</h4><p>Видит ли руководство это до того, как проблема стала потерей маржи, денег или срока?</p></div><span class="status green">правило</span></div>
           <div class="action"><span class="action-number">3</span><div><h4>Поддержка AI</h4><p>Объяснить отклонение, найти разрывы, подготовить action list и бриф собственника.</p></div><span class="status amber">AI</span></div>
         </div>`;
       drawer.classList.add("open");
@@ -1884,7 +1884,7 @@
 
     function runAI() {
       const question = aiPrompt.value.trim();
-      aiAnswer.textContent = `Черновой ответ на вопрос: "${question}" — проверьте цепочку проекта на отсутствующие связи WBS/cost code, открытые закупочные обязательства, дефициты склада, cost split в hakediş и потребность в cash на 4 недели. Эскалировать пункты, которым сегодня нужно решение собственника или финансов.`;
+      aiAnswer.textContent = `Черновой ответ на вопрос: "${question}" — проверьте цепочку проекта на отсутствующие связи WBS/код затрат, открытые закупочные обязательства, дефициты склада, разложение себестоимости в hakediş и потребность в деньгах на 4 недели. Эскалировать пункты, которым сегодня нужно решение собственника или финансов.`;
     }
 
     document.addEventListener("click", event => {
@@ -1899,7 +1899,7 @@
         const action = actionButton.dataset.action;
         if (action.includes("ai")) openAI(action.replaceAll("-", " "));
         else if (action.includes("brief")) openAI("Подготовить бриф для собственника");
-        else if (action.includes("critical")) openDrawer("Решения на сегодня", "Критические решения по проектам, cash, складу и персоналу.");
+        else if (action.includes("critical")) openDrawer("Решения на сегодня", "Критические решения по проектам, деньгам, складу и персоналу.");
         else showToast(`${actionButton.textContent.trim()} поставлено в очередь.`);
       }
 
