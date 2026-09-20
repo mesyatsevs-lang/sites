@@ -1838,8 +1838,8 @@
         <button data-view="losses"><span class="nav-icon">LS</span><span>Где теряется управление</span><span class="nav-code">02</span></button>
         <button data-view="beforeafter"><span class="nav-icon">BA</span><span>До / после</span><span class="nav-code">03</span></button>
         <button data-view="owner"><span class="nav-icon">OW</span><span>Вид собственника</span><span class="nav-code">04</span></button>
-        <button data-view="pilot"><span class="nav-icon">NP</span><span>Пилот Нефтчала</span><span class="nav-code">05</span></button>
-        <button data-view="aiuse"><span class="nav-icon">UC</span><span>ИИ-сценарии</span><span class="nav-code">06</span></button>
+        <button data-view="pilot"><span class="nav-icon">NP</span><span>Пилот: школа + Нефтчала</span><span class="nav-code">05</span></button>
+        <button data-view="aiuse"><span class="nav-icon">UC</span><span>ИИ после данных</span><span class="nav-code">06</span></button>
         <button data-view="standards"><span class="nav-icon">SM</span><span>SMK / HSE / EDMS</span><span class="nav-code">07</span></button>
         <button data-view="operational"><span class="nav-icon">OP</span><span>Операционное демо</span><span class="nav-code">08</span></button>
         <button data-view="startpack"><span class="nav-icon">ST</span><span>Данные для старта</span><span class="nav-code">09</span></button>
@@ -1967,7 +1967,7 @@
         <button data-view="beforeafter">До / после</button>
         <button data-view="owner">Собственник</button>
         <button data-view="pilot">Пилот</button>
-        <button data-view="aiuse">ИИ-сценарии</button>
+        <button data-view="aiuse">ИИ после данных</button>
         <button data-view="standards">Стандарты</button>
         <button data-view="operational">Опер. демо</button>
         <button data-view="startpack">Старт</button>
@@ -1983,17 +1983,17 @@
       <section class="meeting-route" aria-label="Маршрут показа на встрече">
         <div class="route-title">
           <span>Маршрут встречи</span>
-          <strong>Показывать не всё подряд, а как историю</strong>
+          <strong>От причины изменений — к двум доказательствам и решению</strong>
         </div>
         <div class="route-steps">
-          <button class="route-step active" data-view="cockpit"><b>01</b><span>Пульт руководства</span></button>
-          <button class="route-step" data-view="losses"><b>02</b><span>Где теряется управление</span></button>
-          <button class="route-step" data-view="beforeafter"><b>03</b><span>До / после</span></button>
-          <button class="route-step" data-view="tender"><b>04</b><span>Тендер → бюджет</span></button>
-          <button class="route-step" data-view="warehouse"><b>05</b><span>Склад и материалы</span></button>
-          <button class="route-step" data-view="finance"><b>06</b><span>Финансы</span></button>
-          <button class="route-step" data-view="aiuse"><b>07</b><span>ИИ-сценарии</span></button>
-          <button class="route-step" data-view="standards"><b>08</b><span>SMK как gatekeeper</span></button>
+          <button class="route-step active" data-view="cockpit"><b>01</b><span>Почему система нужна сейчас</span></button>
+          <button class="route-step" data-view="losses"><b>02</b><span>Где исчезает маржа</span></button>
+          <button class="route-step" data-view="tender"><b>03</b><span>BOQ → внутренний бюджет</span></button>
+          <button class="route-step" data-view="hakedis"><b>04</b><span>Акт → реальные ресурсы</span></button>
+          <button class="route-step" data-view="pilot"><b>05</b><span>Два пилотных доказательства</span></button>
+          <button class="route-step" data-view="owner"><b>06</b><span>Решения руководства</span></button>
+          <button class="route-step" data-view="startpack"><b>07</b><span>Данные для старта</span></button>
+          <button class="route-step" data-view="aiuse"><b>08</b><span>ИИ только после данных</span></button>
           <button class="route-step" data-view="operational"><b>09</b><span>Операционное демо</span></button>
         </div>
       </section>
@@ -2059,7 +2059,7 @@
               <div class="progress"><i style="--w: 32%"></i></div>
             </div>
             <div class="maturity-line">
-              <header><span>Пилот 30 дней</span><span>1 цепочка</span></header>
+              <header><span>Пилот 30 дней</span><span>2 доказательства</span></header>
               <div class="progress"><i style="--w: 64%"></i></div>
             </div>
             <div class="maturity-line">
@@ -2074,27 +2074,27 @@
           <article class="panel">
             <div class="panel-head">
               <div>
-                <h3 class="panel-title">Пульт по 4 площадкам</h3>
-                <p class="panel-sub">Единый управленческий вид: роль проекта, риски, график и ежедневные действия.</p>
+                <h3 class="panel-title">Контекст четырёх площадок</h3>
+                <p class="panel-sub">Подтверждённые факты и вопросы, которые нужно уточнить на диагностике.</p>
               </div>
               <button class="mini-btn" data-action="project-summary">Сводка</button>
             </div>
             <div class="panel-body project-list">
               <div class="project-row">
-                <div><strong>Нефтчала — солнечная станция</strong><small>Комплексный подряд / планирование, техофис, документооборот</small></div>
-                <span class="status amber">риск денег</span>
+                <div><strong>Нефтчала — солнечная станция</strong><small>Civil engineer уже назначен; площадка подходит для проверки живой операционной цепочки</small></div>
+                <span class="status amber">пилот-кандидат</span>
               </div>
               <div class="project-row">
-                <div><strong>Пакет подстанций</strong><small>Энергетическая инфраструктура, материалы и цепочка пусконаладки</small></div>
-                <span class="status green">стабильно</span>
+                <div><strong>Пакет подстанций</strong><small>Материалоёмкие работы: закупка, склад, сроки поставки и пусконаладка</small></div>
+                <span class="status amber">уточнить контур</span>
               </div>
               <div class="project-row">
-                <div><strong>Школьный объект — общестрой</strong><small>Общестроительный объём, вопросы к ценам консультанта, разрыв структуры себестоимости</small></div>
-                <span class="status red">риск маржи</span>
+                <div><strong>Школьный объект — общестрой</strong><small>На старте не было своей civil/ПГС-команды; расчёты консультанта требуют проверки</small></div>
+                <span class="status red">аудит цены</span>
               </div>
               <div class="project-row">
-                <div><strong>Плаза в Хатае — инженерные системы</strong><small>Сейчас инженерные системы, возможное расширение в общестрой</small></div>
-                <span class="status amber">рост объёма</span>
+                <div><strong>15-этажная plaza в Хатае</strong><small>Инженерные работы и возможный общестрой; договорную роль AVENSOL нужно подтвердить</small></div>
+                <span class="status amber">уточнить scope</span>
               </div>
             </div>
           </article>
@@ -2253,7 +2253,7 @@
         <div class="panel">
           <div class="panel-head">
             <div><h3 class="panel-title">Двухконтурный пилот: школьный объект + Нефтчала</h3><p class="panel-sub">Школа доказывает качество тендерной проверки, Нефтчала — работоспособность операционной цепочки и роль civil engineer.</p></div>
-            <button class="mini-btn" data-detail="Пилот Нефтчала">Открыть</button>
+            <button class="mini-btn" data-detail="Пилот: школа + Нефтчала">Открыть</button>
           </div>
           <div class="panel-body pilot-map">
             <div class="pilot-step"><span>W1</span><strong>Аудит цены</strong><p>Разобрать 10–20 спорных позиций школы: объём, материал, работа, рынок, допущение и маржа.</p></div>
