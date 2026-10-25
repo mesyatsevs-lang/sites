@@ -1672,7 +1672,8 @@
         if (!f) return;
         var st = document.getElementById('zayavka-status');
         var btn = f.querySelector('button');
-        var ENDPOINT = 'https://sergey-mesyatsev.dev/webhook/zayavka';
+        // С 25.10.2026 заявки принимает склад в России (152-ФЗ); в Trello и Telegram уходит только номер.
+        var ENDPOINT = 'https://sklad.sergey-mesyatsev.dev/zayavka';
 
         function say(text, cls) {
           st.className = 'zayavka-status' + (cls ? ' ' + cls : '');
