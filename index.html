@@ -1155,6 +1155,33 @@
       }
       .zayavka-status.err { color: #e8a08a; }
       .zayavka-status.ok { color: #9ecfa8; }
+      .zayavka-consent {
+        display: grid;
+        grid-template-columns: 18px 1fr;
+        gap: 10px;
+        align-items: start;
+        max-width: 560px;
+        font-size: 13px;
+        line-height: 1.5;
+        color: rgba(247, 245, 239, 0.72);
+        cursor: pointer;
+      }
+      .zayavka-consent input {
+        width: 18px; height: 18px; min-height: 0;
+        margin: 2px 0 0; padding: 0;
+        accent-color: var(--copper);
+        cursor: pointer;
+      }
+      .zayavka-consent a { color: var(--signal); text-underline-offset: 3px; }
+      .zayavka-consent.err { color: #e8a08a; }
+      .contact-fine {
+        margin-top: 18px;
+        font-size: 13px;
+        line-height: 1.5;
+        color: rgba(247, 245, 239, 0.55);
+      }
+      .contact-fine a { color: rgba(247, 245, 239, 0.78); text-underline-offset: 3px; }
+      .contact-fine a:hover { color: var(--signal); }
       .zayavka-sr {
         position: absolute;
         width: 1px; height: 1px;
@@ -1642,6 +1669,10 @@
                 </div>
                 <label class="zayavka-sr" for="z-message">Задача</label>
                 <textarea id="z-message" name="message" placeholder="Что сейчас важнее и в чём затык"></textarea>
+                <label class="zayavka-consent" id="z-consent-label">
+                  <input id="z-consent" name="consent" type="checkbox" />
+                  <span>Отправляя форму, я даю согласие ИП Месяцеву С. Б. на обработку указанных имени, контакта и текста обращения для ответа и переговоров о договоре в соответствии с <a href="politika/">политикой обработки персональных данных</a>. Согласие действует 1 год, отзыв — письмом на mesyatsev.s@gmail.com.</span>
+                </label>
                 <button type="submit">Отправить</button>
                 <p class="zayavka-status" id="zayavka-status" role="status" aria-live="polite"></p>
               </form>
@@ -1660,13 +1691,17 @@
                 <span>PDF</span>
                 <span>профиль для пересылки</span>
               </a>
+              <p class="contact-fine">
+                ИП Месяцев Сергей Борисович · ОГРНИП 326774600656065 · ИНН 672701833950<br>
+                <a href="politika/">Политика в отношении обработки персональных данных</a>
+              </p>
             </div>
           </div>
         </section>
       </main>
     </div>
     <script>
-      /* --- Отправка заявки. Добавлено 21.08.2026 --- */
+      /* --- Отправка заявки. Добавлено 21.08.2026; согласие на обработку ПДн — 30.10.2026 --- */
       (function () {
         var f = document.getElementById('zayavka-form');
         if (!f) return;
@@ -1703,6 +1738,15 @@
             f.elements['message'].focus();
             return;
           }
+          var consent = f.elements['consent'];
+          var consentLabel = document.getElementById('z-consent-label');
+          if (!consent.checked) {
+            say('Нужно согласие на обработку данных — поставьте галочку.', 'err');
+            if (consentLabel) consentLabel.classList.add('err');
+            consent.focus();
+            return;
+          }
+          if (consentLabel) consentLabel.classList.remove('err');
 
           btn.disabled = true;
           say('Отправляю…');
